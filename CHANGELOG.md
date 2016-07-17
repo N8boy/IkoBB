@@ -1,6 +1,6 @@
 # IkoBB Changelog
 
-## [Unreleased](https://github.com/codetana/TangoBB/tree/HEAD)
+## [Unreleased](https://github.com/N8boy/IkoBB/tree/HEAD)
 
 [Full Changelog](https://github.com/codetana/TangoBB/compare/1.5.0-A3...HEAD)
 
@@ -31,6 +31,8 @@
 - Profile Comments [\#26](https://github.com/Codetana/TangoBB/issues/26)
 
 - Redirecting always to mainpage [\#20](https://github.com/Codetana/TangoBB/issues/20)
+
+## Released ##
 
 ## TangoBB [1.5.0-A3](https://github.com/codetana/TangoBB/tree/1.5.0-A3) (2015-02-23)
 
