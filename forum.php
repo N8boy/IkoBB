@@ -2,9 +2,9 @@
 
 define('BASEPATH', 'Forum');
 require_once('applications/wrapper.php');
-$TANGO->tpl->getTpl('forum');
-$TANGO->tpl->addParam('forum_listings', $TANGO->bb->listings());
+$IKO->tpl->getTpl('forum');
+$IKO->tpl->addParam('forum_listings', $IKO->bb->listings());
 
-echo $TANGO->tpl->output();
+echo $IKO->tpl->output();
 
 ?>

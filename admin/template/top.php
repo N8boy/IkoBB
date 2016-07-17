@@ -1,5 +1,5 @@
 <?php
-  global $ADMIN, $TANGO;
+global $ADMIN, $IKO;
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -30,7 +30,9 @@
               <div class="container">
                   <div class="logo"></div>
                   <ul class="nav nav-pills nav-stacked">
-                      <li class="active"><a href="javascript:return false;">Welcome,  <?php echo $TANGO->sess->data['username']; ?></a></li>
+                      <li class="active"><a
+                              href="javascript:return false;">Welcome, <?php echo $IKO->sess->data['username']; ?></a>
+                      </li>
                       <li><a href="<?php echo SITE_URL; ?>/admin"><i class="glyphicon glyphicon-dashboard"></i> Dashboard</a></li>
                       <li><a href="<?php echo SITE_URL; ?>/admin/terminal.php"><i class="fa fa-terminal"></i> Terminal</a></li>
                       <?php echo $ADMIN->navigation(); ?>

@@ -28,7 +28,7 @@ class Library_Parse
      */
     public function parse($string)
     {
-        global $TANGO;
+        global $IKO;
         //$string = htmlentities($string);
         //Temporary fix where replace "<" and ">" with "&lt;" and "&gt;".
         //Which negates all HTML tags.
@@ -155,7 +155,7 @@ class Library_Parse
           foreach( $users as $user ) {
             $user_c = preg_replace('/[^a-zA-Z0-9]/', '', $user);
             if( usernameExists($user_c) ) {
-              $user = $TANGO->user($user_c);
+              $user = $IKO->user($user_c);
               $mention[] = '@<a href="' . SITE_URL . '/members.php/cmd/user/id/' . $user['id'] . '">' . $user['username'] . '</a>';
             } else {
               $mention[] = $user;
@@ -176,7 +176,7 @@ class Library_Parse
      */
     private function parseQuote($string)
     {
-        global $MYSQL, $TANGO;
+        global $MYSQL, $IKO;
         //die($string);
         //die(var_dump($string));
         preg_match_all('/<blockquote>(.*?)<\/blockquote>/', $string, $quotes);
@@ -189,11 +189,11 @@ class Library_Parse
             //die($id);
             $MYSQL->where('id', $id);
             $query = $MYSQL->get('{prefix}forum_posts');
-            $user = (!empty($query)) ? $TANGO->user($query['0']['post_user']) : array(
+            $user = (!empty($query)) ? $IKO->user($query['0']['post_user']) : array(
                 'username' => ''
             );
             $q_c = (!empty($query)) ? $query['0']['post_content'] : $string;
-            $quote = $TANGO->tpl->entity(
+            $quote = $IKO->tpl->entity(
                 'quote_post',
                 array(
                     'quoted_post_content',
@@ -305,7 +305,7 @@ class Library_Parse
 
     private function parseHTML($string)
     {
-        global $MYSQL, $TANGO;
+        global $MYSQL, $IKO;
         //die($string);
         //die(var_dump($string));
         preg_match_all('/<pre>(.*?)<\/pre>/', $string, $code);

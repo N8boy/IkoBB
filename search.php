@@ -3,13 +3,13 @@
 define('BASEPATH', 'Forum');
 require_once('applications/wrapper.php');
 
-$TANGO->tpl->getTpl('page');
+$IKO->tpl->getTpl('page');
 
 $content = '';
 $notice = '';
 $page_title = $LANG['bb']['search'];
 
-$content .= $TANGO->tpl->entity('advanced_search', '', '');
+$content .= $IKO->tpl->entity('advanced_search', '', '');
 if (isset($_POST['search_submit'])) {
     try {
 
@@ -54,7 +54,7 @@ if (isset($_POST['search_submit'])) {
             $threads = array();
 
             foreach ($query as $re) {
-                $user = $TANGO->user($re['post_user']);
+                $user = $IKO->user($re['post_user']);
                 if ($re['post_type'] == 2) {
                     $origin = $re['origin_thread'];
                     $MYSQL->bind('origin', $origin);
@@ -95,7 +95,7 @@ if (isset($_POST['search_submit'])) {
                 $searched_users .= $LANG['global_form_process']['search_no_user'];
             }
 
-            $content .= $TANGO->tpl->entity(
+            $content .= $IKO->tpl->entity(
                 'search_page',
                 array(
                     'searched_threads',
@@ -110,7 +110,7 @@ if (isset($_POST['search_submit'])) {
         }
 
     } catch (Exception $e) {
-        $notice .= $TANGO->tpl->entity(
+        $notice .= $IKO->tpl->entity(
             'danger_notice',
             'content',
             $e->getMessage()
@@ -119,18 +119,18 @@ if (isset($_POST['search_submit'])) {
 }
 
 //Breadcrumbs
-$TANGO->tpl->addBreadcrumb(
+$IKO->tpl->addBreadcrumb(
     $LANG['bb']['forum'],
     SITE_URL . '/forum.php'
 );
-$TANGO->tpl->addBreadcrumb(
+$IKO->tpl->addBreadcrumb(
     $LANG['bb']['search'],
     '#',
     true
 );
-$bc = $TANGO->tpl->breadcrumbs();
+$bc = $IKO->tpl->breadcrumbs();
 
-$TANGO->tpl->addParam(
+$IKO->tpl->addParam(
     array(
         'page_title',
         'content'
@@ -141,6 +141,6 @@ $TANGO->tpl->addParam(
     )
 );
 
-echo $TANGO->tpl->output();
+echo $IKO->tpl->output();
 
 ?>

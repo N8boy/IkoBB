@@ -3,7 +3,7 @@
 define('BASEPATH', 'Staff');
 require_once('../applications/wrapper.php');
 
-if (!$TANGO->perm->check('access_administration')) {
+if (!$IKO->perm->check('access_administration')) {
     redirect(SITE_URL);
 }//Checks if user has permission to create a thread.
 //require_once('template/top.php');
@@ -33,7 +33,7 @@ function list_category($check, $id)
 
 function allowed_usergroups($groups)
 {
-    global $TANGO, $MYSQL;
+    global $IKO, $MYSQL;
     $groups = explode(',', $groups);
     //$query  = $MYSQL->get('{prefix}usergroups');
     $query = $MYSQL->query('SELECT * FROM {prefix}usergroups');

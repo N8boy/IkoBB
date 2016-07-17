@@ -96,10 +96,10 @@ class Tango_User
      */
     public function givePermission($user, $permission)
     {
-        global $MYSQL, $TANGO;
-        $user = $TANGO->user($user);
+        global $MYSQL, $IKO;
+        $user = $IKO->user($user);
         if (!empty($user)) {
-            $perm = $TANGO->perm->perm($permission);
+            $perm = $IKO->perm->perm($permission);
             if ($user['additional_permissions'] == "0") {
                 $MYSQL->bind('additional_permissions', $perm['permission_name']);
             } else {
@@ -130,8 +130,8 @@ class Tango_User
      */
     public function removeAddPermission($user, $permission)
     {
-        global $MYSQL, $TANGO;
-        $user = $TANGO->user($user);
+        global $MYSQL, $IKO;
+        $user = $IKO->user($user);
         if (!empty($user)) {
             $current_perms = array();
             foreach ($user['additional_permissions'] as $ap) {
@@ -186,15 +186,15 @@ class Tango_User
      */
     public function userMessages()
     {
-        global $MYSQL, $TANGO;
+        global $MYSQL, $IKO;
         $return = array();
-        $MYSQL->bind('message_receiver', $TANGO->sess->data['id']);
+        $MYSQL->bind('message_receiver', $IKO->sess->data['id']);
         $MYSQL->bind('receiver_viewed', 0);
         $query = $MYSQL->query("SELECT * FROM {prefix}messages WHERE message_receiver = :message_receiver AND receiver_viewed = :receiver_viewed");
         foreach ($query as $msg) {
             if ($msg['message_type'] == 1) {
-                $receiver = $TANGO->user($msg['message_receiver']);
-                $sender = $TANGO->user($msg['message_sender']);
+                $receiver = $IKO->user($msg['message_receiver']);
+                $sender = $IKO->user($msg['message_sender']);
                 $msg['message_receiver'] = $receiver['username'];
                 $msg['message_sender'] = $sender['username'];
                 $msg['view_url'] = SITE_URL . '/conversations.php/cmd/view/v/' . $msg['id'];
@@ -202,8 +202,8 @@ class Tango_User
             } else {
                 $MYSQL->bind('id', $msg['origin_message']);
                 $origin = $MYSQL->query('SELECT * FROM {prefix}messages WHERE id = :id');
-                $receiver = $TANGO->user($msg['message_receiver']);
-                $sender = $TANGO->user($msg['message_sender']);
+                $receiver = $IKO->user($msg['message_receiver']);
+                $sender = $IKO->user($msg['message_sender']);
                 $msg['message_receiver'] = $receiver['username'];
                 $msg['message_sender'] = $sender['username'];
                 $msg['view_url'] = SITE_URL . '/conversations.php/cmd/view/v/' . $origin['0']['id'];
@@ -218,10 +218,10 @@ class Tango_User
      */
     public function notifications()
     {
-        global $MYSQL, $TANGO;
+        global $MYSQL, $IKO;
         $return = array();
-        if ($TANGO->sess->isLogged) {
-            $query = $MYSQL->query("SELECT * FROM {prefix}notifications WHERE user = {$TANGO->sess->data['id']} AND viewed = 0 ORDER BY time_received ASC");
+        if ($IKO->sess->isLogged) {
+            $query = $MYSQL->query("SELECT * FROM {prefix}notifications WHERE user = {$IKO->sess->data['id']} AND viewed = 0 ORDER BY time_received ASC");
             foreach ($query as $note) {
                 $note['notice_link'] = ($query['0']['notice_link'] == "0") ? '#' : $query['0']['notice_link'];
                 $return[] = $note;
@@ -234,14 +234,14 @@ class Tango_User
 
     public function clearNotification()
     {
-        global $MYSQL, $TANGO;
-        $MYSQL->bind('user', $TANGO->sess->data['id']);
+        global $MYSQL, $IKO;
+        $MYSQL->bind('user', $IKO->sess->data['id']);
         $MYSQL->query("UPDATE {prefix}notifications SET viewed = 1 WHERE user = :user");
     }
 
     public function notifyUser($type, $user, $email = false, $extra = array())
     {
-        global $MYSQL, $TANGO, $LANG, $MAIL;
+        global $MYSQL, $IKO, $LANG, $MAIL;
         $time = time();
         $notice = '';
         if (in_array($type, $this->notice_type)) {
@@ -336,10 +336,10 @@ class Tango_User
                 $LANG['email']['notify']['more_info']
             );
             if ($email) {
-                $user = $TANGO->user($user);
+                $user = $IKO->user($user);
                 //Setting up email
                 $MAIL->to($user['user_email']);
-                $MAIL->from($TANGO->data['site_email']);
+                $MAIL->from($IKO->data['site_email']);
                 $MAIL->subject($notice);
                 $MAIL->body($notice . $info);
                 if ($MAIL->send()) {
@@ -353,7 +353,7 @@ class Tango_User
         } catch (mysqli_sql_exception $e) {
             throw new Exception ('FAIL: ' . $e);
         }
-        $notice .= $TANGO->tpl->entity(
+        $notice .= $IKO->tpl->entity(
             'danger_notice',
             'content',
             $e->getMessage()

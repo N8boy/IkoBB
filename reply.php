@@ -3,11 +3,11 @@
 define('BASEPATH', 'Forum');
 require_once('applications/wrapper.php');
 
-if (!$TANGO->perm->check('reply_thread')) {
+if (!$IKO->perm->check('reply_thread')) {
     redirect(SITE_URL);
 }//Checks if user has permission to create a thread.
 
-$TANGO->tpl->getTpl('page');
+$IKO->tpl->getTpl('page');
 $notice = '';
 $content = '';
 
@@ -41,11 +41,11 @@ if ($PGET->s(true)) {
 
         $allowed = explode(',', $node['allowed_usergroups']);
 
-        if (!in_array($TANGO->sess->data['user_group'], $allowed)) {
+        if (!in_array($IKO->sess->data['user_group'], $allowed)) {
             redirect(SITE_URL . '/404.php');
         }
 
-        $breadcrumbs = $TANGO->tpl->entity(
+        $breadcrumbs = $IKO->tpl->entity(
             'breadcrumbs_before',
             array(
                 'link',
@@ -61,7 +61,7 @@ if ($PGET->s(true)) {
             $parent_node = node($node['parent_node']);
             $ori_cat = category($parent_node['in_category']);
 
-            $breadcrumbs .= $TANGO->tpl->entity(
+            $breadcrumbs .= $IKO->tpl->entity(
                 'breadcrumbs_before',
                 array(
                     'link',
@@ -73,7 +73,7 @@ if ($PGET->s(true)) {
                 )
             );
 
-            $breadcrumbs .= $TANGO->tpl->entity(
+            $breadcrumbs .= $IKO->tpl->entity(
                 'breadcrumbs_before',
                 array(
                     'link',
@@ -85,7 +85,7 @@ if ($PGET->s(true)) {
                 )
             );
 
-            $breadcrumbs .= $TANGO->tpl->entity(
+            $breadcrumbs .= $IKO->tpl->entity(
                 'breadcrumbs_before',
                 array(
                     'link',
@@ -101,7 +101,7 @@ if ($PGET->s(true)) {
 
             $ori_cat = category($node['in_category']);
 
-            $breadcrumbs .= $TANGO->tpl->entity(
+            $breadcrumbs .= $IKO->tpl->entity(
                 'breadcrumbs_before',
                 array(
                     'link',
@@ -113,7 +113,7 @@ if ($PGET->s(true)) {
                 )
             );
 
-            $breadcrumbs .= $TANGO->tpl->entity(
+            $breadcrumbs .= $IKO->tpl->entity(
                 'breadcrumbs_before',
                 array(
                     'link',
@@ -125,7 +125,7 @@ if ($PGET->s(true)) {
                 )
             );
         }
-        $breadcrumbs .= $TANGO->tpl->entity(
+        $breadcrumbs .= $IKO->tpl->entity(
             'breadcrumbs_before',
             array(
                 'link',
@@ -136,13 +136,13 @@ if ($PGET->s(true)) {
                 $query['0']['post_title']
             )
         );
-        $breadcrumbs .= $TANGO->tpl->entity(
+        $breadcrumbs .= $IKO->tpl->entity(
             'breadcrumbs_current',
             'name',
             $LANG['bb']['new_reply_breadcrumb']
         );
 
-        $breadcrumbs = $TANGO->tpl->entity(
+        $breadcrumbs = $IKO->tpl->entity(
             'breadcrumbs',
             'bread',
             $breadcrumbs
@@ -169,7 +169,7 @@ if ($PGET->s(true)) {
                 $cont = (!empty($q_query)) ? '[quote]' . $PGET->g('quote') . '[/quote]' . $cont : $cont;
                 $cont = preg_replace('#\\[quote\\]Post ID: (.*?)\\[/quote\\]#uis', '[quote]\\1[/quote]', $cont);
 
-                $MYSQL->bind('post_user', $TANGO->sess->data['id']);
+                $MYSQL->bind('post_user', $IKO->sess->data['id']);
                 $c_query = $MYSQL->query("SELECT * FROM {prefix}forum_posts WHERE post_user = :post_user ORDER BY post_time DESC LIMIT 1");
 
                 if (!$cont) {
@@ -184,14 +184,14 @@ if ($PGET->s(true)) {
                     $watchers = array_filter(explode(',', $query['0']['watchers']));
                     if (!empty($watchers)) {
                         foreach ($watchers as $watcher) {
-                            $user = $TANGO->user($watcher);
-                            if (!empty($user) && $user['id'] !== $TANGO->sess->data['id']) {
-                                $TANGO->user->notifyUser(
+                            $user = $IKO->user($watcher);
+                            if (!empty($user) && $user['id'] !== $IKO->sess->data['id']) {
+                                $IKO->user->notifyUser(
                                     'reply',
                                     $user['id'],
                                     true,
                                     array(
-                                        'username' => $TANGO->sess->data['username'],
+                                        'username' => $IKO->sess->data['username'],
                                         'thread_title' => $query['0']['post_title'],
                                         'link' => SITE_URL . '/thread.php/' . $origin['title_friendly'] . '.' . $origin['id']
                                     )
@@ -207,13 +207,13 @@ if ($PGET->s(true)) {
                     $mentions = array_filter(array_unique($mentions['1']));
                     if (!empty($mentions)) {
                         foreach ($mentions as $mention) {
-                            $user = $TANGO->user($mention);
-                            $TANGO->user->notifyUser(
+                            $user = $IKO->user($mention);
+                            $IKO->user->notifyUser(
                                 'mention',
                                 $user['id'],
                                 true,
                                 array(
-                                    'username' => $TANGO->sess->data['username'],
+                                    'username' => $IKO->sess->data['username'],
                                     'link' => SITE_URL . '/thread.php/' . $origin['title_friendly'] . '.' . $origin['id']
                                 )
                             );
@@ -225,7 +225,7 @@ if ($PGET->s(true)) {
                     $o_data = '1';
                     $o_query = $MYSQL->query("SELECT * FROM {prefix}forum_posts WHERE origin_thread = {$thread['id']} ORDER BY post_time DESC LIMIT 1");
                     $p_query = $MYSQL->query("SELECT * FROM {prefix}forum_posts WHERE origin_thread = {$thread['id']} ORDER BY post_time DESC");
-                    if ($o_query && $o_query['0']['post_user'] == $TANGO->sess->data['id'] && $TANGO->data['post_merge'] == 1) {
+                    if ($o_query && $o_query['0']['post_user'] == $IKO->sess->data['id'] && $IKO->data['post_merge'] == 1) {
                         $t_cont = $o_query['0']['post_content'] . '
                                     ' . $LANG['flat']['merge_post'] . '
                                     ' . $cont;
@@ -253,7 +253,7 @@ if ($PGET->s(true)) {
                             array(
                                 'post_content' => $cont,
                                 'post_time' => $time,
-                                'post_user' => $TANGO->sess->data['id'],
+                                'post_user' => $IKO->sess->data['id'],
                                 'origin_node' => $origin['origin_node'],
                                 'origin_thread' => $thread['id'],
                                 'post_type' => '2'
@@ -279,7 +279,7 @@ if ($PGET->s(true)) {
                 }
 
             } catch (Exception $e) {
-                $notice .= $TANGO->tpl->entity(
+                $notice .= $IKO->tpl->entity(
                     'danger_notice',
                     'content',
                     $e->getMessage()
@@ -293,20 +293,20 @@ if ($PGET->s(true)) {
             define('CSRF_TOKEN', NoCSRF::generate('csrf_token'));
         }
 
-        $quote_user = (!empty($q_query)) ? $TANGO->user($q_query['0']['post_user']) : '';
-        $quote_post = (!empty($q_query)) ? $TANGO->tpl->entity(
+        $quote_user = (!empty($q_query)) ? $IKO->user($q_query['0']['post_user']) : '';
+        $quote_post = (!empty($q_query)) ? $IKO->tpl->entity(
             'quote_post',
             array(
                 'quoted_post_content',
                 'quoted_post_user'
             ),
             array(
-                $TANGO->lib_parse->parse($q_query['0']['post_content']),
+                $IKO->lib_parse->parse($q_query['0']['post_content']),
                 $quote_user['username']
             )
         ) : '';
 
-        $content = $TANGO->tpl->entity(
+        $content = $IKO->tpl->entity(
             'reply_thread_page',
             array(
                 'breadcrumbs',
@@ -338,7 +338,7 @@ if ($PGET->s(true)) {
                 $icon_package[$category] .= '<a href="javascript:add_emoji(\'' . $code . '\');"><span style="font-size: 30px;" title="' . $code . '">' . $html . '</span></a> ';
             }
         }
-        $content .= $TANGO->tpl->entity(
+        $content .= $IKO->tpl->entity(
             'smiley_list',
             array(
                 'smilies',
@@ -356,7 +356,7 @@ if ($PGET->s(true)) {
             )
         );
 
-        $TANGO->tpl->addParam(
+        $IKO->tpl->addParam(
             array(
                 'page_title',
                 'content'
@@ -375,6 +375,6 @@ if ($PGET->s(true)) {
     redirect(SITE_URL . '/404.php');
 }
 
-echo $TANGO->tpl->output();
+echo $IKO->tpl->output();
 
 ?>

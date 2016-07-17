@@ -3,7 +3,7 @@
 define('BASEPATH', 'Forum');
 require_once('applications/wrapper.php');
 
-$TANGO->tpl->getTpl('page');
+$IKO->tpl->getTpl('page');
 
 if ($PGET->s(true)) {
     $get = $PGET->s(true);
@@ -23,14 +23,14 @@ if ($PGET->s(true)) {
         $MYSQL->bind('id', $query['0']['origin_node']);
         $p_query = $MYSQL->query("SELECT * FROM {prefix}forum_node WHERE id = :id");
         $allowed = explode(',', $p_query['0']['allowed_usergroups']);
-        if (!in_array($TANGO->sess->data['user_group'], $allowed)) {
+        if (!in_array($IKO->sess->data['user_group'], $allowed)) {
             redirect(SITE_URL . '/404.php');
         }
 
-        $user = $TANGO->user($query['0']['post_user']);
+        $user = $IKO->user($query['0']['post_user']);
         $node = node($query['0']['origin_node']);
-        $time_post = simplify_time($query['0']['post_time'], @$TANGO->sess->data['location']);
-        $user_joined = simplify_time($user['date_joined'], @$TANGO->sess->data['location']);
+        $time_post = simplify_time($query['0']['post_time'], @$IKO->sess->data['location']);
+        $user_joined = simplify_time($user['date_joined'], @$IKO->sess->data['location']);
 
         // Poll
         $MYSQL->bind('thread_id', $node_id);
@@ -43,8 +43,8 @@ if ($PGET->s(true)) {
         foreach ($user_voted as $u) {
             $users[] = $u['user_id'];
         }
-        if (isset($_POST['submit_form']) && isset($_POST['vote']) && !in_array($TANGO->sess->data['id'], $users)) {
-            $MYSQL->bind('user_id', $TANGO->sess->data['id']);
+        if (isset($_POST['submit_form']) && isset($_POST['vote']) && !in_array($IKO->sess->data['id'], $users)) {
+            $MYSQL->bind('user_id', $IKO->sess->data['id']);
             $MYSQL->bind('answer_id', $_POST['vote']);
             $MYSQL->bind('poll_id', $poll_id);
             $MYSQL->query("INSERT INTO {prefix}poll_votes (user_id, answer_id, poll_id) VALUES (:user_id, :answer_id, :poll_id)");
@@ -61,11 +61,11 @@ if ($PGET->s(true)) {
             $number[$answer['id']] = $qry_quan['0']['quan'];
         }
 
-        if ($TANGO->sess->isLogged && !in_array($TANGO->sess->data['id'], $users)) {
+        if ($IKO->sess->isLogged && !in_array($IKO->sess->data['id'], $users)) {
             foreach ($answers as $id => $answer) {
                 $form_answers .= '<input type="radio" name="vote" value="' . $id . '" id="a_' . $id . '" /> <label style="font-weight: normal;" for="a_' . $id . '">' . $answer . '</label><br />';
             }
-            $poll_list = $TANGO->tpl->entity(
+            $poll_list = $IKO->tpl->entity(
                 'poll_form',
                 array(
                     'answers'
@@ -81,7 +81,7 @@ if ($PGET->s(true)) {
             foreach ($answers as $id => $answer) {
 
                 $percentage = $number[$id] / $total_qnt * 100;
-                $poll_list .= $TANGO->tpl->entity(
+                $poll_list .= $IKO->tpl->entity(
                     'poll_list',
                     array(
                         'answer',
@@ -101,7 +101,7 @@ if ($PGET->s(true)) {
         }
         $poll = '';
         if (!empty($poll_list) && !empty($poll_question)) {
-            $poll = $TANGO->tpl->entity(
+            $poll = $IKO->tpl->entity(
                 'poll_overview',
                 array(
                     'question',
@@ -116,7 +116,7 @@ if ($PGET->s(true)) {
 
 
         // Breadcrumbs
-        $TANGO->tpl->addBreadcrumb(
+        $IKO->tpl->addBreadcrumb(
             $LANG['bb']['forum'],
             SITE_URL . '/forum.php'
         );
@@ -125,17 +125,17 @@ if ($PGET->s(true)) {
             $parent_node = node($node['parent_node']);
             $ori_cat = category($parent_node['in_category']);
 
-            $TANGO->tpl->addBreadcrumb(
+            $IKO->tpl->addBreadcrumb(
                 $ori_cat['category_title'],
                 '#'
             );
 
-            $TANGO->tpl->addBreadcrumb(
+            $IKO->tpl->addBreadcrumb(
                 $parent_node['node_name'],
                 SITE_URL . '/node.php/' . $parent_node['name_friendly'] . '.' . $parent_node['id']
             );
 
-            $TANGO->tpl->addBreadcrumb(
+            $IKO->tpl->addBreadcrumb(
                 $node['node_name'],
                 SITE_URL . '/node.php/' . $node['name_friendly'] . '.' . $node['id']
             );
@@ -143,51 +143,51 @@ if ($PGET->s(true)) {
         } elseif ($node['node_type'] == 1) {
             $ori_cat = category($node['in_category']);
 
-            $TANGO->tpl->addBreadcrumb(
+            $IKO->tpl->addBreadcrumb(
                 $ori_cat['category_title'],
                 '#'
             );
 
-            $TANGO->tpl->addBreadcrumb(
+            $IKO->tpl->addBreadcrumb(
                 $node['node_name'],
                 SITE_URL . '/node.php/' . $node['name_friendly'] . '.' . $node['id']
             );
         }
 
-        $TANGO->tpl->addBreadcrumb(
+        $IKO->tpl->addBreadcrumb(
             $query['0']['post_title'],
             '#',
             true
         );
-        $breadcrumb = $TANGO->tpl->breadcrumbs();
+        $breadcrumb = $IKO->tpl->breadcrumbs();
 
-        $TANGO->node->thread_mark_read($node_id);
+        $IKO->node->thread_mark_read($node_id);
 
         $reply_button = '';
         $quote_thread = '';
         $edit_thread = '';
         $report_thread = '';
-        if ($TANGO->perm->check('reply_thread') && ($query['0']['post_locked'] == "0")) {
-            $reply_button .= $TANGO->tpl->entity(
+        if ($IKO->perm->check('reply_thread') && ($query['0']['post_locked'] == "0")) {
+            $reply_button .= $IKO->tpl->entity(
                 'reply_thread',
                 'link',
                 SITE_URL . '/reply.php/' . $node_name . '.' . $node_id,
                 'buttons'
             );
-            $report_thread .= $TANGO->tpl->entity(
+            $report_thread .= $IKO->tpl->entity(
                 'report_post',
                 'url',
                 SITE_URL . '/report.php/post/' . $node_id,
                 'buttons'
             );
-            $quote_thread .= $TANGO->tpl->entity(
+            $quote_thread .= $IKO->tpl->entity(
                 'quote_post',
                 'url',
                 'javascript:quote(\'' . $query['0']['id'] . '\');',
                 'buttons'
             );
-            if ($query['0']['post_user'] == $TANGO->sess->data['id']) {
-                $edit_thread .= $TANGO->tpl->entity(
+            if ($query['0']['post_user'] == $IKO->sess->data['id']) {
+                $edit_thread .= $IKO->tpl->entity(
                     'edit_post',
                     'url',
                     SITE_URL . '/edit.php/post/' . $node_id,
@@ -197,7 +197,7 @@ if ($PGET->s(true)) {
         }
 
         $thread_mod_tools = '';
-        if ($TANGO->perm->check('access_moderation')) {
+        if ($IKO->perm->check('access_moderation')) {
             $stick_thread = ($query['0']['post_sticky'] == "0") ? 'Stick Thread' : 'Unstick Thread';
             $stick_thread_url = ($query['0']['post_sticky'] == "0") ? SITE_URL . '/mod/stick.php/thread/' . $query['0']['id'] : SITE_URL . '/mod/unstick.php/thread/' . $query['0']['id'];
             $close_thread = ($query['0']['post_locked'] == "0") ? 'Close Thread' : 'Open Thread';
@@ -216,7 +216,7 @@ if ($PGET->s(true)) {
             }
             $move_thread .= '</select></form>';
 
-            $thread_mod_tools .= $TANGO->tpl->entity(
+            $thread_mod_tools .= $IKO->tpl->entity(
                 'mod_tools',
                 array(
                     'stick_thread',
@@ -249,15 +249,15 @@ if ($PGET->s(true)) {
         if ($PGET->g('watch')) {
             switch ($PGET->g('watch')) {
                 case "1":
-                    if (!in_array($TANGO->sess->data['id'], $watchers)) {
+                    if (!in_array($IKO->sess->data['id'], $watchers)) {
                         $watcher = $watchers;
-                        $watcher[] = $TANGO->sess->data['id'];
+                        $watcher[] = $IKO->sess->data['id'];
                         $watcher = implode(',', $watcher);
 
                         $MYSQL->bind('watchers', $watcher);
                         $MYSQL->bind('id', $node_id);
                         if ($MYSQL->query('UPDATE {prefix}forum_posts SET watchers = :watchers WHERE id = :id')) {
-                            $thread_notice = $TANGO->tpl->entity(
+                            $thread_notice = $IKO->tpl->entity(
                                 'success_notice',
                                 array(
                                     'content'
@@ -267,7 +267,7 @@ if ($PGET->s(true)) {
                                 )
                             );
                         } else {
-                            $thread_notice = $TANGO->tpl->entity(
+                            $thread_notice = $IKO->tpl->entity(
                                 'danger_notice',
                                 array(
                                     'content'
@@ -278,7 +278,7 @@ if ($PGET->s(true)) {
                             );
                         }
                     } else {
-                        $thread_notice = $TANGO->tpl->entity(
+                        $thread_notice = $IKO->tpl->entity(
                             'danger_notice',
                             array(
                                 'content'
@@ -290,13 +290,13 @@ if ($PGET->s(true)) {
                     }
                     break;
                 case "2":
-                    if (in_array($TANGO->sess->data['id'], $watchers)) {
-                        $watcher = array_diff($watchers, array($TANGO->sess->data['id']));
+                    if (in_array($IKO->sess->data['id'], $watchers)) {
+                        $watcher = array_diff($watchers, array($IKO->sess->data['id']));
                         $watcher = implode(',', $watcher);
                         $MYSQL->bind('watchers', $watcher);
                         $MYSQL->bind('id', $node_id);
                         if ($MYSQL->query('UPDATE {prefix}forum_posts SET watchers = :watchers WHERE id = :id')) {
-                            $thread_notice = $TANGO->tpl->entity(
+                            $thread_notice = $IKO->tpl->entity(
                                 'success_notice',
                                 array(
                                     'content'
@@ -306,7 +306,7 @@ if ($PGET->s(true)) {
                                 )
                             );
                         } else {
-                            $thread_notice = $TANGO->tpl->entity(
+                            $thread_notice = $IKO->tpl->entity(
                                 'danger_notice',
                                 array(
                                     'content'
@@ -317,7 +317,7 @@ if ($PGET->s(true)) {
                             );
                         }
                     } else {
-                        $thread_notice = $TANGO->tpl->entity(
+                        $thread_notice = $IKO->tpl->entity(
                             'danger_notice',
                             array(
                                 'content'
@@ -332,10 +332,10 @@ if ($PGET->s(true)) {
         }
 
         //Watch link.
-        if ($TANGO->sess->isLogged) {
+        if ($IKO->sess->isLogged) {
             $page = ($PGET->g('page')) ? '/page/' . clean($PGET->g('page')) : '';
-            if (in_array($TANGO->sess->data['id'], $watchers)) {
-                $watch_link = $TANGO->tpl->entity(
+            if (in_array($IKO->sess->data['id'], $watchers)) {
+                $watch_link = $IKO->tpl->entity(
                     'unwatch_thread',
                     array(
                         'url'
@@ -346,7 +346,7 @@ if ($PGET->s(true)) {
                     'buttons'
                 );
             } else {
-                $watch_link = $TANGO->tpl->entity(
+                $watch_link = $IKO->tpl->entity(
                     'watch_thread',
                     array(
                         'url'
@@ -362,7 +362,7 @@ if ($PGET->s(true)) {
         }
 
         if (!$PGET->g('page') or $PGET->g('page') == 1) {
-            $starter = $TANGO->tpl->entity(
+            $starter = $IKO->tpl->entity(
                 'thread_starter',
                 array(
                     'breadcrumbs',
@@ -398,8 +398,8 @@ if ($PGET->s(true)) {
                     $user_joined['time'],
                     $user['post_count'],
                     $poll,
-                    $TANGO->lib_parse->parse($query['0']['post_content']),
-                    $TANGO->lib_parse->parse($user['user_signature']),
+                    $IKO->lib_parse->parse($query['0']['post_content']),
+                    $IKO->lib_parse->parse($user['user_signature']),
                     $time_post['time'],
                     $thread_mod_tools,
                     $watch_link,
@@ -410,7 +410,7 @@ if ($PGET->s(true)) {
                 )
             );
         } else {
-            $starter = $TANGO->tpl->entity(
+            $starter = $IKO->tpl->entity(
                 'thread_top',
                 array(
                     'breadcrumbs',
@@ -431,27 +431,27 @@ if ($PGET->s(true)) {
 
         $page = ($PGET->g('page')) ? clean($PGET->g('page')) : '1';
         foreach (getPosts($node_id, $page) as $post) {
-            $ur = $TANGO->user($post['post_user']);
+            $ur = $IKO->user($post['post_user']);
             $quote_p = '';
             $edit_p = '';
             $report_p = '';
-            $time_reply = simplify_time($post['post_time'], @$TANGO->sess->data['location']);
-            $user_joined = simplify_time($ur['date_joined'], @$TANGO->sess->data['location']);
-            if ($TANGO->perm->check('reply_thread') && ($query['0']['post_locked'] == "0")) {
-                $quote_p .= $TANGO->tpl->entity(
+            $time_reply = simplify_time($post['post_time'], @$IKO->sess->data['location']);
+            $user_joined = simplify_time($ur['date_joined'], @$IKO->sess->data['location']);
+            if ($IKO->perm->check('reply_thread') && ($query['0']['post_locked'] == "0")) {
+                $quote_p .= $IKO->tpl->entity(
                     'quote_post',
                     'url',
                     'javascript:quote(\'' . $post['id'] . '\');',
                     'buttons'
                 );
-                $report_p .= $TANGO->tpl->entity(
+                $report_p .= $IKO->tpl->entity(
                     'report_post',
                     'url',
                     SITE_URL . '/report.php/post/' . $post['id'],
                     'buttons'
                 );
-                if ($post['post_user'] == $TANGO->sess->data['id']) {
-                    $edit_p .= $TANGO->tpl->entity(
+                if ($post['post_user'] == $IKO->sess->data['id']) {
+                    $edit_p .= $IKO->tpl->entity(
                         'edit_post',
                         'url',
                         SITE_URL . '/edit.php/post/' . $post['id'],
@@ -460,8 +460,8 @@ if ($PGET->s(true)) {
                 }
             }
             $post_mod_tools = '';
-            if ($TANGO->perm->check('access_moderation')) {
-                $post_mod_tools = $TANGO->tpl->entity(
+            if ($IKO->perm->check('access_moderation')) {
+                $post_mod_tools = $IKO->tpl->entity(
                     'mod_tools_posts',
                     array(
                         'edit_post_url',
@@ -475,7 +475,7 @@ if ($PGET->s(true)) {
                 );
             }
 
-            $content .= $TANGO->tpl->entity(
+            $content .= $IKO->tpl->entity(
                 'thread_reply',
                 array(
                     'post_id',
@@ -505,8 +505,8 @@ if ($PGET->s(true)) {
                     $ur['username_style'],
                     $user_joined['time'],
                     $ur['post_count'],
-                    $TANGO->lib_parse->parse($post['post_content']),
-                    $TANGO->lib_parse->parse($ur['user_signature']),
+                    $IKO->lib_parse->parse($post['post_content']),
+                    $IKO->lib_parse->parse($ur['user_signature']),
                     $time_reply['time'],
                     $post_mod_tools,
                     $post['id'],
@@ -518,7 +518,7 @@ if ($PGET->s(true)) {
 
         $total_pages = ceil(fetchTotalPost($node_id) / POST_RESULTS_PER_PAGE);
         if ($page != 1 && $total_pages > 1) {
-            $TANGO->tpl->addPagination(
+            $IKO->tpl->addPagination(
                 '<<',
                 SITE_URL . '/thread.php/' . $node_name . '.' . $node_id . '/page/' . intval($page - 1)
             );
@@ -528,19 +528,19 @@ if ($PGET->s(true)) {
             for ($i = 1; $i <= $total_pages; ++$i) {
                 if ($i <= 2 || ($i == ($page - 1) && $page > 1) || $i == $page || $i == ($page + 1) || $i >= ($total_pages - 1)) {
                     if ($i == $page) {
-                        $TANGO->tpl->addPagination(
+                        $IKO->tpl->addPagination(
                             $i,
                             '#',
                             true
                         );
                     } else {
-                        $TANGO->tpl->addPagination(
+                        $IKO->tpl->addPagination(
                             $i,
                             SITE_URL . '/thread.php/' . $node_name . '.' . $node_id . '/page/' . $i
                         );
                     }
                 } elseif (($i == 3 && $page != 1) || ($i == ($total_pages - 2) && $page != $total_pages)) {
-                    $TANGO->tpl->addPagination(
+                    $IKO->tpl->addPagination(
                         '...',
                         '#'
                     );
@@ -548,7 +548,7 @@ if ($PGET->s(true)) {
             }
         }
         if ($page != $total_pages && $total_pages > 1) {
-            $TANGO->tpl->addPagination(
+            $IKO->tpl->addPagination(
                 '>>',
                 SITE_URL . '/thread.php/' . $node_name . '.' . $node_id . '/page/' . intval($page + 1)
             );
@@ -556,8 +556,8 @@ if ($PGET->s(true)) {
         define('CSRF_TOKEN', NoCSRF::generate('csrf_token'));
         define('CSRF_INPUT', '<input type="hidden" name="csrf_token" value="' . CSRF_TOKEN . '">');
         //Reply textarea.
-        if ($TANGO->sess->isLogged && $TANGO->perm->check('reply_thread') && ($query['0']['post_locked'] == "0")) {
-            $content .= $TANGO->tpl->entity(
+        if ($IKO->sess->isLogged && $IKO->perm->check('reply_thread') && ($query['0']['post_locked'] == "0")) {
+            $content .= $IKO->tpl->entity(
                 'reply_thread',
                 array(
                     'form_thread',
@@ -585,7 +585,7 @@ if ($PGET->s(true)) {
                     $icon_package[$category] .= '<a href="javascript:add_emoji(\'' . $code . '\');"><span style="font-size: 30px;" title="' . $code . '">' . $html . '</span></a> ';
                 }
             }
-            $content .= $TANGO->tpl->entity(
+            $content .= $IKO->tpl->entity(
                 'smiley_list',
                 array(
                     'smilies',
@@ -603,9 +603,9 @@ if ($PGET->s(true)) {
                 )
             );
         }
-        $content .= $TANGO->tpl->pagination();
+        $content .= $IKO->tpl->pagination();
 
-        $TANGO->tpl->addParam(
+        $IKO->tpl->addParam(
             array(
                 'page_title',
                 'content',
@@ -625,6 +625,6 @@ if ($PGET->s(true)) {
     redirect(SITE_URL);
 }
 
-echo $TANGO->tpl->output();
+echo $IKO->tpl->output();
 
 ?>

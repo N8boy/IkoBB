@@ -8,15 +8,15 @@ if (!defined('BASEPATH')) {
     die();
 }
 
-if (!$TANGO->sess->isLogged) {
+if (!$IKO->sess->isLogged) {
     redirect(SITE_URL);
 } //If user is not logged in.
 
 if ($FB_USER) {
     $FACEBOOK->destroySession();
-    $TANGO->sess->remove();
+    $IKO->sess->remove();
 } else {
-    $TANGO->sess->remove();
+    $IKO->sess->remove();
 }
 redirect(SITE_URL);
 

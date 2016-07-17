@@ -3,12 +3,12 @@
 define('BASEPATH', 'Forum');
 require_once('applications/wrapper.php');
 
-$TANGO->tpl->getTpl('members');
+$IKO->tpl->getTpl('members');
 switch ($PGET->g('cmd')) {
 
     case "register":
         require_once('applications/commands/members/register.php');
-        $TANGO->tpl->addParam(
+        $IKO->tpl->addParam(
             array(
                 'page_title',
                 'content'
@@ -22,7 +22,7 @@ switch ($PGET->g('cmd')) {
 
     case "signin":
         require_once('applications/commands/members/signin.php');
-        $TANGO->tpl->addParam(
+        $IKO->tpl->addParam(
             array(
                 'page_title',
                 'content'
@@ -40,7 +40,7 @@ switch ($PGET->g('cmd')) {
 
     case "user":
         require_once('applications/commands/members/user.php');
-        $TANGO->tpl->addParam(
+        $IKO->tpl->addParam(
             array(
                 'page_title',
                 'content'
@@ -54,7 +54,7 @@ switch ($PGET->g('cmd')) {
 
     case "activate":
         require_once('applications/commands/members/activate.php');
-        $TANGO->tpl->addParam(
+        $IKO->tpl->addParam(
             array(
                 'page_title',
                 'content'
@@ -68,7 +68,7 @@ switch ($PGET->g('cmd')) {
 
     case "forgotpassword":
         require_once('applications/commands/members/forgotpassword.php');
-        $TANGO->tpl->addParam(
+        $IKO->tpl->addParam(
             array(
                 'page_title',
                 'content'
@@ -82,7 +82,7 @@ switch ($PGET->g('cmd')) {
 
     case "resetpassword":
         require_once('applications/commands/members/resetpassword.php');
-        $TANGO->tpl->addParam(
+        $IKO->tpl->addParam(
             array(
                 'page_title',
                 'content'
@@ -96,7 +96,7 @@ switch ($PGET->g('cmd')) {
 
     case "rules":
         require_once('applications/commands/members/rules.php');
-        $TANGO->tpl->addParam(
+        $IKO->tpl->addParam(
             array(
                 'page_title',
                 'content'
@@ -110,7 +110,7 @@ switch ($PGET->g('cmd')) {
 
     default:
         require_once('applications/commands/members/home.php');
-        $TANGO->tpl->addParam(
+        $IKO->tpl->addParam(
             array(
                 'page_title',
                 'content'
@@ -124,6 +124,6 @@ switch ($PGET->g('cmd')) {
 
 }
 
-echo $TANGO->tpl->output();
+echo $IKO->tpl->output();
 
 ?>

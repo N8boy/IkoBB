@@ -12,21 +12,21 @@ $page_title = $LANG['bb']['members']['rules'];
 $content = '';
 
 //Breadcrumb
-$TANGO->tpl->addBreadcrumb(
+$IKO->tpl->addBreadcrumb(
     $LANG['bb']['forum'],
     SITE_URL . '/forum.php'
 );
-$TANGO->tpl->addBreadcrumb(
+$IKO->tpl->addBreadcrumb(
     $LANG['bb']['members']['home'],
     SITE_URL . '/members.php'
 );
-$TANGO->tpl->addBreadcrumb(
+$IKO->tpl->addBreadcrumb(
     $LANG['bb']['members']['rules'],
     '#',
     true
 );
-$content .= $TANGO->tpl->breadcrumbs();
+$content .= $IKO->tpl->breadcrumbs();
 
-$content .= str_replace('%rules%', nl2br($TANGO->data['site_rules']), nl2br($LANG['bb']['members']['rules_message']));
+$content .= str_replace('%rules%', nl2br($IKO->data['site_rules']), nl2br($LANG['bb']['members']['rules_message']));
 
 ?>

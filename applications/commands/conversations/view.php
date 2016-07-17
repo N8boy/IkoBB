@@ -22,42 +22,42 @@ if ($PGET->g('v')) {
             $query['0']['message_sender'],
             $query['0']['message_receiver']
         );
-        if (!in_array($TANGO->sess->data['id'], $auth)) {
+        if (!in_array($IKO->sess->data['id'], $auth)) {
             redirect(SITE_URL . '/404.php');
         }
 
         $page_title = $query['0']['message_title'];
 
-        $user = $TANGO->user($query['0']['message_sender']);
+        $user = $IKO->user($query['0']['message_sender']);
 
         //Breadcrumbs
-        $TANGO->tpl->addBreadcrumb(
+        $IKO->tpl->addBreadcrumb(
             $LANG['bb']['forum'],
             SITE_URL . '/forum.php'
         );
-        $TANGO->tpl->addBreadcrumb(
+        $IKO->tpl->addBreadcrumb(
             $LANG['bb']['conversations']['page_conversations'],
             SITE_URL . '/conversations.php'
         );
-        $TANGO->tpl->addBreadcrumb(
+        $IKO->tpl->addBreadcrumb(
             $page_title,
             '#',
             true
         );
 
-        $breadcrumb = $TANGO->tpl->breadcrumbs();
+        $breadcrumb = $IKO->tpl->breadcrumbs();
 
         $reply_button = '';
         $edit_thread = '';
-        if ($TANGO->perm->check('reply_thread')) {
-            $reply_button .= $TANGO->tpl->entity(
+        if ($IKO->perm->check('reply_thread')) {
+            $reply_button .= $IKO->tpl->entity(
                 'reply_thread',
                 'link',
                 SITE_URL . '/conversations.php/cmd/reply/id/' . $get,
                 'buttons'
             );
         }
-        if ($query['0']['receiver_viewed'] == 0 && $TANGO->sess->data['id'] == $query['0']['message_receiver']) { //Is this needed?
+        if ($query['0']['receiver_viewed'] == 0 && $IKO->sess->data['id'] == $query['0']['message_receiver']) { //Is this needed?
 
             $MYSQL->bind('id', $get);
             $MYSQL->query('UPDATE {prefix}messages SET receiver_viewed = 1 WHERE id = :id');
@@ -65,7 +65,7 @@ if ($PGET->g('v')) {
 
         $thread_mod_tools = '';
 
-        $starter = $TANGO->tpl->entity(
+        $starter = $IKO->tpl->entity(
             'thread_starter',
             array(
                 'breadcrumbs',
@@ -98,8 +98,8 @@ if ($PGET->g('v')) {
                 $user['username_style'],
                 date('M jS, Y', $user['date_joined']),
                 $user['post_count'],
-                $TANGO->lib_parse->parse($query['0']['message_content']),
-                $TANGO->lib_parse->parse($user['user_signature']),
+                $IKO->lib_parse->parse($query['0']['message_content']),
+                $IKO->lib_parse->parse($user['user_signature']),
                 date('F j, Y', $query['0']['message_time']),
                 $thread_mod_tools,
                 '',
@@ -115,14 +115,14 @@ if ($PGET->g('v')) {
         $rep = $MYSQL->query("SELECT * FROM {prefix}messages WHERE origin_message = :origin_message AND message_type = 2");
         foreach ($rep as $post) {
 
-            if ($post['receiver_viewed'] == 0 && $TANGO->sess->data['id'] == $post['message_receiver']) {
+            if ($post['receiver_viewed'] == 0 && $IKO->sess->data['id'] == $post['message_receiver']) {
                 $MYSQL->bind('id', $post['id']);
                 $MYSQL->query('UPDATE {prefix}messages SET receiver_viewed = 1 WHERE id = :id');
             }
 
-            $ur = $TANGO->user($post['message_sender']);
+            $ur = $IKO->user($post['message_sender']);
 
-            $content .= $TANGO->tpl->entity(
+            $content .= $IKO->tpl->entity(
                 'thread_reply',
                 array(
                     'post_id',
@@ -150,8 +150,8 @@ if ($PGET->g('v')) {
                     $ur['username_style'],
                     date('M jS, Y', $ur['date_joined']),
                     $ur['post_count'],
-                    $TANGO->lib_parse->parse($post['message_content']),
-                    $TANGO->lib_parse->parse($ur['user_signature']),
+                    $IKO->lib_parse->parse($post['message_content']),
+                    $IKO->lib_parse->parse($ur['user_signature']),
                     date('F j, Y', $post['message_time']),
                     '',
                     '<span class="flag-icon flag-icon-' . strtolower($user['location']) . '"></span>'
@@ -162,8 +162,8 @@ if ($PGET->g('v')) {
         define('CSRF_TOKEN', NoCSRF::generate('csrf_token'));
         define('CSRF_INPUT', '<input type="hidden" name="csrf_token" value="' . CSRF_TOKEN . '">');
         //Reply textarea.
-        if ($TANGO->perm->check('reply_thread')) {
-            $content .= $TANGO->tpl->entity(
+        if ($IKO->perm->check('reply_thread')) {
+            $content .= $IKO->tpl->entity(
                 'reply_thread',
                 array(
                     'form_thread',

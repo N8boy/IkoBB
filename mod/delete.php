@@ -3,10 +3,10 @@
 define('BASEPATH', 'Staff');
 require_once('../applications/wrapper.php');
 
-if (!$TANGO->perm->check('access_moderation')) {
+if (!$IKO->perm->check('access_moderation')) {
     redirect(SITE_URL);
 }//Checks if user has permission to create a thread.
-$TANGO->tpl->getTpl('page');
+$IKO->tpl->getTpl('page');
 
 $content = '';
 
@@ -22,7 +22,7 @@ if ($PGET->g('post')) {
             // If it is starting post delete the post and all its subposts
             $MYSQL->bind('id', $query['0']['id']);
             $MYSQL->query("DELETE FROM {prefix}forum_posts WHERE id = :id");
-            $content .= $TANGO->tpl->entity(
+            $content .= $IKO->tpl->entity(
                 'success_notice',
                 'content',
                 $LANG['mod']['delete']['thread_deleted']
@@ -35,7 +35,7 @@ if ($PGET->g('post')) {
         {
             $MYSQL->bind('id', $query['0']['id']);
             $MYSQL->query("DELETE FROM {prefix}forum_posts WHERE id = :id");
-            $content .= $TANGO->tpl->entity(
+            $content .= $IKO->tpl->entity(
                 'success_notice',
                 'content',
                 $LANG['mod']['delete']['post_deleted']
@@ -49,7 +49,7 @@ if ($PGET->g('post')) {
     redirect(SITE_URL);
 }
 
-$TANGO->tpl->addParam(
+$IKO->tpl->addParam(
     array(
         'page_title',
         'content'
@@ -60,6 +60,6 @@ $TANGO->tpl->addParam(
     )
 );
 
-echo $TANGO->tpl->output();
+echo $IKO->tpl->output();
 
 ?>

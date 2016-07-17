@@ -33,7 +33,7 @@ if ($PGET->g('id')) {
                 if (!$cont) {
                     throw new Exception ($LANG['global_form_process']['all_fields_required']);
                 } else {
-                    if ($TANGO->sess->data['id'] == $query['0']['message_sender']) {
+                    if ($IKO->sess->data['id'] == $query['0']['message_sender']) {
                         $receiver = $query['0']['message_receiver'];
                     } else {
                         $receiver = $query['0']['message_sender'];
@@ -44,7 +44,7 @@ if ($PGET->g('id')) {
                             'message_content' => $cont,
                             'message_time' => $time,
                             'origin_message' => $query['0']['id'],
-                            'message_sender' => $TANGO->sess->data['id'],
+                            'message_sender' => $IKO->sess->data['id'],
                             'message_receiver' => $receiver
                         )
                     );
@@ -58,7 +58,7 @@ if ($PGET->g('id')) {
                 }
 
             } catch (Exception $e) {
-                $notice .= $TANGO->tpl->entity(
+                $notice .= $IKO->tpl->entity(
                     'danger_notice',
                     'content',
                     $e->getMessage()
@@ -69,20 +69,20 @@ if ($PGET->g('id')) {
         define('CSRF_TOKEN', NoCSRF::generate('csrf_token'));
 
         //Breadcrumbs
-        $TANGO->tpl->addBreadcrumb(
+        $IKO->tpl->addBreadcrumb(
             $LANG['bb']['forum'],
             SITE_URL . '/forum.php'
         );
-        $TANGO->tpl->addBreadcrumb(
+        $IKO->tpl->addBreadcrumb(
             $LANG['bb']['conversations']['page_conversations'],
             SITE_URL . '/conversations.php'
         );
-        $TANGO->tpl->addBreadcrumb(
+        $IKO->tpl->addBreadcrumb(
             $LANG['bb']['conversations']['page_reply'] . ' ' . $query['0']['message_title'],
             '#',
             true
         );
-        $content = $TANGO->tpl->breadcrumbs();
+        $content = $IKO->tpl->breadcrumbs();
 
         $page_title = $LANG['bb']['conversations']['page_reply'] . ' ' . $query['0']['message_title'];
         $content .= $notice . '

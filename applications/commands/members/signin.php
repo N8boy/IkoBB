@@ -8,26 +8,26 @@ if (!defined('BASEPATH')) {
     die();
 }
 
-if ($TANGO->sess->isLogged) {
+if ($IKO->sess->isLogged) {
     redirect(SITE_URL);
 } //If user is logged in.
 $content = '';
 
 //Breadcrumb
-$TANGO->tpl->addBreadcrumb(
+$IKO->tpl->addBreadcrumb(
     $LANG['bb']['forum'],
     SITE_URL . '/forum.php'
 );
-$TANGO->tpl->addBreadcrumb(
+$IKO->tpl->addBreadcrumb(
     $LANG['bb']['members']['home'],
     SITE_URL . '/members.php'
 );
-$TANGO->tpl->addBreadcrumb(
+$IKO->tpl->addBreadcrumb(
     $LANG['bb']['members']['log_in'],
     '#',
     true
 );
-$content .= $TANGO->tpl->breadcrumbs();
+$content .= $IKO->tpl->breadcrumbs();
 
 if (isset($_POST['signin'])) {
 
@@ -65,14 +65,14 @@ if (isset($_POST['signin'])) {
         } else {
 
             $remember = (isset($_POST['remember'])) ? true : false;
-            $TANGO->sess->assign($email, $remember);
+            $IKO->sess->assign($email, $remember);
             if (isset($_POST['current_url']) && !empty($_POST['current_url'])) {
                 header('refresh:3;url=http://' . $_POST['current_url']);
             } else {
                 header('refresh:3;url=' . SITE_URL . '/forum.php');
             }
 
-            $content .= $TANGO->tpl->entity(
+            $content .= $IKO->tpl->entity(
                 'success_notice',
                 'content',
                 $LANG['bb']['members']['login_success']
@@ -81,7 +81,7 @@ if (isset($_POST['signin'])) {
         }
 
     } catch (Exception $e) {
-        $content .= $TANGO->tpl->entity(
+        $content .= $IKO->tpl->entity(
             'danger_notice',
             'content',
             $e->getMessage()
@@ -89,7 +89,7 @@ if (isset($_POST['signin'])) {
     }
 
 }
-$form = $TANGO->tpl->entity(
+$form = $IKO->tpl->entity(
     'login_form',
     array(
         'email_field_name',

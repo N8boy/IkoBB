@@ -3,10 +3,10 @@
 define('BASEPATH', 'Staff');
 require_once('../applications/wrapper.php');
 
-if (!$TANGO->perm->check('access_moderation')) {
+if (!$IKO->perm->check('access_moderation')) {
     redirect(SITE_URL);
 }//Checks if user has permission to create a thread.
-$TANGO->tpl->getTpl('page');
+$IKO->tpl->getTpl('page');
 
 $content = '';
 
@@ -33,7 +33,7 @@ if ($PGET->g('thread')) {
                 )
             );
             $MYSQL->query("UPDATE {prefix}forum_posts SET origin_node = :origin_node WHERE origin_thread = :origin_thread");
-            $notice = $TANGO->tpl->entity(
+            $notice = $IKO->tpl->entity(
                 'success_notice',
                 'content',
                 $LANG['mod']['move']['thread_moved']
@@ -50,7 +50,7 @@ if ($PGET->g('thread')) {
     redirect(SITE_URL);
 }
 
-$TANGO->tpl->addParam(
+$IKO->tpl->addParam(
     array(
         'page_title',
         'content'
@@ -61,6 +61,6 @@ $TANGO->tpl->addParam(
     )
 );
 
-echo $TANGO->tpl->output();
+echo $IKO->tpl->output();
 
 ?>

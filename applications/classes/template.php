@@ -20,12 +20,12 @@ class Tango_Template
 
     function __construct()
     {
-        global $TANGO, $MYSQL;
+        global $IKO, $MYSQL;
 
         $this->elapsed_time = microtime(true);
 
         $this->addParam('site_url', SITE_URL);
-        $this->addParam('site_name', $TANGO->data['site_name']);
+        $this->addParam('site_name', $IKO->data['site_name']);
 
         $this->addParam('bb_stat_threads', stat_threads());
         $this->addParam('bb_stat_posts', stat_posts());
@@ -70,8 +70,8 @@ class Tango_Template
             </script>'
         );
 
-        if( $this->theme == $TANGO->data['site_theme'] ) {
-           $MYSQL->bind('theme_name', $TANGO->data['site_theme']);
+        if ($this->theme == $IKO->data['site_theme']) {
+            $MYSQL->bind('theme_name', $IKO->data['site_theme']);
         } else {
 
         }
@@ -83,16 +83,16 @@ class Tango_Template
         }
         //die($this->theme);
         $chosen_theme = null;
-        if( $TANGO->sess->isLogged ) {
-            if( $TANGO->sess->data['chosen_theme'] == "0" ) {
-                //$MYSQL->bind('id', $TANGO->data['site_theme']);
+        if ($IKO->sess->isLogged) {
+            if ($IKO->sess->data['chosen_theme'] == "0") {
+                //$MYSQL->bind('id', $IKO->data['site_theme']);
                 //$t_query      = $MYSQL->query("SELECT * FROM {prefix}themes WHERE id = :id");
-                $chosen_theme = $TANGO->data['site_theme'];
+                $chosen_theme = $IKO->data['site_theme'];
             } else {
-                $chosen_theme = $TANGO->sess->data['chosen_theme'];
+                $chosen_theme = $IKO->sess->data['chosen_theme'];
             }
 
-            $MYSQL->bind('post_user', $TANGO->sess->data['id']);
+            $MYSQL->bind('post_user', $IKO->sess->data['id']);
             $user_post_count = $MYSQL->query("SELECT * FROM {prefix}forum_posts WHERE post_user = :post_user");
             $user_post_count = number_format(count($user_post_count));
 
@@ -107,24 +107,24 @@ class Tango_Template
                     'mod_report_integer'
                 ),
                 array(
-                    $TANGO->sess->data['username'],
-                    $TANGO->sess->data['username_style'],
-                    $TANGO->sess->data['user_avatar'],
+                    $IKO->sess->data['username'],
+                    $IKO->sess->data['username_style'],
+                    $IKO->sess->data['user_avatar'],
                     $user_post_count,
                     $mod_report_integer
                 )
             );
 
         } else {
-            $chosen_theme = $TANGO->data['site_theme'];
+            $chosen_theme = $IKO->data['site_theme'];
         }
         //die(var_dump($theme['3']));
         if( !isset($theme[$this->theme]) ) {
-            $this->json_data = json_decode($theme[$TANGO->data['site_theme']]['theme_json_data'], true);
-        } elseif( $chosen_theme !== $TANGO->data['site_theme'] ) {
+            $this->json_data = json_decode($theme[$IKO->data['site_theme']]['theme_json_data'], true);
+        } elseif ($chosen_theme !== $IKO->data['site_theme']) {
             $this->json_data = json_decode($theme[$chosen_theme]['theme_json_data'], true);
-        } elseif( $chosen_theme == $TANGO->data['site_theme'] ) {
-            $this->json_data = json_decode($theme[$TANGO->data['site_theme']]['theme_json_data'], true);
+        } elseif ($chosen_theme == $IKO->data['site_theme']) {
+            $this->json_data = json_decode($theme[$IKO->data['site_theme']]['theme_json_data'], true);
         }
 
         //$this->json_data = json_decode($query['0']['theme_json_data'], true);
@@ -179,7 +179,7 @@ class Tango_Template
      */
     public function entity($entity, $param = "", $value = "", $parent = "theme_entity_file", $blade = true)
     {
-        global $TANGO, $MYSQL;
+        global $IKO, $MYSQL;
 
         $result = $this->json_data;
 
@@ -300,7 +300,7 @@ class Tango_Template
      */
     public function getTpl($template, $ret = false)
     {
-        global $TANGO;
+        global $IKO;
 
         if( isset($this->json_data['templates'][$template]) ) {
             $return = $this->bladeSyntax($this->json_data['templates'][$template]);

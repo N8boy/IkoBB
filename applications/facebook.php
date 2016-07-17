@@ -5,8 +5,8 @@
  */
 require_once(PATH_A . LIB . 'facebook.php');
 $FACEBOOK = new Facebook(array(
-    'appId' => $TANGO->data['facebook_app_id'],
-    'secret' => $TANGO->data['facebook_app_secret'],
+    'appId' => $IKO->data['facebook_app_id'],
+    'secret' => $IKO->data['facebook_app_secret'],
     'cookie' => true,
 ));
 $FB_USER = $FACEBOOK->getUser();
@@ -35,8 +35,8 @@ if ($FB_USER) {
             }
 
         }
-        if (!$TANGO->sess->isLogged) {
-            $TANGO->sess->assign($FB_PROFILE['email'], true, true);
+        if (!$IKO->sess->isLogged) {
+            $IKO->sess->assign($FB_PROFILE['email'], true, true);
         }
 
     } catch (FacebookApiException $e) {
@@ -48,19 +48,19 @@ if ($FB_USER) {
     $FB_LOGOUT = $FACEBOOK->getLogoutUrl(array(
         'next' => SITE_URL . '/members.php/cmd/logout',  // Logout URL full path
     ));
-    $TANGO->user->addUserLink(array(
+    $IKO->user->addUserLink(array(
         'Log Out' => $FB_LOGOUT
     ));
 } else {
-    if ($TANGO->sess->isLogged) {
-        $TANGO->user->addUserLink(array(
+    if ($IKO->sess->isLogged) {
+        $IKO->user->addUserLink(array(
             'Log Out' => SITE_URL . '/members.php/cmd/logout'
         ));
     } else {
         $FB_LOGIN = $FACEBOOK->getLoginUrl(array(
             'scope' => 'email', // Permissions to request from the user
         ));
-        $TANGO->tpl->addParam('facebook_login_url', $FB_LOGIN);
+        $IKO->tpl->addParam('facebook_login_url', $FB_LOGIN);
     }
 }
 

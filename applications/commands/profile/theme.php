@@ -6,7 +6,7 @@
 if (!defined('BASEPATH')) {
     die();
 }
-if (!$TANGO->sess->isLogged) {
+if (!$IKO->sess->isLogged) {
     redirect(SITE_URL . '/404.php');
 }//Check if user is logged in.
 
@@ -15,20 +15,20 @@ $page_title = 'Change Theme';
 if ($PGET->g('set')) {
 
     //Breadcrumbs
-    $TANGO->tpl->addBreadcrumb(
+    $IKO->tpl->addBreadcrumb(
         $LANG['bb']['forum'],
         SITE_URL . '/forum.php'
     );
-    $TANGO->tpl->addBreadcrumb(
+    $IKO->tpl->addBreadcrumb(
         $LANG['bb']['members']['home'],
         SITE_URL . '/conversations.php'
     );
-    $TANGO->tpl->addBreadcrumb(
+    $IKO->tpl->addBreadcrumb(
         $LANG['bb']['profile']['change_theme'],
         '#',
         true
     );
-    $content = $TANGO->tpl->breadcrumbs();
+    $content = $IKO->tpl->breadcrumbs();
 
 
     $get     = ($PGET->g('set') == "default")? '0' : $PGET->g('set');
@@ -46,19 +46,19 @@ if ($PGET->g('set')) {
         $MYSQL->bindMore(
             array(
                 'chosen_theme' => $get,
-                'id' => $TANGO->sess->data['id']
+                'id' => $IKO->sess->data['id']
             )
         );
 
         if ($MYSQL->query("UPDATE {prefix}users SET chosen_theme = :chosen_theme WHERE id = :id") > 0) {
-            $content .= $TANGO->tpl->entity(
+            $content .= $IKO->tpl->entity(
                 'success_notice',
                 'content',
                 $LANG['bb']['profile']['theme_set']
             );
             header('refresh:3;url=' . SITE_URL . '/forum.php');
         } else {
-            $content .= $TANGO->tpl->entity(
+            $content .= $IKO->tpl->entity(
                 'danger_notice',
                 'content',
                 $LANG['bb']['profile']['theme_error']
@@ -66,7 +66,7 @@ if ($PGET->g('set')) {
         }
 
     } else {
-        $content .= $TANGO->tpl->entity(
+        $content .= $IKO->tpl->entity(
             'danger_notice',
             'content',
             $LANG['bb']['profile']['theme_not_exist']

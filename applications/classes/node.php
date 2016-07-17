@@ -16,7 +16,7 @@ class Tango_Node
      */
     /*public function threads($id)
     {
-        global $MYSQL, $TANGO;
+        global $MYSQL, $IKO;
 
         $MYSQL->bind('id', $id);
         $query = $MYSQL->query("SELECT * FROM {prefix}forum_posts WHERE post_type = 1 AND id = :id");
@@ -24,15 +24,15 @@ class Tango_Node
 
         $return = '';
         foreach ($query as $post) {
-            $user = $TANGO->user($post['post_user']);
-            $closed = ($post['post_locked'] == "1") ? $TANGO->tpl->entity('thread_closed') : '';
-            $stickied = ($post['post_sticky'] == "1") ? $TANGO->tpl->entity('thread_stickied') : '';
-            $post_time = simplify_time($post['post_time'], @$TANGO->sess->data['location']);
+            $user = $IKO->user($post['post_user']);
+            $closed = ($post['post_locked'] == "1") ? $IKO->tpl->entity('thread_closed') : '';
+            $stickied = ($post['post_sticky'] == "1") ? $IKO->tpl->entity('thread_stickied') : '';
+            $post_time = simplify_time($post['post_time'], @$IKO->sess->data['location']);
             if ($post['label'] != 0 || empty($post['label'])) {
                 $MYSQL->bind('id', $post['label']);
                 $label_qry = $MYSQL->query("SELECT label FROM {prefix}labels WHERE id = :id");
             }
-            $return .= $TANGO->tpl->entity(
+            $return .= $IKO->tpl->entity(
                 'forum_listings_node_threads_posts',
                 array(
                     'thread_name',
@@ -62,7 +62,7 @@ class Tango_Node
      */
     public function latestReply($id, $url)
     {
-        global $MYSQL, $TANGO, $LANG;
+        global $MYSQL, $IKO, $LANG;
 
         $id = (int)$id;
         $MYSQL->bind('origin_thread', $id);
@@ -72,10 +72,10 @@ class Tango_Node
             $q = (count($query) / POST_RESULTS_PER_PAGE);
             $page = ($q > 1) ? '/page/' . ceil($q) . '/' : '';
 
-            $user = $TANGO->user($query['0']['post_user']);
-            $post_time = simplify_time($query['0']['post_time'], @$TANGO->sess->data['location']);
+            $user = $IKO->user($query['0']['post_user']);
+            $post_time = simplify_time($query['0']['post_time'], @$IKO->sess->data['location']);
 
-            $return = $TANGO->tpl->entity(
+            $return = $IKO->tpl->entity(
                 'forum_listings_node_threads_latestreply',
                 array(
                     'user_avatar',
@@ -103,7 +103,7 @@ class Tango_Node
 
     public function thread_is_read($thread_id, $user)
     {
-        global $MYSQL, $TANGO;
+        global $MYSQL, $IKO;
         if (isset($user)) {
 
             $MYSQL->bind('user_id', $user);
@@ -132,15 +132,15 @@ class Tango_Node
 
     public function thread_mark_read($thread_id)
     {
-        global $MYSQL, $TANGO, $LANG;
-        if (isset($TANGO->sess->data['id'])) {
-            $status = $this->thread_is_read($thread_id, $TANGO->sess->data['id']);
+        global $MYSQL, $IKO, $LANG;
+        if (isset($IKO->sess->data['id'])) {
+            $status = $this->thread_is_read($thread_id, $IKO->sess->data['id']);
 
             if ($status['status'] === false) {
                 // Create new entry
                 $MYSQL->bindMore(
                     array(
-                        'user_id' => $TANGO->sess->data['id'],
+                        'user_id' => $IKO->sess->data['id'],
                         'thread_id' => $thread_id,
                         'last_visit' => time()
                     )
@@ -156,7 +156,7 @@ class Tango_Node
                 $MYSQL->bindMore(
                     array(
                         'last_visit' => time(),
-                        'user_id' => $TANGO->sess->data['id'],
+                        'user_id' => $IKO->sess->data['id'],
                         'thread_id' => $thread_id
                     )
                 );
@@ -173,7 +173,7 @@ class Tango_Node
 
     public function thread_mark_unread($thread_id, $user, $time)
     {
-        global $MYSQL, $TANGO, $LANG;
+        global $MYSQL, $IKO, $LANG;
         $status = $this->thread_is_read($thread_id, $user);
 
         if ($status['status'] === false) {
@@ -214,10 +214,10 @@ class Tango_Node
 
     public function thread_new_posts($thread_id)
     {
-        global $MYSQL, $TANGO, $LANG;
+        global $MYSQL, $IKO, $LANG;
         $return = 'read';
-        if (isset($TANGO->sess->data['id'])) {
-            $tracker = $this->thread_is_read($thread_id, $TANGO->sess->data['id']);
+        if (isset($IKO->sess->data['id'])) {
+            $tracker = $this->thread_is_read($thread_id, $IKO->sess->data['id']);
 
             $MYSQL->bind('origin_thread', $thread_id);
             $MYSQL->bind('id', $thread_id);

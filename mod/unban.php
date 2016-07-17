@@ -3,10 +3,10 @@
 define('BASEPATH', 'Staff');
 require_once('../applications/wrapper.php');
 
-if (!$TANGO->perm->check('access_moderation')) {
+if (!$IKO->perm->check('access_moderation')) {
     redirect(SITE_URL);
 }//Checks if user has permission to create a thread.
-$TANGO->tpl->getTpl('page');
+$IKO->tpl->getTpl('page');
 
 $content = '';
 
@@ -21,7 +21,7 @@ if ($PGET->g('id')) {
             $MYSQL->bind('id', $PGET->g('id'));
 
             if ($MYSQL->query("UPDATE {prefix}users SET is_banned = 0, user_group = DEFAULT WHERE id = :id") > 0) {
-                $content .= $TANGO->tpl->entity(
+                $content .= $IKO->tpl->entity(
                     'success_notice',
                     'content',
                     str_replace(
@@ -31,7 +31,7 @@ if ($PGET->g('id')) {
                     )
                 );
             } else {
-                $content .= $TANGO->tpl->entity(
+                $content .= $IKO->tpl->entity(
                     'danger_notice',
                     'content',
                     $LANG['mod']['ban']['unban_error']
@@ -39,7 +39,7 @@ if ($PGET->g('id')) {
             }
 
         } else {
-            $content .= $TANGO->tpl->entity(
+            $content .= $IKO->tpl->entity(
                 'danger_notice',
                 'content',
                 $LANG['mod']['ban']['already_unbanned']
@@ -54,7 +54,7 @@ if ($PGET->g('id')) {
     redirect(SITE_URL);
 }
 
-$TANGO->tpl->addParam(
+$IKO->tpl->addParam(
     array(
         'page_title',
         'content'
@@ -65,6 +65,6 @@ $TANGO->tpl->addParam(
     )
 );
 
-echo $TANGO->tpl->output();
+echo $IKO->tpl->output();
 
 ?>

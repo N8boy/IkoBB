@@ -16,13 +16,13 @@ class TangoBB_Captcha
 
     public function __construct()
     {
-        global $TANGO;
-        if ($TANGO->data['captcha_type'] == "2") {
+        global $IKO;
+        if ($IKO->data['captcha_type'] == "2") {
             require_once('recaptchalib.php');
             $this->captcha_type = 2;
             $this->key = array(
-                'public' => $TANGO->data['recaptcha_public_key'],
-                'private' => $TANGO->data['recaptcha_private_key']
+                'public' => $IKO->data['recaptcha_public_key'],
+                'private' => $IKO->data['recaptcha_private_key']
             );
         }
     }

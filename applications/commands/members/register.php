@@ -8,14 +8,14 @@ if (!defined('BASEPATH')) {
     die();
 }
 
-if ($TANGO->sess->isLogged) {
+if ($IKO->sess->isLogged) {
     redirect(SITE_URL);
 } //If user is logged in.
 
 $notice = '';
 $content = '';
 
-if (isset($_POST['register']) && $TANGO->data['register_enable'] == 1) {
+if (isset($_POST['register']) && $IKO->data['register_enable'] == 1) {
     try {
 
         foreach ($_POST as $parent => $child) {
@@ -48,9 +48,9 @@ if (isset($_POST['register']) && $TANGO->data['register_enable'] == 1) {
         } else {
 
             //Verifying the captcha.
-            $TANGO->captcha->verify();
+            $IKO->captcha->verify();
 
-            if ($TANGO->data['register_email_activate'] == "1") {
+            if ($IKO->data['register_email_activate'] == "1") {
                 $MYSQL->bindMore(array(
                     'username' => $username,
                     'user_password' => encrypt($password),
@@ -71,7 +71,7 @@ if (isset($_POST['register']) && $TANGO->data['register_enable'] == 1) {
             try {
                 $MYSQL->query('INSERT INTO {prefix}users (username, user_password, user_email, date_joined, user_disabled) VALUES (:username, :user_password, :user_email, :date_joined, :user_disabled)');
 
-                if ($TANGO->data['register_email_activate'] == "1") {
+                if ($IKO->data['register_email_activate'] == "1") {
 
                     $send = $MAIL->setTo($email, $username)
                         ->setSubject($LANG['email']['forgot_password']['subject'])
@@ -84,7 +84,7 @@ if (isset($_POST['register']) && $TANGO->data['register_enable'] == 1) {
                                     '%activate_url%'
                                 ),
                                 array(
-                                    $TANGO->data['site_name'],
+                                    $IKO->data['site_name'],
                                     SITE_URL . '/members.php/activate/code/' . $time
                                 ),
                                 $LANG['email']['register']['content']
@@ -95,7 +95,7 @@ if (isset($_POST['register']) && $TANGO->data['register_enable'] == 1) {
 
                     if ($send) {
 
-                        $notice .= $TANGO->tpl->entity(
+                        $notice .= $IKO->tpl->entity(
                             'success_notice',
                             'content',
                             $LANG['bb']['members']['register_successful_email']
@@ -106,9 +106,9 @@ if (isset($_POST['register']) && $TANGO->data['register_enable'] == 1) {
                 } else {
                     $MYSQL->bind('username', $username);
                     $l_q = $MYSQL->query('SELECT * FROM {prefix}users WHERE username = :username');
-                    $TANGO->sess->assign($l_q['0']['user_email'], true);
+                    $IKO->sess->assign($l_q['0']['user_email'], true);
                     header('refresh:3;url=' . SITE_URL . '/forum.php');
-                    $notice .= $TANGO->tpl->entity(
+                    $notice .= $IKO->tpl->entity(
                         'success_notice',
                         'content',
                         $LANG['bb']['members']['register_successful']
@@ -122,7 +122,7 @@ if (isset($_POST['register']) && $TANGO->data['register_enable'] == 1) {
         }
 
     } catch (Exception $e) {
-        $notice .= $TANGO->tpl->entity(
+        $notice .= $IKO->tpl->entity(
             'danger_notice',
             'content',
             $e->getMessage()
@@ -132,27 +132,27 @@ if (isset($_POST['register']) && $TANGO->data['register_enable'] == 1) {
 
 define('CSRF_TOKEN', NoCSRF::generate('csrf_token'));
 //Breadcrumb
-$TANGO->tpl->addBreadcrumb(
+$IKO->tpl->addBreadcrumb(
     $LANG['bb']['forum'],
     SITE_URL . '/forum.php'
 );
-$TANGO->tpl->addBreadcrumb(
+$IKO->tpl->addBreadcrumb(
     $LANG['bb']['members']['home'],
     SITE_URL . '/members.php'
 );
-$TANGO->tpl->addBreadcrumb(
+$IKO->tpl->addBreadcrumb(
     $LANG['bb']['members']['register'],
     '#',
     true
 );
-$content .= $TANGO->tpl->breadcrumbs();
+$content .= $IKO->tpl->breadcrumbs();
 
 //Form Values
 $username_value = (isset($_SESSION['register_form_username'])) ? $_SESSION['register_form_username'] : '';
 $email_value = (isset($_SESSION['register_form_email'])) ? $_SESSION['register_form_email'] : '';
 
-if ($TANGO->data['register_enable'] == 1) {
-    $content .= $TANGO->tpl->entity(
+if ($IKO->data['register_enable'] == 1) {
+    $content .= $IKO->tpl->entity(
         'register_form',
         array(
             'notice',
@@ -174,7 +174,7 @@ if ($TANGO->data['register_enable'] == 1) {
             'password',
             'a_password',
             'email',
-            $TANGO->captcha->display(),
+            $IKO->captcha->display(),
             'register',
             $LANG['bb']['members']['register_message'],
             $username_value,
@@ -186,7 +186,7 @@ if ($TANGO->data['register_enable'] == 1) {
     unset($_SESSION['register_form_username']);
     unset($_SESSION['register_form_email']);
 } else {
-    $content .= $TANGO->tpl->entity(
+    $content .= $IKO->tpl->entity(
         'danger_notice',
         'content',
         $LANG['bb']['members']['register_disabled']

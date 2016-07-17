@@ -3,10 +3,10 @@
 define('BASEPATH', 'Forum');
 require_once('applications/wrapper.php');
 
-if (!$TANGO->sess->isLogged) {
+if (!$IKO->sess->isLogged) {
     redirect(SITE_URL);
 }//Checks if user has permission to create a thread.
-$TANGO->tpl->getTpl('page');
+$IKO->tpl->getTpl('page');
 
 if ($PGET->g('post')) {
 
@@ -37,14 +37,14 @@ if ($PGET->g('post')) {
                     $MYSQL->bindMore(
                         array(
                             'report_reason' => $reason,
-                            'reported_by' => $TANGO->sess->data['id'],
+                            'reported_by' => $IKO->sess->data['id'],
                             'reported_post' => $post,
                             'reported_time' => $time
                         )
                     );
 
                     if ($MYSQL->query("INSERT INTO {prefix}reports (report_reason, reported_by, reported_post, reported_time) VALUES (:report_reason, :reported_by, :reported_post, :reported_time)") > 0) {
-                        $notice .= $TANGO->tpl->entity(
+                        $notice .= $IKO->tpl->entity(
                             'success_notice',
                             'content',
                             $LANG['global_form_process']['report_create_success']
@@ -56,7 +56,7 @@ if ($PGET->g('post')) {
                 }
 
             } catch (Exception $e) {
-                $notice .= $TANGO->tpl->entity(
+                $notice .= $IKO->tpl->entity(
                     'danger_notice',
                     'content',
                     $e->getMessage()
@@ -73,18 +73,18 @@ if ($PGET->g('post')) {
                        </form>';
 
         //Breadcrumbs
-        $TANGO->tpl->addBreadcrumb(
+        $IKO->tpl->addBreadcrumb(
             $LANG['bb']['forum'],
             SITE_URL . '/forum.php'
         );
-        $TANGO->tpl->addBreadcrumb(
+        $IKO->tpl->addBreadcrumb(
             $LANG['bb']['new_report'],
             '#',
             true
         );
-        $bc = $TANGO->tpl->breadcrumbs();
+        $bc = $IKO->tpl->breadcrumbs();
 
-        $TANGO->tpl->addParam(
+        $IKO->tpl->addParam(
             array(
                 'page_title',
                 'content'
@@ -106,6 +106,6 @@ if ($PGET->g('post')) {
     redirect(SITE_URL);
 }
 
-echo $TANGO->tpl->output();
+echo $IKO->tpl->output();
 
 ?>

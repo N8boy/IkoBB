@@ -14,7 +14,7 @@ class Tango_Forum
 
     public function listings()
     {
-        global $MYSQL, $TANGO;
+        global $MYSQL, $IKO;
 
         $return = '';
         $query = $MYSQL->query("SELECT * FROM
@@ -24,8 +24,8 @@ class Tango_Forum
                                   ASC");
         foreach ($query as $list) {
             $allowed = explode(',', $list['allowed_usergroups']);
-            if (in_array($TANGO->sess->data['user_group'], $allowed)) {
-                $return .= $TANGO->tpl->entity(
+            if (in_array($IKO->sess->data['user_group'], $allowed)) {
+                $return .= $IKO->tpl->entity(
                     'forum_listings_category',
                     array(
                         'category_name',
@@ -48,24 +48,24 @@ class Tango_Forum
      */
     private function forums($category)
     {
-        global $MYSQL, $TANGO;
+        global $MYSQL, $IKO;
 
         $return = '';
         $MYSQL->bind('in_category', $category);
         $query = $MYSQL->query("SELECT * FROM {prefix}forum_node WHERE in_category = :in_category AND node_type = 1 ORDER BY node_place ASC");
         foreach ($query as $node) {
             $allowed = explode(',', $node['allowed_usergroups']);
-            if (in_array($TANGO->sess->data['user_group'], $allowed)) {
+            if (in_array($IKO->sess->data['user_group'], $allowed)) {
                 $MYSQL->bind('parent_node', $node['id']);
                 $sub = $MYSQL->query("SELECT * FROM {prefix}forum_node WHERE node_type = 2 AND parent_node = :parent_node ORDER BY node_place asc");
                 $subs = array();
                 foreach ($sub as $suf) {
                     $allowed = explode(',', $suf['allowed_usergroups']);
-                    if (in_array($TANGO->sess->data['user_group'], $allowed)) {
+                    if (in_array($IKO->sess->data['user_group'], $allowed)) {
                         $subs[] = '<a href="' . SITE_URL . '/node.php/' . $suf['name_friendly'] . '.' . $suf['id'] . '">' . $suf['node_name'] . '</a>';
                     }
                 }
-                $subs = (!empty($subs)) ? implode(', ', array_slice($subs, 0, $TANGO->data['number_subs'])) : 'None';
+                $subs = (!empty($subs)) ? implode(', ', array_slice($subs, 0, $IKO->data['number_subs'])) : 'None';
 
                 // New posts in node?
                 $MYSQL->bind('parent_node', $node['id']);
@@ -84,7 +84,7 @@ class Tango_Forum
                     $node_status = 'read';
                     if (!empty($posts)) {
                         foreach ($posts as $post) {
-                            $status = $TANGO->node->thread_new_posts($post['id']);
+                            $status = $IKO->node->thread_new_posts($post['id']);
                             if ($status == 'unread') {
                                 $node_status = 'unread';
                                 break;
@@ -95,7 +95,7 @@ class Tango_Forum
                 }
 
 
-                $return .= $TANGO->tpl->entity(
+                $return .= $IKO->tpl->entity(
                     'forum_listings_node',
                     array(
                         'node_name',
@@ -122,15 +122,15 @@ class Tango_Forum
      */
     public function subForums($parent_forum)
     {
-        global $MYSQL, $TANGO;
+        global $MYSQL, $IKO;
 
         $return = '';
         $MYSQL->bind('parent_node', $parent_forum);
         $query = $MYSQL->query("SELECT * FROM {prefix}forum_node WHERE parent_node = :parent_node AND node_type = 2 ORDER BY node_place ASC");
         foreach ($query as $node) {
             $allowed = explode(',', $node['allowed_usergroups']);
-            if (in_array($TANGO->sess->data['user_group'], $allowed)) {
-                $return .= $TANGO->tpl->entity(
+            if (in_array($IKO->sess->data['user_group'], $allowed)) {
+                $return .= $IKO->tpl->entity(
                     'forum_listings_node_sub_forums_posts',
                     array(
                         'node_name',
@@ -146,7 +146,7 @@ class Tango_Forum
             }
         }
 
-        $return = $TANGO->tpl->entity(
+        $return = $IKO->tpl->entity(
             'forum_listings_node_sub_forums',
             'nodes',
             $return
@@ -159,7 +159,7 @@ class Tango_Forum
      */
     private function latestPost($forum)
     {
-        global $MYSQL, $TANGO;
+        global $MYSQL, $IKO;
 
         $MYSQL->bind('parent_node', $forum);
         $query = $MYSQL->query("SELECT * FROM {prefix}forum_node WHERE node_type = 2 AND parent_node = :parent_node");
@@ -177,7 +177,7 @@ class Tango_Forum
         if (!empty($query)) {
 
             foreach ($query as $post) {
-                $user = $TANGO->user($post['post_user']);
+                $user = $IKO->user($post['post_user']);
 
                 if ($post['post_type'] == "1") {
                     $latest = (strlen($post['post_title']) > 24) ? '<a href="' . SITE_URL . '/thread.php/' . $post['title_friendly'] . '.' . $post['id'] . '" title="' . $post['post_title'] . '">' . substr($post['post_title'], 0, 24) . '...' . '</a>' : '<a href="' . SITE_URL . '/thread.php/' . $post['title_friendly'] . '.' . $post['id'] . '">' . $post['post_title'] . '</a>';
@@ -192,9 +192,9 @@ class Tango_Forum
                     $latest = (strlen($p['post_title']) > 24) ? '<a href="' . SITE_URL . '/thread.php/' . $p['title_friendly'] . '.' . $p['id'] . $page . '#post-' . $post['id'] . '" title="' . $p['post_title'] . '">' . substr($p['post_title'], 0, 24) . '...' . '</a>' : '<a href="' . SITE_URL . '/thread.php/' . $p['title_friendly'] . '.' . $p['id'] . $page . '#post-' . $post['id'] . '">' . $p['post_title'] . '</a>';
                 }
 
-                $post_time = simplify_time($post['post_time'], @$TANGO->sess->data['location']);
+                $post_time = simplify_time($post['post_time'], @$IKO->sess->data['location']);
                 /** Output */
-                $return .= $TANGO->tpl->entity(
+                $return .= $IKO->tpl->entity(
                     'forum_listings_node_latest',
                     array(
                         'user_avatar',
@@ -219,7 +219,7 @@ class Tango_Forum
 
     private function latestSubForumPost($forum)
     {
-        global $MYSQL, $TANGO;
+        global $MYSQL, $IKO;
 
         $return = '';
         $MYSQL->bind('origin_node', $forum);
@@ -227,7 +227,7 @@ class Tango_Forum
         if (!empty($query)) {
 
             foreach ($query as $post) {
-                $user = $TANGO->user($post['post_user']);
+                $user = $IKO->user($post['post_user']);
 
                 if ($post['post_type'] == "1") {
                     $latest = (strlen($post['post_title']) > 24) ? '<a href="' . SITE_URL . '/thread.php/' . $post['title_friendly'] . '.' . $post['id'] . '" title="' . $post['post_title'] . '">' . substr($post['post_title'], 0, 24) . '...' . '</a>' : '<a href="' . SITE_URL . '/thread.php/' . $post['title_friendly'] . '.' . $post['id'] . '">' . $post['post_title'] . '</a>';
@@ -242,9 +242,9 @@ class Tango_Forum
                     $latest = (strlen($p['post_title']) > 24) ? '<a href="' . SITE_URL . '/thread.php/' . $p['title_friendly'] . '.' . $p['id'] . $page . '#post-' . $post['id'] . '" title="' . $p['post_title'] . '">' . substr($p['post_title'], 0, 24) . '...' . '</a>' : '<a href="' . SITE_URL . '/thread.php/' . $p['title_friendly'] . '.' . $p['id'] . $page . '#post-' . $post['id'] . '">' . $p['post_title'] . '</a>';
                 }
 
-                $post_time = simplify_time($post['post_time'], @$TANGO->sess->data['location']);
+                $post_time = simplify_time($post['post_time'], @$IKO->sess->data['location']);
                 /** Output */
-                $return .= $TANGO->tpl->entity(
+                $return .= $IKO->tpl->entity(
                     'forum_listings_node_sub_forums_latest',
                     array(
                         'user_avatar',

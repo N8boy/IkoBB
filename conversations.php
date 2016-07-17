@@ -3,17 +3,17 @@
 define('BASEPATH', 'Forum');
 require_once('applications/wrapper.php');
 
-if (!$TANGO->sess->isLogged) {
+if (!$IKO->sess->isLogged) {
     redirect(SITE_URL);
 }
 
-$TANGO->tpl->getTpl('page');
+$IKO->tpl->getTpl('page');
 
 switch ($PGET->g('cmd')) {
 
     case "view":
         require_once('applications/commands/conversations/view.php');
-        $TANGO->tpl->addParam(
+        $IKO->tpl->addParam(
             array(
                 'page_title',
                 'content'
@@ -27,7 +27,7 @@ switch ($PGET->g('cmd')) {
 
     case "new":
         require_once('applications/commands/conversations/new.php');
-        $TANGO->tpl->addParam(
+        $IKO->tpl->addParam(
             array(
                 'page_title',
                 'content'
@@ -41,7 +41,7 @@ switch ($PGET->g('cmd')) {
 
     case "reply":
         require_once('applications/commands/conversations/reply.php');
-        $TANGO->tpl->addParam(
+        $IKO->tpl->addParam(
             array(
                 'page_title',
                 'content'
@@ -55,7 +55,7 @@ switch ($PGET->g('cmd')) {
 
     case "delete":
         require_once('applications/commands/conversations/delete.php');
-        $TANGO->tpl->addParam(
+        $IKO->tpl->addParam(
             array(
                 'page_title',
                 'content'
@@ -69,7 +69,7 @@ switch ($PGET->g('cmd')) {
 
     default:
         require_once('applications/commands/conversations/home.php');
-        $TANGO->tpl->addParam(
+        $IKO->tpl->addParam(
             array(
                 'page_title',
                 'content'
@@ -83,6 +83,6 @@ switch ($PGET->g('cmd')) {
 
 }
 
-echo $TANGO->tpl->output();
+echo $IKO->tpl->output();
 
 ?>

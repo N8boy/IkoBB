@@ -2,17 +2,17 @@
 
 define('BASEPATH', 'Forum');
 require_once('applications/wrapper.php');
-if (!$TANGO->sess->isLogged) {
+if (!$IKO->sess->isLogged) {
     redirect(SITE_URL . '/404.php');
 }//Check if user is logged in.
 
-$TANGO->tpl->getTpl('members');
+$IKO->tpl->getTpl('members');
 
 switch ($PGET->g('cmd')) {
 
     case "edit":
         require_once('applications/commands/profile/edit.php');
-        $TANGO->tpl->addParam(
+        $IKO->tpl->addParam(
             array(
                 'page_title',
                 'content'
@@ -26,7 +26,7 @@ switch ($PGET->g('cmd')) {
 
     case "avatar":
         require_once('applications/commands/profile/avatar.php');
-        $TANGO->tpl->addParam(
+        $IKO->tpl->addParam(
             array(
                 'page_title',
                 'content'
@@ -40,7 +40,7 @@ switch ($PGET->g('cmd')) {
 
     case "signature":
         require_once('applications/commands/profile/signature.php');
-        $TANGO->tpl->addParam(
+        $IKO->tpl->addParam(
             array(
                 'page_title',
                 'content'
@@ -54,7 +54,7 @@ switch ($PGET->g('cmd')) {
 
     case "password":
         require_once('applications/commands/profile/password.php');
-        $TANGO->tpl->addParam(
+        $IKO->tpl->addParam(
             array(
                 'page_title',
                 'content'
@@ -68,7 +68,7 @@ switch ($PGET->g('cmd')) {
 
     case "theme":
         require_once('applications/commands/profile/theme.php');
-        $TANGO->tpl->addParam(
+        $IKO->tpl->addParam(
             array(
                 'page_title',
                 'content'
@@ -86,6 +86,6 @@ switch ($PGET->g('cmd')) {
 
 }
 
-echo $TANGO->tpl->output();
+echo $IKO->tpl->output();
 
 ?>

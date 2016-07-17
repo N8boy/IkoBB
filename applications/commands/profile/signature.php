@@ -6,7 +6,7 @@
 if (!defined('BASEPATH')) {
     die();
 }
-if (!$TANGO->sess->isLogged) {
+if (!$IKO->sess->isLogged) {
     redirect(SITE_URL . '/404.php');
 }//Check if user is logged in.
 
@@ -27,11 +27,11 @@ if (isset($_POST['edit'])) {
         $MYSQL->bindMore(
             array(
                 'user_signature' => $sig,
-                'id' => $TANGO->sess->data['id']
+                'id' => $IKO->sess->data['id']
             )
         );
         if ($MYSQL->query("UPDATE {prefix}users SET user_signature = :user_signature WHERE id = :id") > 0) {
-            $notice .= $TANGO->tpl->entity(
+            $notice .= $IKO->tpl->entity(
                 'success_notice',
                 'content',
                 $LANG['global_form_process']['save_success']
@@ -40,7 +40,7 @@ if (isset($_POST['edit'])) {
             throw new Exception ($LANG['bb']['profile']['error_updating_signature']);
         }
     } catch (Exception $e) {
-        $notice .= $TANGO->tpl->entity(
+        $notice .= $IKO->tpl->entity(
             'danger_notice',
             'content',
             $e->getMessage()
@@ -52,26 +52,26 @@ if (isset($_POST['edit'])) {
 define('CSRF_TOKEN', NoCSRF::generate('csrf_token'));
 $content .= '<form id="tango_form" action="" method="POST">
                  ' . $FORM->build('hidden', '', 'csrf_token', array('value' => CSRF_TOKEN)) . '
-                 ' . $FORM->build('textarea', '', 'sig', array('value' => $TANGO->sess->data['user_signature'], 'id' => 'editor', 'style' => 'width:100%;height:300px;max-width:100%;min-width:100%;')) . '
+                 ' . $FORM->build('textarea', '', 'sig', array('value' => $IKO->sess->data['user_signature'], 'id' => 'editor', 'style' => 'width:100%;height:300px;max-width:100%;min-width:100%;')) . '
                  <br /><br />
                  ' . $FORM->build('submit', '', 'edit', array('value' => $LANG['bb']['profile']['form_save'])) . '
                </form>';
 
 //Breadcrumbs
-$TANGO->tpl->addBreadcrumb(
+$IKO->tpl->addBreadcrumb(
     $LANG['bb']['forum'],
     SITE_URL . '/forum.php'
 );
-$TANGO->tpl->addBreadcrumb(
+$IKO->tpl->addBreadcrumb(
     $LANG['bb']['members']['home'],
     SITE_URL . '/conversations.php'
 );
-$TANGO->tpl->addBreadcrumb(
+$IKO->tpl->addBreadcrumb(
     $LANG['bb']['profile']['signature'],
     '#',
     true
 );
-$bc = $TANGO->tpl->breadcrumbs();
+$bc = $IKO->tpl->breadcrumbs();
 
 $content = $bc . $notice . $content;
 

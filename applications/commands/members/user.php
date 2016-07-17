@@ -25,20 +25,20 @@ if ($PGET->g('id')) {
     if (!empty($query)) {
 
         $page_title .= $LANG['bb']['members']['profile_of'] . ' ' . $query['0']['username'];
-        $userg = $TANGO->usergroup($query['0']['user_group']);
-        $user = $TANGO->user($id);
+        $userg = $IKO->usergroup($query['0']['user_group']);
+        $user = $IKO->user($id);
 
-        if ($TANGO->sess->isLogged && $TANGO->sess->data['id'] != $user['id']) {
+        if ($IKO->sess->isLogged && $IKO->sess->data['id'] != $user['id']) {
             // Inserting a new visitor
             $MYSQL->bindMore(array(
                 'profile_owner' => $user['id'],
-                'visitor' => $TANGO->sess->data['id']
+                'visitor' => $IKO->sess->data['id']
             ));
             $query = $MYSQL->query('SELECT * FROM  {prefix}user_visitors WHERE profile_owner = :profile_owner AND visitor = :visitor');
             if (empty($query)) {
                 $MYSQL->bindMore(array(
                     'profile_owner' => $user['id'],
-                    'visitor' => $TANGO->sess->data['id']
+                    'visitor' => $IKO->sess->data['id']
                 ));
                 try {
                     $MYSQL->query('INSERT INTO {prefix}user_visitors (profile_owner, visitor, timestamp) VALUES (:profile_owner, :visitor, UNIX_TIMESTAMP(NOW()))');
@@ -48,7 +48,7 @@ if ($PGET->g('id')) {
             } else {
                 $MYSQL->bindMore(array(
                     'profile_owner' => $user['id'],
-                    'visitor' => $TANGO->sess->data['id']
+                    'visitor' => $IKO->sess->data['id']
                 ));
                 try {
                     $MYSQL->query('UPDATE {prefix}user_visitors SET timestamp = UNIX_TIMESTAMP(NOW()) WHERE profile_owner = :profile_owner AND visitor = :visitor');
@@ -61,10 +61,10 @@ if ($PGET->g('id')) {
         }
     }
 } else {
-    if ($TANGO->sess->isLogged) {
-        $page_title .= $LANG['bb']['members']['profile_of'] . ' ' . $TANGO->sess->data['username'];
-        $userg      = $TANGO->usergroup($TANGO->sess->data['user_group']);
-        $user       = $TANGO->user($TANGO->sess->data['id']);
+    if ($IKO->sess->isLogged) {
+        $page_title .= $LANG['bb']['members']['profile_of'] . ' ' . $IKO->sess->data['username'];
+        $userg = $IKO->usergroup($IKO->sess->data['user_group']);
+        $user = $IKO->user($IKO->sess->data['id']);
         $query['0'] = $user;
     } else {
         redirect(SITE_URL . '/404.php');
@@ -76,7 +76,7 @@ if (isset($user) && isset($userg) && isset($page_title)) {
     if (isset($_POST['comment_submit'])) {
         $comment_insert = clean($_POST['comment']);
         $MYSQL->bind('comment', $comment_insert);
-        $MYSQL->bind('writer', $TANGO->sess->data['id']);
+        $MYSQL->bind('writer', $IKO->sess->data['id']);
         $MYSQL->bind('profile_owner', $user['id']);
         $MYSQL->query("INSERT INTO {prefix}user_comments (comment, writer, profile_owner, timestamp) VALUES (:comment, :writer, :profile_owner, UNIX_TIMESTAMP(NOW()))");
     }
@@ -122,9 +122,9 @@ if (isset($user) && isset($userg) && isset($page_title)) {
 
     //Moderation tools
     $mod_tools = '';
-    if ($TANGO->perm->check('access_moderation')) {
+    if ($IKO->perm->check('access_moderation')) {
         if ($user['is_banned'] == "1") {
-            $mod_tools .= $TANGO->tpl->entity(
+            $mod_tools .= $IKO->tpl->entity(
                 'mod_tools_profile',
                 array(
                     'ban_user',
@@ -137,7 +137,7 @@ if (isset($user) && isset($userg) && isset($page_title)) {
                 'buttons'
             );
         } else {
-            $mod_tools .= $TANGO->tpl->entity(
+            $mod_tools .= $IKO->tpl->entity(
                 'mod_tools_profile',
                 array(
                     'ban_user',
@@ -158,11 +158,11 @@ if (isset($user) && isset($userg) && isset($page_title)) {
     $query = $MYSQL->query("SELECT writer,comment,timestamp FROM {prefix}user_comments WHERE profile_owner = :profile_owner ORDER BY timestamp DESC LIMIT 10");
     foreach ($query as $entry) {
 
-        $writer = $TANGO->user($entry['writer']);
-        $comment = $TANGO->lib_parse->parse($entry['comment']);
+        $writer = $IKO->user($entry['writer']);
+        $comment = $IKO->lib_parse->parse($entry['comment']);
         $date_temp = simplify_time($entry['timestamp']);
         $date = $date_temp['time'];
-        $comments .= $TANGO->tpl->entity(
+        $comments .= $IKO->tpl->entity(
             'user_profile_comments',
             array(
                 'writer',
@@ -181,8 +181,8 @@ if (isset($user) && isset($userg) && isset($page_title)) {
         );
     }
     $form = '';
-    if ($TANGO->sess->isLogged) {
-        $form = $TANGO->tpl->entity('user_profile_comments_form', 'comments_action', '');
+    if ($IKO->sess->isLogged) {
+        $form = $IKO->tpl->entity('user_profile_comments_form', 'comments_action', '');
     }
 
     //profile visitors
@@ -190,30 +190,30 @@ if (isset($user) && isset($userg) && isset($page_title)) {
     $MYSQL->bind('profile_owner', $user['id']);
     $query = $MYSQL->query("SELECT visitor FROM {prefix}user_visitors WHERE profile_owner = :profile_owner ORDER BY timestamp DESC LIMIT 10");
     foreach ($query as $entry) {
-        $visitor = $TANGO->user($entry['visitor']);
+        $visitor = $IKO->user($entry['visitor']);
         $visitors .= '<li><a href="' . SITE_URL . '/members.php/cmd/user/id/' . $visitor['id'] . '" title="' . $visitor['username'] . '"><img src="' . $visitor['user_avatar'] . '" class="img-thumbnail" style="width:45px;height:45px;" /></a></li>';
     }
     $visitors .= '</ul></div>';
 
 
     //Breadcrumbs
-    $TANGO->tpl->addBreadcrumb(
+    $IKO->tpl->addBreadcrumb(
         $LANG['bb']['forum'],
         SITE_URL . '/forum.php'
     );
-    $TANGO->tpl->addBreadcrumb(
+    $IKO->tpl->addBreadcrumb(
         $LANG['bb']['members']['home'],
         SITE_URL . '/members.php'
     );
-    $TANGO->tpl->addBreadcrumb(
+    $IKO->tpl->addBreadcrumb(
         $LANG['bb']['members']['profile_of'] . ' ' . $user['username'],
         '#',
         true
     );
-    $content .= $TANGO->tpl->breadcrumbs();
+    $content .= $IKO->tpl->breadcrumbs();
 
     //user profile
-    $content .= $TANGO->tpl->entity(
+    $content .= $IKO->tpl->entity(
         'user_profile_page',
         array(
             'username',
@@ -236,9 +236,9 @@ if (isset($user) && isset($userg) && isset($page_title)) {
             $user['username_style'],
             $user['user_avatar'],
             $userg['group_name'],
-            localized_date($user['date_joined'], @$TANGO->sess->data['location']),
-            $TANGO->lib_parse->parse($user['user_signature']),
-            $TANGO->lib_parse->parse($user['about_user']),
+            localized_date($user['date_joined'], @$IKO->sess->data['location']),
+            $IKO->lib_parse->parse($user['user_signature']),
+            $IKO->lib_parse->parse($user['about_user']),
             $LANG['location'][$user['location']],
             '<span class="flag-icon flag-icon-' . strtolower($user['location']) . '"></span>',
             gender($user['gender']),

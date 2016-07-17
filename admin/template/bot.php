@@ -1,5 +1,5 @@
 <?php
-  global $ADMIN, $TANGO;
+global $ADMIN, $IKO;
 ?>
 </div>
           </div>

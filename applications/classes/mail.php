@@ -165,7 +165,7 @@ class SimpleMail
      */
     public function setMessage($message)
     {
-        global $TANGO;
+        global $IKO;
         if (!is_string($message)) {
             throw new \InvalidArgumentException('$message must be a string.');
         }
@@ -182,7 +182,7 @@ class SimpleMail
                 '%content%'
             ),
             array(
-                $TANGO->data['site_name'],
+                $IKO->data['site_name'],
                 SITE_URL,
                 $message
             ),

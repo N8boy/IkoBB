@@ -16,20 +16,20 @@ $content = '';
 $m_cont = '';
 
 //Breadcrumb
-$TANGO->tpl->addBreadcrumb(
+$IKO->tpl->addBreadcrumb(
     $LANG['bb']['forum'],
     SITE_URL . '/forum.php'
 );
-$TANGO->tpl->addBreadcrumb(
+$IKO->tpl->addBreadcrumb(
     $LANG['bb']['members']['home'],
     '#',
     true
 );
-$content .= $TANGO->tpl->breadcrumbs();
+$content .= $IKO->tpl->breadcrumbs();
 
 foreach (getMembers($page, $sort) as $user) {
-    $p_count = $TANGO->user($user['id']);
-    $m_cont .= $TANGO->tpl->entity(
+    $p_count = $IKO->user($user['id']);
+    $m_cont .= $IKO->tpl->entity(
         'members_page',
         array(
             'avatar',
@@ -48,7 +48,7 @@ foreach (getMembers($page, $sort) as $user) {
     );
 }
 
-$content .= $TANGO->tpl->entity(
+$content .= $IKO->tpl->entity(
     'members_page_head',
     array(
         'members',
@@ -72,11 +72,11 @@ $total_pages = ceil(fetchTotalMembers() / 20);
 
 $pag = '';
 if ($page != 1 && $total_pages > 1) {
-    /*$TANGO->tpl->addPagination(
+    /*$IKO->tpl->addPagination(
         '<<',
         ($sort) ? SITE_URL . '/members.php/sort/' . $sort . '/page/' . $i : SITE_URL . '/members.php/page/' . intval($page - 1)
     );*/
-    $pag .= $TANGO->tpl->entity(
+    $pag .= $IKO->tpl->entity(
         'pagination_links',
         array(
             'url',
@@ -94,13 +94,13 @@ if ($total_pages > 1) {
         if ($i <= 2 || ($i == ($page - 1) && $page > 1) || $i == $page || $i == ($page + 1) || $i >= ($total_pages - 1)) {
             $link = ($sort) ? SITE_URL . '/members.php/sort/' . $sort . '/page/' . $i : SITE_URL . '/members.php/page/' . $i;
             if ($i == $page) {
-                $pag .= $TANGO->tpl->entity(
+                $pag .= $IKO->tpl->entity(
                     'pagination_link_current',
                     'page',
                     $i
                 );
             } else {
-                $pag .= $TANGO->tpl->entity(
+                $pag .= $IKO->tpl->entity(
                     'pagination_links',
                     array(
                         'url',
@@ -113,11 +113,11 @@ if ($total_pages > 1) {
                 );
             }
         } elseif (($i == 3 && $page != 1) || ($i == ($total_pages - 2) && $page != $total_pages)) {
-            /*$TANGO->tpl->addPagination(
+            /*$IKO->tpl->addPagination(
                 '...',
                 '#'
             );*/
-            $pag .= $TANGO->tpl->entity(
+            $pag .= $IKO->tpl->entity(
                 'pagination_links',
                 array(
                     'url',
@@ -132,11 +132,11 @@ if ($total_pages > 1) {
     }
 }
 if ($page != $total_pages && $total_pages > 1) {
-    /*$TANGO->tpl->addPagination(
+    /*$IKO->tpl->addPagination(
         '>>',
         ($sort) ? SITE_URL . '/members.php/sort/' . $sort . '/page/' . $i : SITE_URL . '/members.php/page/' . intval($page + 1)
     );*/
-    $pag .= $TANGO->tpl->entity(
+    $pag .= $IKO->tpl->entity(
         'pagination_links',
         array(
             'url',
@@ -148,7 +148,7 @@ if ($page != $total_pages && $total_pages > 1) {
         )
     );
 }
-$content .= $TANGO->tpl->entity(
+$content .= $IKO->tpl->entity(
     'pagination',
     'pages',
     $pag

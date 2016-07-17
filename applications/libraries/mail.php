@@ -19,8 +19,8 @@ class Library_Mail
 
     public function __construct()
     {
-        global $TANGO;
-        if ($TANGO->data['mail_type'] == "1") {
+        global $IKO;
+        if ($IKO->data['mail_type'] == "1") {
             //Server's Email Server
             $this->email_type = 1;
             if (BASEPATH == "Staff") {
@@ -38,10 +38,10 @@ class Library_Mail
             $this->mail = new PHPMailer;
             $this->mail->isSMTP();
             //SMTP Details
-            $this->mail->Host = $TANGO->data['smtp_address'];
-            $this->mali->Username = $TANGO->data['smtp_username'];
-            $this->mail->Password = $TANGO->data['smtp_password'];
-            $this->mail->Port = $TANGO->data['smtp_port'];
+            $this->mail->Host = $IKO->data['smtp_address'];
+            $this->mali->Username = $IKO->data['smtp_username'];
+            $this->mail->Password = $IKO->data['smtp_password'];
+            $this->mail->Port = $IKO->data['smtp_port'];
             $this->mail->SMTPSecure = 'tls';
         }
     }
@@ -66,7 +66,7 @@ class Library_Mail
 
     public function body($string)
     {
-        global $TANGO;
+        global $IKO;
         if ($this->email_type == "1") {
             $this->message = $string;
         } else {
@@ -82,7 +82,7 @@ class Library_Mail
                     '%content%'
                 ),
                 array(
-                    $TANGO->data['site_name'],
+                    $IKO->data['site_name'],
                     SITE_URL,
                     $string
                 ),
@@ -95,9 +95,9 @@ class Library_Mail
 
     public function send()
     {
-        global $TANGO;
+        global $IKO;
         if ($this->email_type == "1") {
-            $from = ($this->from == $TANGO->data['site_email']) ? $TANGO->data['site_name'] : $this->from;
+            $from = ($this->from == $IKO->data['site_email']) ? $IKO->data['site_name'] : $this->from;
             $send = $this->client->setTo($this->to, $this->to)
                 ->setFrom($this->from, $from)
                 ->setSubject($this->subject)
@@ -112,7 +112,7 @@ class Library_Mail
             }
         } else {
             $this->mail->From = $this->from;
-            $this->mail->FromName = ($this->from == $TANGO->data['site_email']) ? $TANGO->data['site_name'] : $this->from;
+            $this->mail->FromName = ($this->from == $IKO->data['site_email']) ? $IKO->data['site_name'] : $this->from;
             $this->mail->addAddress($this->to, $this->to);
             $this->mail->isHTML(true);
             $this->mail->Subject = $this->subject;

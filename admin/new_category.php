@@ -3,7 +3,7 @@
 define('BASEPATH', 'Staff');
 require_once('../applications/wrapper.php');
 
-if (!$TANGO->perm->check('access_administration')) {
+if (!$IKO->perm->check('access_administration')) {
     redirect(SITE_URL);
 }//Checks if user has permission to create a thread.
 //require_once('template/top.php');
@@ -12,7 +12,7 @@ $notice = '';
 
 function allowed_usergroups()
 {
-    global $TANGO, $MYSQL;
+    global $IKO, $MYSQL;
     //$query  = $MYSQL->get('{prefix}usergroups');
     $query = $MYSQL->query('SELECT * FROM {prefix}usergroups');
     $return = '<input type="checkbox" name="allowed_ug[]" value="0" CHECKED /> Guest<br />';

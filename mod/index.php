@@ -3,10 +3,10 @@
 define('BASEPATH', 'Staff');
 require_once('../applications/wrapper.php');
 
-if (!$TANGO->perm->check('access_moderation')) {
+if (!$IKO->perm->check('access_moderation')) {
     redirect(SITE_URL);
 }//Checks if user has permission to create a thread.
-$TANGO->tpl->getTpl('page');
+$IKO->tpl->getTpl('page');
 
 $content = '';
 $page_title = '';
@@ -23,10 +23,10 @@ if (!empty($query)) {
     $posts = '<table class="table"><tr><th style="width: 20%">' . $LANG['mod']['reports']['thread'] . '</th><th style="width: 50%">' . $LANG['mod']['reports']['reason'] . '</th><th>' . $LANG['mod']['reports']['reported_time'] . '</th><th></th></tr>';
     $users = '';
     foreach ($query as $report) {
-        $reported_time = simplify_time($report['reported_time'], @$TANGO->sess->data['location']);
+        $reported_time = simplify_time($report['reported_time'], @$IKO->sess->data['location']);
         if ($report['reported_post'] !== 0) {
 
-            $user = $TANGO->user($report['reported_by']);
+            $user = $IKO->user($report['reported_by']);
             $MYSQL->bind('id', $report['reported_post']);
             $query = $MYSQL->query("SELECT * FROM {prefix}forum_posts WHERE id = :id");
             if ($query['0']['post_type'] == "1") {
@@ -50,7 +50,7 @@ if (!empty($query)) {
 
         } elseif ($report['reported_user'] !== 0) {
 
-            $user = $TANGO->user($report['reported_user']);
+            $user = $IKO->user($report['reported_user']);
 
             $users .= '<div style="overflow:auto;border-bottom:1px solid #ccc;">
                                <p>
@@ -66,7 +66,7 @@ if (!empty($query)) {
     }
     $posts .= '</table>';
 
-    $content .= $TANGO->tpl->entity(
+    $content .= $IKO->tpl->entity(
         'mod_reports',
         array(
             'reported_posts',
@@ -79,14 +79,14 @@ if (!empty($query)) {
     );
 
 } else {
-    $content .= $TANGO->tpl->entity(
+    $content .= $IKO->tpl->entity(
         'warning_notice',
         'content',
         $LANG['mod']['reports']['no_reports']
     );
 }
 
-$TANGO->tpl->addParam(
+$IKO->tpl->addParam(
     array(
         'page_title',
         'content'
@@ -97,6 +97,6 @@ $TANGO->tpl->addParam(
     )
 );
 
-echo $TANGO->tpl->output();
+echo $IKO->tpl->output();
 
 ?>

@@ -8,7 +8,7 @@ if (!defined('BASEPATH')) {
     die();
 }
 
-if ($TANGO->sess->isLogged) {
+if ($IKO->sess->isLogged) {
     redirect(SITE_URL);
 } //If user is logged in.
 
@@ -62,7 +62,7 @@ if (isset($_POST['forget'])) {
                                 '%token_url%'
                             ),
                             array(
-                                $TANGO->data['site_name'],
+                                $IKO->data['site_name'],
                                 SITE_URL . '/members.php/cmd/resetpassword/token/' . urlencode($reset_token)
                             ),
                             $LANG['email']['forgot_password']['content']
@@ -75,7 +75,7 @@ if (isset($_POST['forget'])) {
             }
 
             if ($successful) {
-                $notice .= $TANGO->tpl->entity(
+                $notice .= $IKO->tpl->entity(
                     'success_notice',
                     'content',
                     $LANG['bb']['members']['password_reset_link_sent']
@@ -86,7 +86,7 @@ if (isset($_POST['forget'])) {
         }
 
     } catch (Exception $e) {
-        $notice .= $TANGO->tpl->entity(
+        $notice .= $IKO->tpl->entity(
             'danger_notice',
             'content',
             $e->getMessage()
@@ -97,22 +97,22 @@ if (isset($_POST['forget'])) {
 define('CSRF_TOKEN', NoCSRF::generate('csrf_token'));
 
 //Breadcrumb
-$TANGO->tpl->addBreadcrumb(
+$IKO->tpl->addBreadcrumb(
     $LANG['bb']['forum'],
     SITE_URL . '/forum.php'
 );
-$TANGO->tpl->addBreadcrumb(
+$IKO->tpl->addBreadcrumb(
     $LANG['bb']['members']['home'],
     SITE_URL . '/members.php'
 );
-$TANGO->tpl->addBreadcrumb(
+$IKO->tpl->addBreadcrumb(
     $LANG['bb']['members']['forgot_password'],
     '#',
     true
 );
-$bc = $TANGO->tpl->breadcrumbs();
+$bc = $IKO->tpl->breadcrumbs();
 
-$content .= $TANGO->tpl->entity(
+$content .= $IKO->tpl->entity(
     'forget_password_form',
     array(
         'csrf_field',

@@ -1,6 +1,6 @@
 <?php
 
-global $TANGO;
+global $IKO;
 //An example to make use of the template system and MySQL library.
 
 //Running MySQL stuff.
@@ -12,5 +12,5 @@ foreach ($users as $user) {
 $return .= '</ul>';
 
 //Adding the data into the template parameter %list_all_users%
-$TANGO->tpl->addParam('list_all_users', $return);
+$IKO->tpl->addParam('list_all_users', $return);
 ?>

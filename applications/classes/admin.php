@@ -202,9 +202,9 @@ class Tango_Admin
     }
 
     public function template($type) {
-        global $TANGO;
+        global $IKO;
 
-        $data = ($TANGO->data['flat_ui_admin'] == 1)? 'template/old_' . $type . '.php' : 'template/' . $type . '.php';
+        $data = ($IKO->data['flat_ui_admin'] == 1) ? 'template/old_' . $type . '.php' : 'template/' . $type . '.php';
         $return = '';
         ob_start();
         include($data);

@@ -21,13 +21,13 @@ if ($PGET->g('id')) {
     $sender_deleted = $msg['0']['sender_deleted'];
     $receiver_deleted = $msg['0']['receiver_deleted'];
     // If user is sender                         
-    if ($msg['0']['message_sender'] == $TANGO->sess->data['id']) {
+    if ($msg['0']['message_sender'] == $IKO->sess->data['id']) {
         // and the sender didn't delete the message
         if ($msg['0']['sender_deleted'] == 0) {
             $sender_deleted = 1;
         }
     }
-    if ($msg['0']['message_receiver'] == $TANGO->sess->data['id']) {
+    if ($msg['0']['message_receiver'] == $IKO->sess->data['id']) {
         if ($msg['0']['receiver_deleted'] == 0) {
             $receiver_deleted = 1;
         }

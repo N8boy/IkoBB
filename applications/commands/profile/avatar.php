@@ -6,7 +6,7 @@
 if (!defined('BASEPATH')) {
     die();
 }
-if (!$TANGO->sess->isLogged) {
+if (!$IKO->sess->isLogged) {
     redirect(SITE_URL . '/404.php');
 }//Check if user is logged in.
 
@@ -28,9 +28,9 @@ if (isset($_POST['edit'])) {
         $gravatar = (isset($_POST['gravatar'])) ? '1' : '0';
 
         if ($gravatar == "1") {
-            $MYSQL->bind('id', $TANGO->sess->data['id']);
+            $MYSQL->bind('id', $IKO->sess->data['id']);
             if ($MYSQL->query("UPDATE {prefix}users SET avatar_type = 1 WHERE id = :id") > 0) {
-                $notice .= $TANGO->tpl->entity(
+                $notice .= $IKO->tpl->entity(
                     'success_notice',
                     'content',
                     $LANG['bb']['profile']['successful_adding_gravatar']
@@ -46,7 +46,7 @@ if (isset($_POST['edit'])) {
         } else {
 
             $image = $_FILES['avatar'];
-            $bin_dir = 'public/img/bin/' . $TANGO->sess->data['id'] . '.png';
+            $bin_dir = 'public/img/bin/' . $IKO->sess->data['id'] . '.png';
             copy($image['tmp_name'], $bin_dir);
             list($width, $height, $type, $attr) = getimagesize($bin_dir);
 
@@ -55,14 +55,14 @@ if (isset($_POST['edit'])) {
             } else {
 
                 unlink($bin_dir);
-                $avatar_dir = 'public/img/avatars/' . $TANGO->sess->data['id'] . '.png';
+                $avatar_dir = 'public/img/avatars/' . $IKO->sess->data['id'] . '.png';
                 if (copy($image['tmp_name'], $avatar_dir)) {
-                    $MYSQL->bind('user_avatar', $TANGO->sess->data['id'] . '.png');
-                    $MYSQL->bind('id', $TANGO->sess->data['id']);
+                    $MYSQL->bind('user_avatar', $IKO->sess->data['id'] . '.png');
+                    $MYSQL->bind('id', $IKO->sess->data['id']);
                     $MYSQL->query("UPDATE {prefix}users SET user_avatar = :user_avatar WHERE id = :id");
-                    $MYSQL->bind('id', $TANGO->sess->data['id']);
+                    $MYSQL->bind('id', $IKO->sess->data['id']);
                     $MYSQL->query("UPDATE {prefix}users SET avatar_type = 0 WHERE id = :id");
-                    $notice .= $TANGO->tpl->entity(
+                    $notice .= $IKO->tpl->entity(
                         'success_notice',
                         'content',
                         $LANG['bb']['profile']['successful_upload_avatar']
@@ -77,7 +77,7 @@ if (isset($_POST['edit'])) {
         }
 
     } catch (Exception $e) {
-        $notice .= $TANGO->tpl->entity(
+        $notice .= $IKO->tpl->entity(
             'danger_notice',
             'content',
             $e->getMessage()
@@ -87,22 +87,22 @@ if (isset($_POST['edit'])) {
 }
 
 //Breadcrumbs
-$TANGO->tpl->addBreadcrumb(
+$IKO->tpl->addBreadcrumb(
     $LANG['bb']['forum'],
     SITE_URL . '/forum.php'
 );
-$TANGO->tpl->addBreadcrumb(
+$IKO->tpl->addBreadcrumb(
     $LANG['bb']['members']['home'],
     SITE_URL . '/conversations.php'
 );
-$TANGO->tpl->addBreadcrumb(
+$IKO->tpl->addBreadcrumb(
     $LANG['bb']['profile']['avatar'],
     '#',
     true
 );
-$bc = $TANGO->tpl->breadcrumbs();
+$bc = $IKO->tpl->breadcrumbs();
 
-$gravatar_checked = ($TANGO->sess->data['avatar_type'] == "1") ? ' checked' : '';
+$gravatar_checked = ($IKO->sess->data['avatar_type'] == "1") ? ' checked' : '';
 $content .= '<form id="tango_form" action="" method="POST" enctype="multipart/form-data">
                  <div class="iko avatar_uploader">
                    <label for="avatar">' . $LANG['bb']['profile']['change_avatar'] . '</label>

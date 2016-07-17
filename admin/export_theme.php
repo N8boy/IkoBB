@@ -3,7 +3,7 @@
 define('BASEPATH', 'Staff');
 require_once('../applications/wrapper.php');
 
-if (!$TANGO->perm->check('access_administration')) {
+if (!$IKO->perm->check('access_administration')) {
     redirect(SITE_URL);
 }
 

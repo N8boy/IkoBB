@@ -3,10 +3,10 @@
 define('BASEPATH', 'Staff');
 require_once('../applications/wrapper.php');
 
-if (!$TANGO->perm->check('access_moderation')) {
+if (!$IKO->perm->check('access_moderation')) {
     redirect(SITE_URL);
 }//Checks if user has permission to create a thread.
-$TANGO->tpl->getTpl('page');
+$IKO->tpl->getTpl('page');
 
 $content = '';
 
@@ -22,7 +22,7 @@ if ($PGET->g('thread')) {
             $MYSQL->bind('id', $PGET->g('thread'));
 
             if ($MYSQL->query("UPDATE {prefix}forum_posts SET post_locked = 1 WHERE id = :id") > 0) {
-                $content .= $TANGO->tpl->entity(
+                $content .= $IKO->tpl->entity(
                     'success_notice',
                     'content',
                     str_replace(
@@ -32,7 +32,7 @@ if ($PGET->g('thread')) {
                     )
                 );
             } else {
-                $content .= $TANGO->tpl->entity(
+                $content .= $IKO->tpl->entity(
                     'danger_notice',
                     'content',
                     $LANG['mod']['close']['close_error']
@@ -40,7 +40,7 @@ if ($PGET->g('thread')) {
             }
 
         } else {
-            $content .= $TANGO->tpl->entity(
+            $content .= $IKO->tpl->entity(
                 'danger_notice',
                 'content',
                 $LANG['mod']['close']['already_closed']
@@ -55,7 +55,7 @@ if ($PGET->g('thread')) {
     redirect(SITE_URL);
 }
 
-$TANGO->tpl->addParam(
+$IKO->tpl->addParam(
     array(
         'page_title',
         'content'
@@ -66,6 +66,6 @@ $TANGO->tpl->addParam(
     )
 );
 
-echo $TANGO->tpl->output();
+echo $IKO->tpl->output();
 
 ?>

@@ -11,7 +11,7 @@ if (!defined('BASEPATH')) {
 function getThreads($id, $page, $sort, $per_page = THREAD_RESULTS_PER_PAGE)
 {
     global $MYSQL;
-    global $TANGO;
+    global $IKO;
 
     $start = (int)($page - 1) * $per_page;
     $per_page = (int)$per_page;
@@ -41,16 +41,16 @@ function getThreads($id, $page, $sort, $per_page = THREAD_RESULTS_PER_PAGE)
     }
     $return = '';
     foreach ($query as $thread) {
-        $status = $TANGO->node->thread_new_posts($thread['id']);
-        $user = $TANGO->user($thread['post_user']);
-        $closed = ($thread['post_locked'] == "1") ? $TANGO->tpl->entity('thread_closed') : '';
-        $stickied = ($thread['post_sticky'] == "1") ? $TANGO->tpl->entity('thread_stickied') : '';
-        $post_time = simplify_time($thread['post_time'], @$TANGO->sess->data['location']);
+        $status = $IKO->node->thread_new_posts($thread['id']);
+        $user = $IKO->user($thread['post_user']);
+        $closed = ($thread['post_locked'] == "1") ? $IKO->tpl->entity('thread_closed') : '';
+        $stickied = ($thread['post_sticky'] == "1") ? $IKO->tpl->entity('thread_stickied') : '';
+        $post_time = simplify_time($thread['post_time'], @$IKO->sess->data['location']);
         if ($thread['label'] != 0 || empty($post['label'])) {
             $MYSQL->bind('id', $thread['label']);
             $label_qry = $MYSQL->query("SELECT label FROM {prefix}labels WHERE id = :id");
         }
-        $return .= $TANGO->tpl->entity(
+        $return .= $IKO->tpl->entity(
             'forum_listings_node_threads_posts',
             array(
                 'thread_name',
@@ -66,7 +66,7 @@ function getThreads($id, $page, $sort, $per_page = THREAD_RESULTS_PER_PAGE)
                 '<a href="' . SITE_URL . '/members.php/cmd/user/id/' . $user['id'] . '">' . $user['username'] . '</a>',
                 $user['user_avatar'],
                 '<span title="' . $post_time['tooltip'] . '">' . $post_time['time'] . '</span>',
-                $TANGO->node->latestReply($thread['id'], SITE_URL . '/thread.php/' . $thread['title_friendly'] . '.' . $thread['id']),
+                $IKO->node->latestReply($thread['id'], SITE_URL . '/thread.php/' . $thread['title_friendly'] . '.' . $thread['id']),
                 $status,
                 (empty($label_qry['0']['label'])) ? ('') : ($label_qry['0']['label'])
             )

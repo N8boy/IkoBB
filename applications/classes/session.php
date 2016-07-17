@@ -16,21 +16,21 @@ class Tango_Session
 
     public function __construct()
     {
-        global $TANGO, $MYSQL, $LANG;
+        global $IKO, $MYSQL, $LANG;
         $this->clear();
         if ($this->check()) {
             $this->isLogged = true;
-            $this->data = $TANGO->user($this->session['logged_user']);
+            $this->data = $IKO->user($this->session['logged_user']);
             $d_group    = ($this->data['display_group'] == 0)? $this->data['user_group'] : $this->data['display_group'];
-            $this->data['username_style'] = $TANGO->usergroup($d_group, 'username_style', $this->data['username']);
+            $this->data['username_style'] = $IKO->usergroup($d_group, 'username_style', $this->data['username']);
             if ($this->data['additional_permissions'] !== "0") {
-                $current_perms = $TANGO->usergroup($this->data['user_group'], 'permissions');
+                $current_perms = $IKO->usergroup($this->data['user_group'], 'permissions');
                 foreach ($this->data['additional_permissions'] as $ap) {
                     $current_perms[] = $ap;
                 }
                 $this->data['permissions'] = $current_perms;
             } else {
-                $this->data['permissions'] = $TANGO->usergroup($this->data['user_group'], 'permissions');
+                $this->data['permissions'] = $IKO->usergroup($this->data['user_group'], 'permissions');
             }
 
             if (($this->session['session_time'] >= strtotime('24 hours ago') && $this->session['session_type'] == 1) || ($this->session['session_time'] >= strtotime('365 days ago') && $this->session['session_type'] == 2)) {
@@ -41,7 +41,7 @@ class Tango_Session
             }
 
             //Adding links for users who are logged in and everything else in the template.
-            $TANGO->user->addUserLink(array(
+            $IKO->user->addUserLink(array(
                 $LANG['bb']['profile']['profile'] => SITE_URL . '/members.php/cmd/user/',
                 $LANG['bb']['profile']['personal_details'] => SITE_URL . '/profile.php/cmd/edit',
                 $LANG['bb']['profile']['avatar'] => SITE_URL . '/profile.php/cmd/avatar',
@@ -56,7 +56,7 @@ class Tango_Session
 
             $mod_report_integer = modReportInteger();*/
 
-            /*$TANGO->tpl->addParam(
+            /*$IKO->tpl->addParam(
                 array(
                     'username',
                     'username_style',
@@ -75,15 +75,15 @@ class Tango_Session
 
             date_default_timezone_set($this->data['set_timezone']);
             /*if ($this->data['chosen_theme'] == "0") {
-                $TANGO->tpl->setTheme($TANGO->data['site_theme']);
+                $IKO->tpl->setTheme($IKO->data['site_theme']);
             } else {
-                $TANGO->tpl->setTheme($this->data['chosen_theme']);
+                $IKO->tpl->setTheme($this->data['chosen_theme']);
             }*/
         } else {
             $this->data['permissions'] = array();
             $this->data['user_group'] = '0';
             date_default_timezone_set('US/Central');
-            //$TANGO->tpl->setTheme($TANGO->data['site_theme']);
+            //$IKO->tpl->setTheme($IKO->data['site_theme']);
         }
     }
 

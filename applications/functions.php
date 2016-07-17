@@ -68,7 +68,7 @@ function stat_users()
  * time >= session_time
  */
 /*function users_online() {
-  global $MYSQL, $TANGO;
+  global $MYSQL, $IKO;
   $time  = strtotime("-1 day");
   $time  = time();
   $query = $MYSQL->query("SELECT * FROM {prefix}sessions ORDER BY session_time DESC");
@@ -84,7 +84,7 @@ function stat_users()
 
   $total = array();
   foreach( $users as $u ) {
-    $us = $TANGO->user($u);
+    $us = $IKO->user($u);
     $total[] = '<a href="' . SITE_URL . '/members.php/cmd/user/id/' . $us['id'] . '">' . $us['username_style'] . '</a>';
   }
   //die(var_dump($total));
@@ -96,7 +96,7 @@ function stat_users()
 }*/
 function users_online()
 {
-    global $MYSQL, $TANGO;
+    global $MYSQL, $IKO;
     $time = time();
     $query = $MYSQL->query("SELECT * FROM {prefix}sessions ORDER BY session_time DESC");
     $users = array();
@@ -111,7 +111,7 @@ function users_online()
 
     $total = array();
     foreach ($users as $u) {
-        $us = $TANGO->user($u);
+        $us = $IKO->user($u);
         $total[] = '<a href="' . SITE_URL . '/members.php/cmd/user/id/' . $us['id'] . '">' . $us['username_style'] . '</a>';
     }
     if (!empty($total)) {

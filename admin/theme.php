@@ -3,7 +3,7 @@
 define('BASEPATH', 'Staff');
 require_once('../applications/wrapper.php');
 
-if (!$TANGO->perm->check('access_administration')) {
+if (!$IKO->perm->check('access_administration')) {
     redirect(SITE_URL);
 }//Checks if user has permission to create a thread.
 //require_once('template/top.php');
@@ -70,7 +70,7 @@ if ($PGET->g('delete_theme')) {
 $themes = '';
 foreach ($directory as $t) {
     if (is_dir('../public/themes/' . $t)) {
-        $set = ($TANGO->data['site_theme'] == $t) ? ' class="success" title="Theme is currently set to default."' : '';
+        $set = ($IKO->data['site_theme'] == $t) ? ' class="success" title="Theme is currently set to default."' : '';
         $themes .= '<tr' . $set . '>
                         <td>' . $t . '</td>
                         <td>
@@ -94,7 +94,7 @@ $query = $MYSQL->query("SELECT * FROM {prefix}themes");
 
 $themes = '';
 foreach( $query as $t ) {
-    $set = ($TANGO->data['site_theme'] == $t['id']) ? ' class="success" title="Theme is currently set to default."' : '';
+    $set = ($IKO->data['site_theme'] == $t['id']) ? ' class="success" title="Theme is currently set to default."' : '';
     $themes .= '<tr' . $set . '>
                   <td>' . $t['theme_name'] . '</td>
                     <td>

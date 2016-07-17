@@ -231,16 +231,16 @@ class Library_Parse
      */
     private function parseQuote($raw_id)
     {
-        global $MYSQL, $TANGO;
+        global $MYSQL, $IKO;
 
         $id = preg_replace('#\\s+#u', '', $raw_id);
         $MYSQL->bind('id', $id);
         $query = $MYSQL->query('SELECT * FROM {prefix}forum_posts WHERE id = :id');
-        $user = (!empty($query)) ? $TANGO->user($query['0']['post_user']) : array(
+        $user = (!empty($query)) ? $IKO->user($query['0']['post_user']) : array(
             'username' => ''
         );
         $q_c = (!empty($query)) ? $query['0']['post_content'] : $raw_id;
-        $quote = $TANGO->tpl->entity(
+        $quote = $IKO->tpl->entity(
             'quote_post',
             array(
                 'quoted_post_content',

@@ -3,10 +3,10 @@
 define('BASEPATH', 'Forum');
 require_once('applications/wrapper.php');
 
-if (!$TANGO->perm->check('reply_thread')) {
+if (!$IKO->perm->check('reply_thread')) {
     redirect(SITE_URL);
 }//Checks if user has permission to create a thread.
-$TANGO->tpl->getTpl('page');
+$IKO->tpl->getTpl('page');
 
 if ($PGET->g('post')) {
 
@@ -16,14 +16,14 @@ if ($PGET->g('post')) {
 
     if (!empty($query)) {
 
-        if ($TANGO->perm->check('access_moderation')) {
-        } elseif ($query['0']['post_user'] !== $TANGO->sess->data['id']) {
+        if ($IKO->perm->check('access_moderation')) {
+        } elseif ($query['0']['post_user'] !== $IKO->sess->data['id']) {
             redirect(SITE_URL);
         }
 
         $node = node($query['0']['origin_node']);
 
-        $breadcrumbs = $TANGO->tpl->entity(
+        $breadcrumbs = $IKO->tpl->entity(
             'breadcrumbs_before',
             array(
                 'link',
@@ -39,7 +39,7 @@ if ($PGET->g('post')) {
             $parent_node = node($node['parent_node']);
             $ori_cat = category($parent_node['in_category']);
 
-            $breadcrumbs .= $TANGO->tpl->entity(
+            $breadcrumbs .= $IKO->tpl->entity(
                 'breadcrumbs_before',
                 array(
                     'link',
@@ -51,7 +51,7 @@ if ($PGET->g('post')) {
                 )
             );
 
-            $breadcrumbs .= $TANGO->tpl->entity(
+            $breadcrumbs .= $IKO->tpl->entity(
                 'breadcrumbs_before',
                 array(
                     'link',
@@ -63,7 +63,7 @@ if ($PGET->g('post')) {
                 )
             );
 
-            $breadcrumbs .= $TANGO->tpl->entity(
+            $breadcrumbs .= $IKO->tpl->entity(
                 'breadcrumbs_before',
                 array(
                     'link',
@@ -79,7 +79,7 @@ if ($PGET->g('post')) {
 
             $ori_cat = category($node['in_category']);
 
-            $breadcrumbs .= $TANGO->tpl->entity(
+            $breadcrumbs .= $IKO->tpl->entity(
                 'breadcrumbs_before',
                 array(
                     'links',
@@ -91,7 +91,7 @@ if ($PGET->g('post')) {
                 )
             );
 
-            $breadcrumbs .= $TANGO->tpl->entity(
+            $breadcrumbs .= $IKO->tpl->entity(
                 'breadcrumbs_before',
                 array(
                     'link',
@@ -105,7 +105,7 @@ if ($PGET->g('post')) {
         }
 
         if ($query['0']['post_type'] == 1) {
-            $breadcrumbs .= $TANGO->tpl->entity(
+            $breadcrumbs .= $IKO->tpl->entity(
                 'breadcrumbs_before',
                 array(
                     'link',
@@ -118,7 +118,7 @@ if ($PGET->g('post')) {
             );
         } elseif ($query['0']['post_type'] == 2) {
             $t = thread($query['0']['origin_thread']);
-            $breadcrumbs .= $TANGO->tpl->entity(
+            $breadcrumbs .= $IKO->tpl->entity(
                 'breadcrumbs_before',
                 array(
                     'link',
@@ -131,13 +131,13 @@ if ($PGET->g('post')) {
             );
         }
 
-        $breadcrumbs .= $TANGO->tpl->entity(
+        $breadcrumbs .= $IKO->tpl->entity(
             'breadcrumbs_current',
             'name',
             $LANG['bb']['edit_post_breadcrumb']
         );
 
-        $breadcrumb = $TANGO->tpl->entity(
+        $breadcrumb = $IKO->tpl->entity(
             'breadcrumbs',
             'bread',
             $breadcrumbs
@@ -202,7 +202,7 @@ if ($PGET->g('post')) {
                 }
 
             } catch (Exception $e) {
-                $notice .= $TANGO->tpl->entity(
+                $notice .= $IKO->tpl->entity(
                     'danger_notice',
                     'content',
                     $e->getMessage()
@@ -226,7 +226,7 @@ if ($PGET->g('post')) {
                 $icon_package[$category] .= '<a href="javascript:add_emoji(\'' . $code . '\');"><span style="font-size: 30px;" title="' . $code . '">' . $html . '</span></a> ';
             }
         }
-        $content .= $TANGO->tpl->entity(
+        $content .= $IKO->tpl->entity(
             'smiley_list',
             array(
                 'smilies',
@@ -244,7 +244,7 @@ if ($PGET->g('post')) {
             )
         );
 
-        $TANGO->tpl->addParam(
+        $IKO->tpl->addParam(
             array(
                 'page_title',
                 'content'
@@ -263,6 +263,6 @@ if ($PGET->g('post')) {
     redirect(SITE_URL);
 }
 
-echo $TANGO->tpl->output();
+echo $IKO->tpl->output();
 
 ?>

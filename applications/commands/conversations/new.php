@@ -39,19 +39,19 @@ if (isset($_POST['create'])) {
                         )
                     );
                 }
-                $us = $TANGO->user($u);
+                $us = $IKO->user($u);
                 $MYSQL->bindMore(
                     array(
                         'message_title' => $title,
                         'message_content' => $cont,
                         'message_time' => $time,
-                        'message_sender' => $TANGO->sess->data['id'],
+                        'message_sender' => $IKO->sess->data['id'],
                         'message_receiver' => $us['id']
                     )
                 );
 
                 if ($MYSQL->query("INSERT INTO {prefix}messages (message_title, message_content, message_time, message_sender, message_receiver, message_type) VALUES (:message_title, :message_content, :message_time, :message_sender, :message_receiver, 1)") > 0) {
-                    $notice .= $TANGO->tpl->entity(
+                    $notice .= $IKO->tpl->entity(
                         'success_notice',
                         'content',
                         str_replace(
@@ -75,7 +75,7 @@ if (isset($_POST['create'])) {
         }
 
     } catch (Exception $e) {
-        $notice .= $TANGO->tpl->entity(
+        $notice .= $IKO->tpl->entity(
             'danger_notice',
             'content',
             $e->getMessage()
@@ -90,20 +90,20 @@ $pm_user = (isset($_POST['receiver'])) ? $_POST['receiver'] : '';
 $pm_title = (isset($_POST['title'])) ? $_POST['title'] : '';
 
 //Breadcrumbs
-$TANGO->tpl->addBreadcrumb(
+$IKO->tpl->addBreadcrumb(
     $LANG['bb']['forum'],
     SITE_URL . '/forum.php'
 );
-$TANGO->tpl->addBreadcrumb(
+$IKO->tpl->addBreadcrumb(
     $LANG['bb']['conversations']['page_conversations'],
     SITE_URL . '/conversations.php'
 );
-$TANGO->tpl->addBreadcrumb(
+$IKO->tpl->addBreadcrumb(
     $LANG['bb']['conversations']['page_new'],
     '#',
     true
 );
-$content .= $TANGO->tpl->breadcrumbs();
+$content .= $IKO->tpl->breadcrumbs();
 
 $content .= $notice . '<form action="" method="POST">
                  ' . $FORM->build('hidden', '', 'csrf_token', array('value' => CSRF_TOKEN)) . '

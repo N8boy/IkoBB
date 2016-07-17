@@ -3,7 +3,7 @@
 define('BASEPATH', 'Forum');
 require_once('applications/wrapper.php');
 
-$TANGO->tpl->getTpl('page');
+$IKO->tpl->getTpl('page');
 
 if ($PGET->s(true)) {
 
@@ -19,17 +19,17 @@ if ($PGET->s(true)) {
     if (!empty($query)) {
 
         $allowed = explode(',', $query['0']['allowed_usergroups']);
-        if (!in_array($TANGO->sess->data['user_group'], $allowed)) {
+        if (!in_array($IKO->sess->data['user_group'], $allowed)) {
             redirect(SITE_URL . '/404.php');
         }
 
         if ($query['0']['node_type'] == 1) {
-            $sub_forums = $TANGO->bb->subForums($query['0']['id']);
+            $sub_forums = $IKO->bb->subForums($query['0']['id']);
         } else {
             $sub_forums = '';
         }
 
-        $breadcrumbs = $TANGO->tpl->entity(
+        $breadcrumbs = $IKO->tpl->entity(
             'breadcrumbs_before',
             array(
                 'link',
@@ -45,7 +45,7 @@ if ($PGET->s(true)) {
             $parent_node = node($query['0']['parent_node']);
             $ori_cat = category($parent_node['in_category']);
 
-            $breadcrumbs .= $TANGO->tpl->entity(
+            $breadcrumbs .= $IKO->tpl->entity(
                 'breadcrumbs_before',
                 array(
                     'link',
@@ -57,7 +57,7 @@ if ($PGET->s(true)) {
                 )
             );
 
-            $breadcrumbs .= $TANGO->tpl->entity(
+            $breadcrumbs .= $IKO->tpl->entity(
                 'breadcrumbs_before',
                 array(
                     'link',
@@ -69,7 +69,7 @@ if ($PGET->s(true)) {
                 )
             );
 
-            $breadcrumbs .= $TANGO->tpl->entity(
+            $breadcrumbs .= $IKO->tpl->entity(
                 'breadcrumbs_current',
                 array(
                     'name'
@@ -83,7 +83,7 @@ if ($PGET->s(true)) {
 
             $ori_cat = category($query['0']['in_category']);
 
-            $breadcrumbs .= $TANGO->tpl->entity(
+            $breadcrumbs .= $IKO->tpl->entity(
                 'breadcrumbs_before',
                 array(
                     'name',
@@ -95,7 +95,7 @@ if ($PGET->s(true)) {
                 )
             );
 
-            $breadcrumbs .= $TANGO->tpl->entity(
+            $breadcrumbs .= $IKO->tpl->entity(
                 'breadcrumbs_current',
                 array(
                     'name'
@@ -107,7 +107,7 @@ if ($PGET->s(true)) {
 
         }
 
-        $breadcrumbs = $TANGO->tpl->entity(
+        $breadcrumbs = $IKO->tpl->entity(
             'breadcrumbs',
             'bread',
             $breadcrumbs
@@ -118,14 +118,14 @@ if ($PGET->s(true)) {
         $results = '';
         $t = '';
         /*foreach (getThreads($node_id, $page, $PGET->g('sort')) as $thread) {
-            $t .= $TANGO->node->threads($thread['id']);
+            $t .= $IKO->node->threads($thread['id']);
         }*/
         $t .= getThreads($node_id, $page, $PGET->g('sort'));
 
         $new_thread = '';
         if ($query['0']['node_locked'] == "0") {
-            if ($TANGO->perm->check('create_thread')) {
-                $new_thread .= $TANGO->tpl->entity(
+            if ($IKO->perm->check('create_thread')) {
+                $new_thread .= $IKO->tpl->entity(
                     'create_thread',
                     'url',
                     SITE_URL . '/new.php/node/' . $node_id,
@@ -133,8 +133,8 @@ if ($PGET->s(true)) {
                 );
             }
         } else {
-            if ($TANGO->perm->check('access_moderation')) {
-                $new_thread .= $TANGO->tpl->entity(
+            if ($IKO->perm->check('access_moderation')) {
+                $new_thread .= $IKO->tpl->entity(
                     'create_thread',
                     'url',
                     SITE_URL . '/new.php/node/' . $node_id,
@@ -143,7 +143,7 @@ if ($PGET->s(true)) {
             }
         }
 
-        $results .= $TANGO->tpl->entity(
+        $results .= $IKO->tpl->entity(
             'forum_listings_node_threads',
             array(
                 'breadcrumbs',
@@ -175,7 +175,7 @@ if ($PGET->s(true)) {
         $sort = clean($PGET->g('sort'));
         $pag = '';
         if ($page != 1 && $total_pages > 1) {
-            $TANGO->tpl->addPagination(
+            $IKO->tpl->addPagination(
                 '<<',
                 ($sort) ? SITE_URL . '/node.php/' . $node_name . '.' . $node_id . '/sort/' . $sort . '/page/' . $i : SITE_URL . '/node.php/' . $node_name . '.' . $node_id . '/page/' . intval($page - 1)
             );
@@ -186,13 +186,13 @@ if ($PGET->s(true)) {
                 $link = ($sort) ? SITE_URL . '/node.php/' . $node_name . '.' . $node_id . '/sort/' . $sort . '/page/' . $i : SITE_URL . '/node.php/' . $node_name . '.' . $node_id . '/page/' . $i;
                 if ($i <= 2 || ($i == ($page - 1) && $page > 1) || $i == $page || $i == ($page + 1) || $i >= ($total_pages - 1)) {
                     if ($i == $page) {
-                        $pag .= $TANGO->tpl->entity(
+                        $pag .= $IKO->tpl->entity(
                             'pagination_link_current',
                             'page',
                             $i
                         );
                     } else {
-                        $pag .= $TANGO->tpl->entity(
+                        $pag .= $IKO->tpl->entity(
                             'pagination_links',
                             array(
                                 'url',
@@ -205,7 +205,7 @@ if ($PGET->s(true)) {
                         );
                     }
                 } elseif (($i == 3 && $page != 1) || ($i == ($total_pages - 2) && $page != $total_pages)) {
-                    $TANGO->tpl->addPagination(
+                    $IKO->tpl->addPagination(
                         '...',
                         '#'
                     );
@@ -213,19 +213,19 @@ if ($PGET->s(true)) {
             }
         }
         if ($page != $total_pages && $total_pages > 1) {
-            $TANGO->tpl->addPagination(
+            $IKO->tpl->addPagination(
                 '>>',
                 ($sort) ? SITE_URL . '/node.php/' . $node_name . '.' . $node_id . '/sort/' . $sort . '/page/' . $i : SITE_URL . '/node.php/' . $node_name . '.' . $node_id . '/page/' . intval($page + 1)
             );
         }
 
-        $results .= $TANGO->tpl->entity(
+        $results .= $IKO->tpl->entity(
             'pagination',
             'pages',
             $pag
         );
 
-        $TANGO->tpl->addParam(
+        $IKO->tpl->addParam(
             array(
                 'page_title',
                 'content'
@@ -244,6 +244,6 @@ if ($PGET->s(true)) {
     redirect(SITE_URL);
 }
 
-echo $TANGO->tpl->output();
+echo $IKO->tpl->output();
 
 ?>

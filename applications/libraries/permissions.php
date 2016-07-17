@@ -17,8 +17,8 @@ class Library_Permissions
      */
     public function check($permission)
     {
-        global $TANGO;
-        if (in_array($permission, $TANGO->sess->data['permissions'])) {
+        global $IKO;
+        if (in_array($permission, $IKO->sess->data['permissions'])) {
             return true;
         } else {
             return false;

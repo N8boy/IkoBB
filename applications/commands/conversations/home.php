@@ -10,30 +10,30 @@ if (!defined('BASEPATH')) {
 $content = '';
 $page_title = $LANG['bb']['conversations']['page_conversations'];
 
-if (!$TANGO->sess->isLogged) {
+if (!$IKO->sess->isLogged) {
     redirect(SITE_URL);
 }
 //If user is not logged in.
 $MYSQL->bindMore(
     array(
-        'message_sender' => $TANGO->sess->data['id'],
-        'message_receiver' => $TANGO->sess->data['id']
+        'message_sender' => $IKO->sess->data['id'],
+        'message_receiver' => $IKO->sess->data['id']
     )
 );
 $query = $MYSQL->query("SELECT * FROM {prefix}messages WHERE (message_sender = :message_sender OR message_receiver = :message_receiver) AND message_type = 1 ORDER BY message_time DESC");
 
 //Breadcrumbs
-$TANGO->tpl->addBreadcrumb(
+$IKO->tpl->addBreadcrumb(
     $LANG['bb']['forum'],
     SITE_URL . '/forum.php'
 );
-$TANGO->tpl->addBreadcrumb(
+$IKO->tpl->addBreadcrumb(
     $LANG['bb']['conversations']['page_conversations'],
     SITE_URL . '/conversations.php',
     true
 );
 
-$content .= $TANGO->tpl->breadcrumbs();
+$content .= $IKO->tpl->breadcrumbs();
 $table = '';
 if (!empty($query)) {
     $table .= '<table class="table">'; // N8boy
@@ -44,15 +44,15 @@ if (!empty($query)) {
         $MYSQL->bind('origin_message', $msg['id']);
         $last_reply = $MYSQL->query("SELECT * FROM {prefix}messages WHERE origin_message = :origin_message ORDER BY message_time DESC LIMIT 1");
 
-        $sender = $TANGO->user($msg['message_sender']);
-        $receiver = $TANGO->user($msg['message_receiver']);
+        $sender = $IKO->user($msg['message_sender']);
+        $receiver = $IKO->user($msg['message_receiver']);
 
         $message_time = simplify_time($msg['message_time']);
 
-        if ($sender['id'] == $TANGO->sess->data['id'] && $msg['sender_deleted'] == 0) {
+        if ($sender['id'] == $IKO->sess->data['id'] && $msg['sender_deleted'] == 0) {
             $check = true;
 
-        } elseif ($receiver['id'] == $TANGO->sess->data['id'] && $msg['receiver_deleted'] == 0) {
+        } elseif ($receiver['id'] == $IKO->sess->data['id'] && $msg['receiver_deleted'] == 0) {
             $check = true;
         } else {
             $check = false;
@@ -60,19 +60,19 @@ if (!empty($query)) {
         if ($check == true) {
             $counter += 1;
             if (isset($last_reply['0'])) {
-                if ($last_reply['0']['receiver_viewed'] == 0 && $last_reply['0']['message_receiver'] == $TANGO->sess->data['id']) {  // notification for Receiver: New message
-                    $badge .= $TANGO->tpl->entity('conversation_new_message');
-                } elseif ($last_reply['0']['receiver_viewed'] == 0 && $last_reply['0']['message_sender'] == $TANGO->sess->data['id']) { // Sender can see if the receiver has viewed the last message
-                    $badge .= $TANGO->tpl->entity('conversation_unread');
-                } elseif ($last_reply['0']['receiver_viewed'] == 1 && $last_reply['0']['message_sender'] == $TANGO->sess->data['id']) { // Sender can see if the receiver has viewed the last message
-                    $badge .= $TANGO->tpl->entity('conversation_read');
+                if ($last_reply['0']['receiver_viewed'] == 0 && $last_reply['0']['message_receiver'] == $IKO->sess->data['id']) {  // notification for Receiver: New message
+                    $badge .= $IKO->tpl->entity('conversation_new_message');
+                } elseif ($last_reply['0']['receiver_viewed'] == 0 && $last_reply['0']['message_sender'] == $IKO->sess->data['id']) { // Sender can see if the receiver has viewed the last message
+                    $badge .= $IKO->tpl->entity('conversation_unread');
+                } elseif ($last_reply['0']['receiver_viewed'] == 1 && $last_reply['0']['message_sender'] == $IKO->sess->data['id']) { // Sender can see if the receiver has viewed the last message
+                    $badge .= $IKO->tpl->entity('conversation_read');
                 }
-            } elseif ($msg['receiver_viewed'] == 0 && $receiver['id'] == $TANGO->sess->data['id']) {
-                $badge .= $TANGO->tpl->entity('conversation_new_message');
-            } elseif ($msg['receiver_viewed'] == 0 && $sender['id'] == $TANGO->sess->data['id']) {
-                $badge .= $TANGO->tpl->entity('conversation_unread');
-            } elseif ($msg['receiver_viewed'] == 1 && $sender['id'] == $TANGO->sess->data['id']) {
-                $badge .= $TANGO->tpl->entity('conversation_read');
+            } elseif ($msg['receiver_viewed'] == 0 && $receiver['id'] == $IKO->sess->data['id']) {
+                $badge .= $IKO->tpl->entity('conversation_new_message');
+            } elseif ($msg['receiver_viewed'] == 0 && $sender['id'] == $IKO->sess->data['id']) {
+                $badge .= $IKO->tpl->entity('conversation_unread');
+            } elseif ($msg['receiver_viewed'] == 1 && $sender['id'] == $IKO->sess->data['id']) {
+                $badge .= $IKO->tpl->entity('conversation_read');
             }
 
             $table .= '<tr>
@@ -88,7 +88,7 @@ if (!empty($query)) {
                             ' . $message_time['time'] . '
                         </td>
                         <td style="width: 25px;">';
-            $table .= $TANGO->tpl->entity('conversation_delete', 'link', SITE_URL . '/conversations.php/cmd/delete/id/' . $msg['id']);
+            $table .= $IKO->tpl->entity('conversation_delete', 'link', SITE_URL . '/conversations.php/cmd/delete/id/' . $msg['id']);
             $table .= '</td>
                        </tr>';
         }
@@ -96,7 +96,7 @@ if (!empty($query)) {
     $table .= '</table>';
 
     if ($counter == 0) {
-        $table .= $TANGO->tpl->entity(
+        $table .= $IKO->tpl->entity(
             'danger_notice',
             'content',
             $LANG['bb']['conversations']['no_conversations']
@@ -104,13 +104,13 @@ if (!empty($query)) {
     }
 
 } else {
-    $table .= $TANGO->tpl->entity(
+    $table .= $IKO->tpl->entity(
         'danger_notice',
         'content',
         $LANG['bb']['conversations']['no_conversations']
     );
 }
-$content .= $TANGO->tpl->entity(
+$content .= $IKO->tpl->entity(
     'conversation_overview',
     array(
         'overview_header',
