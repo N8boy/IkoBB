@@ -6,6 +6,14 @@
 
 **Closed issues:**
 
+##### IkoBB #####
+
+- Updated wysibb to version 1.5.1 [dfea14e](https://github.com/N8boy/IkoBB/commit/dfea14e8eac8a225a1289a459e4b8a02b77b1121)
+- Updated Font Awesome to version 4.6.3 [49dbe89](https://github.com/N8boy/IkoBB/commit/49dbe89c138b841ee8a4a8b020b8e141769df043)
+- Updated HTML5Shiv to version 3.7.3 [49dbe89](https://github.com/N8boy/IkoBB/commit/49dbe89c138b841ee8a4a8b020b8e141769df043)
+
+##### TangoBB #####
+
 - What happen to Iko and demo? [\#43](https://github.com/Codetana/TangoBB/issues/43)
 
 - TangoBB 1.5.0-A3 XSS Vulnerability [\#40](https://github.com/Codetana/TangoBB/issues/40)
@@ -24,7 +32,7 @@
 
 - Redirecting always to mainpage [\#20](https://github.com/Codetana/TangoBB/issues/20)
 
-## [1.5.0-A3](https://github.com/codetana/TangoBB/tree/1.5.0-A3) (2015-02-23)
+## TangoBB [1.5.0-A3](https://github.com/codetana/TangoBB/tree/1.5.0-A3) (2015-02-23)
 
 [Full Changelog](https://github.com/codetana/TangoBB/compare/1.5.0-A2...1.5.0-A3)
 
@@ -32,7 +40,7 @@
 
 - Installation error [\#39](https://github.com/Codetana/TangoBB/issues/39)
 
-## [1.5.0-A2](https://github.com/codetana/TangoBB/tree/1.5.0-A2) (2015-02-18)
+## TangoBB [1.5.0-A2](https://github.com/codetana/TangoBB/tree/1.5.0-A2) (2015-02-18)
 
 [Full Changelog](https://github.com/codetana/TangoBB/compare/1.5.0-A1...1.5.0-A2)
 
@@ -40,7 +48,7 @@
 
 - Installation Error after Theme Updates [\#38](https://github.com/Codetana/TangoBB/issues/38)
 
-## [1.5.0-A1](https://github.com/codetana/TangoBB/tree/1.5.0-A1) (2015-02-16)
+## TangoBB [1.5.0-A1](https://github.com/codetana/TangoBB/tree/1.5.0-A1) (2015-02-16)
 
 [Full Changelog](https://github.com/codetana/TangoBB/compare/1.4.1...1.5.0-A1)
 
@@ -60,7 +68,7 @@
 
 - French Translation : First Shot [\#34](https://github.com/Codetana/TangoBB/pull/34) ([JeromeCrecy](https://github.com/JeromeCrecy))
 
-## [1.4.1](https://github.com/codetana/TangoBB/tree/1.4.1) (2014-08-30)
+##TangoBB [1.4.1](https://github.com/codetana/TangoBB/tree/1.4.1) (2014-08-30)
 
 [Full Changelog](https://github.com/codetana/TangoBB/compare/1.3.4...1.4.1)
 
@@ -76,7 +84,7 @@
 
 - Signature and Profile Details bug [\#14](https://github.com/Codetana/TangoBB/issues/14)
 
-## [1.3.4](https://github.com/codetana/TangoBB/tree/1.3.4) (2014-05-31)
+##TangoBB [1.3.4](https://github.com/codetana/TangoBB/tree/1.3.4) (2014-05-31)
 
 [Full Changelog](https://github.com/codetana/TangoBB/compare/1.3.1...1.3.4)
 
@@ -84,15 +92,15 @@
 
 - Blank Page during install [\#13](https://github.com/Codetana/TangoBB/issues/13)
 
-## [1.3.1](https://github.com/codetana/TangoBB/tree/1.3.1) (2014-04-20)
+##TangoBB [1.3.1](https://github.com/codetana/TangoBB/tree/1.3.1) (2014-04-20)
 
 [Full Changelog](https://github.com/codetana/TangoBB/compare/1.3.0...1.3.1)
 
-## [1.3.0](https://github.com/codetana/TangoBB/tree/1.3.0) (2014-04-19)
+##TangoBB [1.3.0](https://github.com/codetana/TangoBB/tree/1.3.0) (2014-04-19)
 
 [Full Changelog](https://github.com/codetana/TangoBB/compare/1.2.5...1.3.0)
 
-## [1.2.5](https://github.com/codetana/TangoBB/tree/1.2.5) (2014-03-07)
+##TangoBB [1.2.5](https://github.com/codetana/TangoBB/tree/1.2.5) (2014-03-07)
 
 [Full Changelog](https://github.com/codetana/TangoBB/compare/1.2.4...1.2.5)
 
@@ -112,7 +120,7 @@
 
 - Rewrite of BBCode parser [\#6](https://github.com/Codetana/TangoBB/pull/6) ([Jacques1](https://github.com/Jacques1))
 
-## [1.2.4](https://github.com/codetana/TangoBB/tree/1.2.4) (2014-02-20)
+##TangoBB [1.2.4](https://github.com/codetana/TangoBB/tree/1.2.4) (2014-02-20)
 
 [Full Changelog](https://github.com/codetana/TangoBB/compare/1.2.3...1.2.4)
 
@@ -120,7 +128,7 @@
 
 - Make application use UTF-8 [\#4](https://github.com/Codetana/TangoBB/pull/4) ([Jacques1](https://github.com/Jacques1))
 
-## [1.2.3](https://github.com/codetana/TangoBB/tree/1.2.3) (2014-02-14)
+##TangoBB [1.2.3](https://github.com/codetana/TangoBB/tree/1.2.3) (2014-02-14)
 
 [Full Changelog](https://github.com/codetana/TangoBB/compare/1.2.2...1.2.3)
 
@@ -132,28 +140,28 @@
 
 - Fixed all redirects [\#1](https://github.com/Codetana/TangoBB/pull/1) ([Jacques1](https://github.com/Jacques1))
 
-## [1.2.2](https://github.com/codetana/TangoBB/tree/1.2.2) (2014-01-29)
+##TangoBB [1.2.2](https://github.com/codetana/TangoBB/tree/1.2.2) (2014-01-29)
 
 [Full Changelog](https://github.com/codetana/TangoBB/compare/1.2.1...1.2.2)
 
-## [1.2.1](https://github.com/codetana/TangoBB/tree/1.2.1) (2014-01-09)
+##TangoBB [1.2.1](https://github.com/codetana/TangoBB/tree/1.2.1) (2014-01-09)
 
 [Full Changelog](https://github.com/codetana/TangoBB/compare/1.2.0...1.2.1)
 
-## [1.2.0](https://github.com/codetana/TangoBB/tree/1.2.0) (2013-12-24)
+##TangoBB [1.2.0](https://github.com/codetana/TangoBB/tree/1.2.0) (2013-12-24)
 
 [Full Changelog](https://github.com/codetana/TangoBB/compare/1.2.0-A2...1.2.0)
 
-## [1.2.0-A2](https://github.com/codetana/TangoBB/tree/1.2.0-A2) (2013-12-19)
+##TangoBB [1.2.0-A2](https://github.com/codetana/TangoBB/tree/1.2.0-A2) (2013-12-19)
 
 [Full Changelog](https://github.com/codetana/TangoBB/compare/1.2.0-A1...1.2.0-A2)
 
-## [1.2.0-A1](https://github.com/codetana/TangoBB/tree/1.2.0-A1) (2013-12-17)
+##TangoBB [1.2.0-A1](https://github.com/codetana/TangoBB/tree/1.2.0-A1) (2013-12-17)
 
 [Full Changelog](https://github.com/codetana/TangoBB/compare/1.1.2...1.2.0-A1)
 
-## [1.1.2](https://github.com/codetana/TangoBB/tree/1.1.2) (2013-12-12)
+##TangoBB [1.1.2](https://github.com/codetana/TangoBB/tree/1.1.2) (2013-12-12)
 
 [Full Changelog](https://github.com/codetana/TangoBB/compare/1.0.5...1.1.2)
 
-## [1.0.5](https://github.com/codetana/TangoBB/tree/1.0.5) (2013-12-02)
+##TangoBB [1.0.5](https://github.com/codetana/TangoBB/tree/1.0.5) (2013-12-02)
