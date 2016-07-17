@@ -1,7 +1,7 @@
 <?php
 
 /*
- * Sign In module for TangoBB
+ * Sign In module for IkoBB
  * Everything that you want to display MUST be in the $content variable.
  */
 if (!defined('BASEPATH')) {

@@ -7,7 +7,7 @@ global $ADMIN, $IKO;
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>TangoBB Administration</title>
+      <title>IkoBB Administration</title>
 
     <!-- Bootstrap -->
     <link href="<?php echo SITE_URL; ?>/public/css/admin.css" rel="stylesheet">
@@ -47,7 +47,7 @@ global $ADMIN, $IKO;
                    data-toggle="tooltip" title="Log Out">
                     <i class="glyphicon glyphicon-off"></i>
                 </a><br />
-                      Powered by TangoBB
+                      Powered by IkoBB
 
                   </div>
               </div>

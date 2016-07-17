@@ -1,7 +1,7 @@
 <?php
 
 /*
- * TangoBB Language Entity.
+ * IkoBB Language Entity.
  * Language: Spanish.
  * Thanks to https://github.com/jennifer-c-leveke
  */

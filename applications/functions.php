@@ -1,7 +1,7 @@
 <?php
 
 /*
- * Standard Functions of TangoBB.
+ * Standard Functions of IkoBB.
  */
 if (!defined('BASEPATH')) {
     die();

@@ -1,13 +1,13 @@
 <?php
 
 /*
- * Session class of TangoBB
+ * Session class of IkoBB
  */
 if (!defined('BASEPATH')) {
     die();
 }
 
-class Tango_Session
+class Iko_Session
 {
 
     public $isLogged = false;
@@ -94,8 +94,8 @@ class Tango_Session
     {
         global $MYSQL;
 
-        if (isset($_SESSION['tangobb_sess']) or isset($_COOKIE['tangobb_sess'])) {
-            $id = (isset($_SESSION['tangobb_sess'])) ? $_SESSION['tangobb_sess'] : $_COOKIE['tangobb_sess'];
+        if (isset($_SESSION['ikobb_sess']) or isset($_COOKIE['ikobb_sess'])) {
+            $id = (isset($_SESSION['ikobb_sess'])) ? $_SESSION['ikobb_sess'] : $_COOKIE['ikobb_sess'];
             $MYSQL->bind('session_id', $id);
             $query = $MYSQL->query("SELECT * FROM {prefix}sessions WHERE session_id = :session_id");
 
@@ -120,7 +120,7 @@ class Tango_Session
     {
         global $MYSQL;
         $time_session = strtotime(session_cache_expire() . ' minutes ago');
-        $time_cookie = strtotime(TANGO_SESSION_TIMEOUT . ' seconds ago');
+        $time_cookie = strtotime(IKO_SESSION_TIMEOUT . ' seconds ago');
         $query = $MYSQL->query("SELECT * FROM {prefix}sessions");
         $time_now = time();
         foreach ($query as $s) {
@@ -154,7 +154,7 @@ class Tango_Session
         $time = time();
 
         if ($facebook) {
-            setcookie('tangobb_facebook', true, time() + TANGO_SESSION_TIMEOUT, '/', NULL, isset($_SERVER['HTTPS']), true);
+            setcookie('ikobb_facebook', true, time() + IKO_SESSION_TIMEOUT, '/', NULL, isset($_SERVER['HTTPS']), true);
         }
 
         if ($remember) {
@@ -164,7 +164,7 @@ class Tango_Session
             $MYSQL->bind('session_time', $time);
             $insert = $MYSQL->query("INSERT INTO {prefix}sessions (session_id, logged_user, session_type, session_time) VALUES (:session_id, :logged_user, :session_type, :session_time)");
             if ($insert > 0) {
-                return setcookie('tangobb_sess', $session_id, time() + TANGO_SESSION_TIMEOUT, '/', NULL, isset($_SERVER['HTTPS']), true);
+                return setcookie('ikobb_sess', $session_id, time() + IKO_SESSION_TIMEOUT, '/', NULL, isset($_SERVER['HTTPS']), true);
             } else {
                 return false;
             }
@@ -177,7 +177,7 @@ class Tango_Session
             $MYSQL->bind('session_time', $time);
             $insert = $MYSQL->query("INSERT INTO {prefix}sessions (session_id, logged_user, session_type, session_time) VALUES (:session_id, :logged_user, :session_type, :session_time)");
             if ($insert > 0) {
-                $_SESSION['tangobb_sess'] = $session_id;
+                $_SESSION['ikobb_sess'] = $session_id;
                 return true;
             } else {
                 return false;
@@ -193,14 +193,14 @@ class Tango_Session
     {
         global $MYSQL;
 
-        if (isset($_SESSION['tangobb_sess'])) {
-            $MYSQL->bind('session_id', $_SESSION['tangobb_sess']);
+        if (isset($_SESSION['ikobb_sess'])) {
+            $MYSQL->bind('session_id', $_SESSION['ikobb_sess']);
             $MYSQL->query("DELETE FROM {prefix}sessions WHERE session_id = :session_id");
             session_destroy();
         } else {
-            $MYSQL->bind('session_id', $_COOKIE['tangobb_sess']);
+            $MYSQL->bind('session_id', $_COOKIE['ikobb_sess']);
             $MYSQL->query("DELETE FROM {prefix}sessions WHERE session_id = :session_id");
-            return setcookie('tangobb_sess', '', time() - 3600, '/', NULL, isset($_SERVER['HTTPS']), true);
+            return setcookie('ikobb_sess', '', time() - 3600, '/', NULL, isset($_SERVER['HTTPS']), true);
         }
     }
 

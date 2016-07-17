@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title> Welcome to TangoBB </title>
+      <title> Welcome to IkoBB </title>
     <link rel="stylesheet" href="install/assets/css/bootstrap.min.css">
     <link rel="stylesheet" href="install/assets/css/install.css">
   </head>
@@ -18,7 +18,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#">TangoBB Installation</a>
+            <a class="navbar-brand" href="#">IkoBB Installation</a>
         </div>
         <div class="collapse navbar-collapse" id="install-top">
           <ul class="nav navbar-nav navbar-right">
@@ -34,12 +34,12 @@
         <div class="col-md-6 col-md-offset-3">
 
           <div class="panel panel-primary" id="main_content"><div class="panel-heading">
-            TangoBB Installation
+                  IkoBB Installation
             </div>
             <div class="panel-body">
-              <h4>Welcome to TangoBB</h4>
+                <h4>Welcome to IkoBB</h4>
 
-              <p>Press the button below to install TangoBB on this system.</p>
+                <p>Press the button below to install IkoBB on this system.</p>
               <a href="install" class="btn btn-success btn-block">Install</a>
             </div>
 
@@ -48,7 +48,7 @@
         </div>
       </div>
       <footer class="footer text-muted">
-        TangoBB by Codetana
+          IkoBB by Codetana
       </footer>
     </div>
     <script src="install/assets/js/jquery.min.js"></script>

@@ -2,7 +2,7 @@
 
 session_start();
 
-if (!isset($_SESSION['tangobb_install_step1'])) {
+if (!isset($_SESSION['IkoBB_install_step1'])) {
     die('Installation access denied.');
 }
 
@@ -50,7 +50,7 @@ if (isset($_POST['mysql'])) {
             /*
              * Running SQL on Database
              */
-            $_SESSION['tangobb_install_step2'] = true;
+            $_SESSION['IkoBB_install_step2'] = true;
 
             $MYSQL = new mysqli($mysql_host, $mysql_username, $mysql_password, $mysql_database);
 

@@ -33,7 +33,7 @@ if ($config_chmods < '666') {
 }
 
 if ($check['php'] === true && $check['chmods'] === true && $check['mysql'] === true) {
-    $_SESSION['tangobb_install_step1'] = true;
+    $_SESSION['IkoBB_install_step1'] = true;
     ?>
     <div class="alert alert-success">
         System check done! <a href="step2.php">Continue</a>.

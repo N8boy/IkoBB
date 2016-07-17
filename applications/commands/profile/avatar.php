@@ -1,7 +1,7 @@
 <?php
 
 /*
- * Profile edit module for TangoBB.
+ * Profile edit module for IkoBB.
  */
 if (!defined('BASEPATH')) {
     die();

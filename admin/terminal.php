@@ -139,7 +139,7 @@ echo $ADMIN->box(
 
 echo $ADMIN->box(
     'Command',
-    'You can run commands that are available in TangoBB.
+    'You can run commands that are available in IkoBB.
        <br />
        <h4>Commands</h4>
        Change User\'s Usergroup: <code>cugroup &lt;username&gt; &lt;usergroup&gt;</code>

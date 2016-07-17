@@ -4,7 +4,7 @@ global $ADMIN, $IKO;
 <!DOCTYPE html>
 <html>
   <head>
-    <title>TangoBB Administration Panel</title>
+      <title>IkoBB Administration Panel</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Bootstrap -->
     <link href="<?php echo SITE_URL; ?>/public/css/old-acp-bootstrap.min.css" rel="stylesheet" media="screen">

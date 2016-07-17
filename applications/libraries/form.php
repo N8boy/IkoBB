@@ -1,7 +1,7 @@
 <?php
 
 /*
- * Form Builder Library of TangoBB
+ * Form Builder Library of IkoBB
  */
 if (!defined('BASEPATH')) {
     die();

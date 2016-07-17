@@ -1,7 +1,7 @@
 <?php
 
 /*
- * Register Module for TangoBB.
+ * Register Module for IkoBB.
  * Everything that you want to display MUST be in the $content variable.
  */
 if (!defined('BASEPATH')) {

@@ -1,7 +1,7 @@
 <?php
 
 /*
- * TangoBB Permissions Library
+ * IkoBB Permissions Library
  */
 if (!defined('BASEPATH')) {
     die();

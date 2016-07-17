@@ -1,7 +1,7 @@
 <?php
 
 /*
- * Standard Pagination Functions of TangoBB.
+ * Standard Pagination Functions of IkoBB.
  */
 if (!defined('BASEPATH')) {
     die();

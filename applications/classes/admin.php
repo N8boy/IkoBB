@@ -1,13 +1,13 @@
 <?php
 
 /*
- * Admin class of TangoBB
+ * Admin class of IkoBB
  */
 if (!defined('BASEPATH')) {
     die();
 }
 
-class Tango_Admin
+class Iko_Admin
 {
 
     private $links = array();

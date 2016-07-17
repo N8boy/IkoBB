@@ -1,7 +1,7 @@
 <?php
 
 /*
- * Timezones support for TangoBB.
+ * Timezones support for IkoBB.
  */
 if (!defined('BASEPATH')) {
     die();

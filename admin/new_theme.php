@@ -82,7 +82,7 @@ echo $ADMIN->box(
 
 echo $ADMIN->box(
     'Entity File',
-    'The entity is a JSON file that is <strong>required</strong> in in order to make a theme work on TangoBB.',
+    'The entity is a JSON file that is <strong>required</strong> in in order to make a theme work on IkoBB.',
     '',
     '6'
 );

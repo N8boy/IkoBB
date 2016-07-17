@@ -93,36 +93,36 @@ if (!defined('Install')) {
     require_once(PATH_A . 'smilies/emoteicons.php');
     require_once(PATH_A . 'smilies/synonymes.php');
 
-    //Classes to run TangoBB
+    //Classes to run IkoBB
     require_once(PATH_A . CLA . 'core.php');
-    $TANGO = new Tango_Core();
+    $IKO = new Iko_Core();
 
     //Captcha
     require_once(PATH_A . LIB . 'captcha.php');
-    $TANGO->captcha = new TangoBB_Captcha();
+    $IKO->captcha = new Iko_Captcha();
 
     require_once(PATH_A . CLA . 'user.php');
-    $TANGO->user = new Tango_User();
+    $IKO->user = new Iko_User();
 
     require_once(PATH_A . CLA . 'session.php');
-    $TANGO->sess = new Tango_Session();
+    $IKO->sess = new Iko_Session();
 
     require_once(PATH_A . CLA . 'template.php');
-    $TANGO->tpl = new Tango_Template();
-    $TANGO->tpl->setTheme($TANGO->data['site_theme']);
+    $IKO->tpl = new Iko_Template();
+    $IKO->tpl->setTheme($IKO->data['site_theme']);
 
     require_once(PATH_A . CLA . 'forum.php');
-    $TANGO->bb = new Tango_Forum();
+    $IKO->bb = new Iko_Forum();
 
     require_once(PATH_A . CLA . 'node.php');
-    $TANGO->node = new Tango_Node();
+    $IKO->node = new Iko_Node();
 
     //Permissions Library
     require_once(PATH_A . LIB . 'permissions.php');
-    $TANGO->perm = new Library_Permissions();
+    $IKO->perm = new Library_Permissions();
 
     require_once(PATH_A . LIB . 'parse.php');
-    $TANGO->lib_parse = new Library_Parse();
+    $IKO->lib_parse = new Library_Parse();
 
     //Mail Library
     require_once(PATH_A . LIB . 'mail.php');
@@ -146,17 +146,17 @@ if (!defined('Install')) {
     require_once(PATH_A . 'timezone.php');
 
     //Admin Class
-    if ($TANGO->perm->check('access_administration')) {
+    if ($IKO->perm->check('access_administration')) {
         require_once(PATH_A . CLA . 'admin.php');
-        $ADMIN = new Tango_Admin();
+        $ADMIN = new Iko_Admin();
     }
 
     $FB_USER = false;
-    if ($TANGO->data['facebook_authenticate'] == "1") {
+    if ($IKO->data['facebook_authenticate'] == "1") {
         require_once('facebook.php');
     } else {
-        if ($TANGO->sess->isLogged) {
-            $TANGO->user->addUserLink(array(
+        if ($IKO->sess->isLogged) {
+            $IKO->user->addUserLink(array(
                 'Log Out' => SITE_URL . '/members.php/cmd/logout'
             ));
         }
@@ -168,7 +168,7 @@ if (!defined('Install')) {
     //Including installed extensions.
     include_extensions();
     //Check if authenticated via Facebook
-    if ($TANGO->data['facebook_authenticate'] == "1") {
+    if ($IKO->data['facebook_authenticate'] == "1") {
         if (isset($_GET['code']) && isset($_GET['state'])) {
             redirect(SITE_URL . '/forum.php');
         }

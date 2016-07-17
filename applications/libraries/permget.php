@@ -1,7 +1,7 @@
 <?php
 
 /*
- * TangoBB PermGET Class.
+ * IkoBB PermGET Class.
  */
 
 if (!defined('BASEPATH')) {

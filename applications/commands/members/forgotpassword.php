@@ -1,7 +1,7 @@
 <?php
 
 /*
- * Password Reset Module for TangoBB.
+ * Password Reset Module for IkoBB.
  * Everything that you want to display MUST be in the $content variable.
  */
 if (!defined('BASEPATH')) {

@@ -15,7 +15,7 @@ $versions = @file_get_contents('http://api.codetana.com/iko/version_list.php'); 
 if ($versions != '') {
     $versionList = explode("|", $versions);
     foreach ($versionList as $version) {
-        if (version_compare(TANGOBB_VERSION, $version, '<')) {
+        if (version_compare(IKOBB_VERSION, $version, '<')) {
             //echo '<p>New version found: ' . $version . '<br /><a href="?doUpdate=true&step=1">&raquo; Download Now?</a></p>';
 
             // do update

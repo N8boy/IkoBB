@@ -1,7 +1,7 @@
 <?php
 
 /*
- * User Profile module for TangoBB
+ * User Profile module for IkoBB
  * Everything that you want to display MUST be in the $content variable.
  */
 

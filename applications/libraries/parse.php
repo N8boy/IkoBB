@@ -1,7 +1,7 @@
 <?php
 
 /*
- * Additional Parsing Library of TangoBB
+ * Additional Parsing Library of IkoBB
  * Rewritten by Jaques1 (https://github.com/TangoBB/TangoBB/pull/6)
  */
 

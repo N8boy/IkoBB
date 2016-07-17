@@ -1,13 +1,13 @@
 <?php
 
 /*
- * User class of TangoBB
+ * User class of IkoBB
  */
 if (!defined('BASEPATH')) {
     die();
 }
 
-class Tango_User
+class Iko_User
 {
 
     private $user_links = array();

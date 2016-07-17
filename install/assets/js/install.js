@@ -1,5 +1,5 @@
 /*
- * Installation Js for TangoBB
+ * Installation Js for IkoBB
  */
 function ajaxLoad(url) {
     var load_msg = '<div class="panel-body"><div align="center"><img src="assets/img/load.gif" alt="Loading..." /></div></div>';

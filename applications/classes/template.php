@@ -1,13 +1,13 @@
 <?php
 
 /*
- * Template class of TangoBB
+ * Template class of IkoBB
  */
 if (!defined('BASEPATH')) {
     die();
 }
 
-class Tango_Template
+class Iko_Template
 {
 
     private $output, $theme;
@@ -30,7 +30,7 @@ class Tango_Template
         $this->addParam('bb_stat_threads', stat_threads());
         $this->addParam('bb_stat_posts', stat_posts());
         $this->addParam('bb_stat_users', stat_users());
-        $this->addParam('bb_software_version', TANGOBB_VERSION);
+        $this->addParam('bb_software_version', IKOBB_VERSION);
         $this->addParam('users_online', users_online());
         $this->addParam('current_url', $_SERVER['HTTP_HOST'] . $_SERVER['PHP_SELF']);
 

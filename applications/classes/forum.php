@@ -1,13 +1,13 @@
 <?php
 
 /*
- * Forum class of TangoBB
+ * Forum class of IkoBB
  */
 if (!defined('BASEPATH')) {
     die();
 }
 
-class Tango_Forum
+class Iko_Forum
 {
 
     public $parser;

@@ -1,13 +1,13 @@
 <?php
 
 /*
- * Core class of TangoBB
+ * Core class of IkoBB
  */
 if (!defined('BASEPATH')) {
     die();
 }
 
-class Tango_Core
+class Iko_Core
 {
 
     public $data;

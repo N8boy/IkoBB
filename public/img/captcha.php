@@ -1,7 +1,7 @@
 <?php
  
   /*
-   * TangoBB Captcha
+   * IkoBB Captcha
    * Source: NekoGD (https://github.com/jtpox/NekoGD)
    */
   session_start();
@@ -47,7 +47,7 @@
     die($e->getMessage());
   }
 
-  $_SESSION['TangoBB_Captcha'] = md5($string);
-  //die($string . '<br />' . $_SESSION['TangoBB_Captcha']);
+$_SESSION['IkoBB_Captcha'] = md5($string);
+//die($string . '<br />' . $_SESSION['IkoBB_Captcha']);
 
 ?>

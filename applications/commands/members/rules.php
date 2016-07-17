@@ -1,7 +1,7 @@
 <?php
 
 /*
- * Account Activation Module for TangoBB.
+ * Account Activation Module for IkoBB.
  * Everything that you want to display MUST be in the $content variable.
  */
 if (!defined('BASEPATH')) {

@@ -7,7 +7,7 @@ if (!defined('BASEPATH')) {
     die();
 }
 
-class Tango_Node
+class Iko_Node
 {
 
     /*

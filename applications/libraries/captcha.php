@@ -1,13 +1,13 @@
 <?php
 
 /*
- * Core class of TangoBB
+ * Core class of IkoBB
  */
 if (!defined('BASEPATH')) {
     die();
 }
 
-class TangoBB_Captcha
+class Iko_Captcha
 {
 
     public $error;
@@ -37,7 +37,7 @@ class TangoBB_Captcha
     {
         global $LANG;
         if ($this->captcha_type == "1") {
-            return '<img src="' . SITE_URL . '/public/img/captcha.php" alt="TangoBB Captcha" /><br /><input type="text" id="tangobb_captcha" name="tangobb_captcha" />';
+            return '<img src="' . SITE_URL . '/public/img/captcha.php" alt="IkoBB Captcha" /><br /><input type="text" id="tangobb_captcha" name="tangobb_captcha" />';
         } else {
             return recaptcha_get_html($this->key['public'], $this->error);
         }
@@ -51,7 +51,7 @@ class TangoBB_Captcha
         global $LANG;
         if ($this->captcha_type == "1") {
             $input = md5($_POST['tangobb_captcha']);
-            if ($input !== $_SESSION['TangoBB_Captcha']) {
+            if ($input !== $_SESSION['IkoBB_Captcha']) {
                 throw new Exception ($LANG['global_form_process']['captcha_incorrect']);
             } else {
                 return true;

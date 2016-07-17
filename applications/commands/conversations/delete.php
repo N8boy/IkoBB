@@ -1,7 +1,7 @@
 <?php
 
 /*
-* Conversations module for TangoBB
+* Conversations module for IkoBB
 * Delete script by N8boy
 * Everything that you want to display MUST be in the $content variable.
 */

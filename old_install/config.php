@@ -6,7 +6,7 @@ if (!defined('BASEPATH')) {
 
 /*
  * Iko Configuration File.
- * Iko (http://iko.im) was previously TangoBB (http://tangobb.net)
+ * Iko (http://iko.im) was previously IkoBB (http://tangobb.net)
  */
 define('MYSQL_HOST', '%mysql_host%');
 define('MYSQL_USERNAME', '%mysql_username%');
@@ -19,7 +19,7 @@ define('MYSQL_PORT', 3306);
  * Iko Local Details
  */
 define('SITE_URL', '%site_url%');//Without the ending "/"
-define('TANGOBB_VERSION', '1.5.0-A1');
+define('IkoBB_VERSION', '1.5.0-A1');
 define('TANGO_SESSION_TIMEOUT', 31536000);//In seconds.
 define('USER_PASSWORD_HASH_COST', 10);
 

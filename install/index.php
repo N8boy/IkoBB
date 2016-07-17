@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>TangoBB Installation</title>
+    <title>IkoBB Installation</title>
 
     <!-- Bootstrap -->
     <link href="assets/css/install.css" rel="stylesheet">
@@ -38,7 +38,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#">TangoBB installation</a>
+            <a class="navbar-brand" href="#">IkoBB installation</a>
         </div>
         <div class="collapse navbar-collapse" id="install-top">
             <ul class="nav navbar-nav navbar-right">
@@ -59,7 +59,7 @@
         </div>
     </div>
     <footer class="footer text-muted">
-        TangoBB by Codetana
+        IkoBB
     </footer>
 </div>
 

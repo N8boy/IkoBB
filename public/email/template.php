@@ -36,7 +36,7 @@
                     <tr>
                         <td>
                             <hr>
-                            <p>%site_name% is powered by <a href="http://codetana.me/blog">TangoBB</a></p>
+                            <p>%site_name% is powered by <a href="http://codetana.me/blog">IkoBB</a></p>
                         </td>
                     </tr>
                 </table>

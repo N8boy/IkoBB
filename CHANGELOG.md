@@ -1,4 +1,4 @@
-# TangoBB Changelog
+# IkoBB Changelog
 
 ## [Unreleased](https://github.com/codetana/TangoBB/tree/HEAD)
 

@@ -171,7 +171,7 @@ class SimpleMail
         }
 
         /*
-         * Additions made to work with TangoBB
+         * Additions made to work with IkoBB
          * Added 1.3.
          */
         $template = file_get_contents('applications/commands/mail/default.php');

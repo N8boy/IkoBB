@@ -8,7 +8,7 @@ if (phpversion() <= '5.5') {
 }
 require_once('../applications/functions.php');
 
-if (!isset($_SESSION['tangobb_install_step2'])) {
+if (!isset($_SESSION['IkoBB_install_step2'])) {
     die('Installation access denied.');
 }
 

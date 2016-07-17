@@ -19,14 +19,14 @@ $versions = @file_get_contents('http://api.codetana.com/iko/version_list.php');
 if ($versions != '') {
     $versionList = explode("|", $versions);
     foreach ($versionList as $version) {
-        if (version_compare(TANGOBB_VERSION, $version, '<')) {
+        if (version_compare(IKOBB_VERSION, $version, '<')) {
             $alert = $ADMIN->alert('<p>New version found: ' . $version . '<br /><a href="' . SITE_URL . '/admin/update.php?doUpdate=true&step=1">&raquo; Download Now?</a></p>', 'warning');
         }
     }
 }
 echo $ADMIN->box(
     'Dashboard',
-    'This forum is powered by TangoBB <strong>' . TANGOBB_VERSION . '</strong>.' . @$alert,
+    'This forum is powered by IkoBB <strong>' . IKOBB_VERSION . '</strong>.' . @$alert,
     '<table class="table">
          <thead>
            <tr>
@@ -53,8 +53,8 @@ echo $ADMIN->box(
 
 echo $ADMIN->box(
     'Github and Updates',
-    'Fork TangoBB on Github <a href="https://github.com/Codetana/TangoBB">here</a>.<br />
-       To keep up with the updates on TangoBB, you can fork/watch the TangoBB Github repository or visit our website at <a href="http://tangobb.com">TangoBB.Com</a> regularly!'
+    'Fork IkoBB on Github <a href="https://github.com/N8boy/IkoBB">here</a>.<br />
+       To keep up with the updates on IkoBB, you can fork/watch the IkoBB Github repository or visit our website at <a href="http://ikobb.de">ikoBB.Com</a> regularly!'
 );
 
 //require_once('template/bot.php');

@@ -1,7 +1,7 @@
 <?php
 
 /*
- * Mail Library of TangoBB
+ * Mail Library of IkoBB
  */
 if (!defined('BASEPATH')) {
     die();
@@ -71,7 +71,7 @@ class Library_Mail
             $this->message = $string;
         } else {
             /*
-             * Additions made to work with TangoBB
+             * Additions made to work with IkoBB
              * Added 1.3.
              */
             $template = file_get_contents('applications/commands/mail/default.php');

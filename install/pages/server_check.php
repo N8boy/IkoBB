@@ -46,7 +46,7 @@ if (strtoupper(substr(php_uname('s'), 0, 3)) === 'WIN') {
 
 
 if ($check['php'] === true && $check['chmods'] === true) {
-    $_SESSION['tangobb_install_step1'] = true;
+    $_SESSION['IkoBB_install_step1'] = true;
     ?>
     <div class="panel-body">
         <div class="alert alert-success">
@@ -59,7 +59,7 @@ if ($check['php'] === true && $check['chmods'] === true) {
     <div class="panel-body">
         <div class="alert alert-danger">
             <strong>Oh snap!</strong>
-            TangoBB can't be installed on your system.
+            IkoBB can't be installed on your system.
             <?php
             if ($check['php'] === false) {
                 echo '<br />Your current PHP version is lower than the recommended version.';

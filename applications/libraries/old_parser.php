@@ -1,7 +1,7 @@
 <?php
 
 /*
- * Additional Parsing Library of TangoBB
+ * Additional Parsing Library of IkoBB
  * This is officially obsolete as in 1.3.3.
  */
 if (!defined('BASEPATH')) {
