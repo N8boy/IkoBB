@@ -10,7 +10,7 @@ global $ADMIN, $IKO;
     <link href="<?php echo SITE_URL; ?>/public/css/old-acp-bootstrap.min.css" rel="stylesheet" media="screen">
     <link href="<?php echo SITE_URL; ?>/public/css/flat-ui.min.css" rel="stylesheet" media="screen">
     <link href="<?php echo SITE_URL; ?>/public/css/old-admin.css" rel="stylesheet" media="screen">
-    <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css" rel="stylesheet">
+      <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
   </head>
   <body>
 
