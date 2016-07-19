@@ -39,7 +39,7 @@ class Library_Mail
             $this->mail->isSMTP();
             //SMTP Details
             $this->mail->Host = $IKO->data['smtp_address'];
-            $this->mali->Username = $IKO->data['smtp_username'];
+            $this->mail->Username = $IKO->data['smtp_username'];
             $this->mail->Password = $IKO->data['smtp_password'];
             $this->mail->Port = $IKO->data['smtp_port'];
             $this->mail->SMTPSecure = 'tls';
