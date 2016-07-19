@@ -8,20 +8,20 @@ if (!defined('BASEPATH')) {
  * IkoBB Configuration File.
  * IkoBB (http://tangobb.net)
  */
-define('MYSQL_HOST', '%mysql_host%');
-define('MYSQL_USERNAME', '%mysql_username%');
-define('MYSQL_PASSWORD', '%mysql_password%');
-define('MYSQL_DATABASE', '%mysql_database%');
-define('MYSQL_PREFIX', '%mysql_prefix%');
-define('MYSQL_PORT', 3306);
+define('MYSQL_HOST', '%mysql_host%');  // Your SQL host
+define('MYSQL_USERNAME', '%mysql_username%'); // Your SQL username
+define('MYSQL_PASSWORD', '%mysql_password%'); // Your SQL password
+define('MYSQL_DATABASE', '%mysql_database%'); // Your SQL Database for IkoBB
+define('MYSQL_PREFIX', '%mysql_prefix%'); // The prefix for this forum
+define('MYSQL_PORT', 3306); // The port to your SQL
 
 /*
  * Iko Local Details
  */
-define('SITE_URL', '%site_url%');//Without the ending "/"
-define('IKOBB_VERSION', '1.5.1');
-define('IKO_SESSION_TIMEOUT', 31536000);//In seconds.
-define('USER_PASSWORD_HASH_COST', 10);
+define('SITE_URL', '%site_url%'); // Without the ending "/"
+define('IKOBB_VERSION', '0.1.0'); // Do not change if you want to get updates
+define('IKO_SESSION_TIMEOUT', 31536000); // In seconds. Default: 31536000 (one year)
+define('USER_PASSWORD_HASH_COST', 10);  // Not used? ToDo: Check if somewhere used, if not delete
 
 /*
  * Usergroup Details.
