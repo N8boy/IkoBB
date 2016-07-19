@@ -2,6 +2,15 @@
     Checking your server.
 </div>
 <?php
+
+if (function_exists("gd_info")) {
+    $check['gd'] = 'Installed';
+    $check['gd_css'] = 'success';
+} else {
+    $check['gd'] = 'Not Installed';
+    $check['gd_css'] = 'success';
+}
+
 if (version_compare(PHP_VERSION, '5.3.7', '<')) {
     $check['php'] = false;
     $check['php_version'] = PHP_VERSION;
@@ -45,7 +54,7 @@ if (strtoupper(substr(php_uname('s'), 0, 3)) === 'WIN') {
 }
 
 
-if ($check['php'] === true && $check['chmods'] === true) {
+if ($check['php'] === true && $check['chmods'] === true && $check['gd'] == 'Installed' && $check['pdo'] == 'Installed') {
     $_SESSION['IkoBB_install_step1'] = true;
     ?>
     <div class="panel-body">
@@ -66,6 +75,12 @@ if ($check['php'] === true && $check['chmods'] === true) {
             }
             if ($check['chmods'] === false) {
                 echo '<br />Please change the chmod of the \'<em>config.php</em>\' file in the \'<em>applications</em>\' folder to <em>777</em>.';
+            }
+            if ($check['gd'] == 'Not Installed') {
+                echo '<br />Please install and activate the GD library.';
+            }
+            if ($check['pdo'] == 'Not Installed') {
+                echo '<br />Please install and activate the PDO extension.';
             }
             ?>
         </div>
@@ -96,6 +111,11 @@ if ($check['php'] === true && $check['chmods'] === true) {
         <td>PDO Extension</td>
         <td><span class="label label-default">Installed</span></td>
         <td><span class="label label-<?php echo $check['pdo_css']; ?>"><?php echo $check['pdo']; ?></span></td>
+    </tr>
+    <tr>
+        <td>GD Library</td>
+        <td><span class="label label-default">Installed</span></td>
+        <td><span class="label label-<?php echo $check['gd_css']; ?>"><?php echo $check['gd']; ?></span></td>
     </tr>
     <tr>
         <td>chmod '<em>applications/config.php</em>'</td>
