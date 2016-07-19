@@ -3,14 +3,6 @@
 </div>
 <?php
 
-if (function_exists("gd_info")) {
-    $check['gd'] = 'Installed';
-    $check['gd_css'] = 'success';
-} else {
-    $check['gd'] = 'Not Installed';
-    $check['gd_css'] = 'success';
-}
-
 if (version_compare(PHP_VERSION, '5.3.7', '<')) {
     $check['php'] = false;
     $check['php_version'] = PHP_VERSION;
@@ -28,6 +20,15 @@ if (extension_loaded('pdo_mysql')) {
     $check['pdo'] = 'Not Installed';
     $check['pdo_css'] = 'danger';
 }
+
+if (function_exists("gd_info")) {
+    $check['gd'] = 'Installed';
+    $check['gd_css'] = 'success';
+} else {
+    $check['gd'] = 'Not Installed';
+    $check['gd_css'] = 'danger';
+}
+
 $config_chmods = substr(decoct(fileperms("../../applications/config.php")), -3);
 $check['OS'] = php_uname('s');
 $check['OS_css'] = 'success';
