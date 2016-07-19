@@ -13,7 +13,7 @@ define('MYSQL_HOST', '%mysql_host%');  // Your SQL host                         
 define('MYSQL_USERNAME', '%mysql_username%'); // Your SQL username
 define('MYSQL_PASSWORD', '%mysql_password%'); // Your SQL password
 define('MYSQL_DATABASE', '%mysql_database%'); // Your SQL Database for IkoBB
-define('MYSQL_PREFIX', '%mysql_prefix%'); // The prefix for this forum              Default: tan_
+define('MYSQL_PREFIX', '%mysql_prefix%'); // The prefix for this forum              Default: iko_
 define('MYSQL_PORT', 3306); // The port to your SQL                                 Default: 3306
 
 /**
