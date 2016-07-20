@@ -127,6 +127,10 @@ $LANG = array(
         '404' => array(
             'header' => '404',
             'message' => 'Entschuldigung, die von Ihnen gesuchte Resource konnte nicht gefunden werden.'
+        ),
+        '403' => array(
+            'header' => '403',
+            'message' => 'Entschuldigung, aber Sie dürfen diese Seite nicht sehen. Registrieren Sie sich und melden Sie sich an um den Inhalt dieser Seite zu sehen.'
         )
     ),
     'errors' => array(

@@ -3,7 +3,7 @@
 define('BASEPATH', 'Forum');
 require_once('applications/wrapper.php');
 if (!$IKO->sess->isLogged) {
-    redirect(SITE_URL . '/404.php');
+    redirect(SITE_URL . '/403.php');
 }//Check if user is logged in.
 
 $IKO->tpl->getTpl('members');
