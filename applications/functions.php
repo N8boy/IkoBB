@@ -608,5 +608,3 @@ function emoji_to_text($input)
     }
     return $clean;
 }
-
-?>
