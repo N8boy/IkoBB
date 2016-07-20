@@ -372,18 +372,34 @@ if (isset($_POST['submit'])) {
 
     } catch (Exception $e) {
         echo '<div class="alert alert-danger">' . $e->getMessage() . '</div>';
+        echo '<form onsubmit="javascript:ajaxForm(\'pages/mysql.php\')" action="javascript:return false;" class="ajaxForm"
+          method="POST">
+        <input type="text" name="host" class="form-control input-lg" placeholder="MySQL Host" value="' . $_POST['host'] . '"/>
+        <input type="text" name="username" class="form-control input-lg" placeholder="MySQL Username" value="' . $_POST['username'] . '"/>
+        <input type="password" name="password" class="form-control input-lg" placeholder="MySQL Password"/>
+        <input type="text" name="database" class="form-control input-lg" placeholder="MySQL Database" value="' . $_POST['database'] . '"/>
+        <input type="text" name="prefix" class="form-control input-lg" placeholder="MySQL Prefix" value="' . $_POST['prefix'] . '"/>
+        <br/>
+        <input type="hidden" name="submit" value=""/>
+        <input type="submit" name="submit" class="btn btn-primary btn-lg btn-block" value="Test Connection and Continue"/>
+    </form>';
     }
+} else {
+    ?>
+    <form onsubmit="javascript:ajaxForm('pages/mysql.php')" action="javascript:return false;" class="ajaxForm"
+          method="POST">
+        <input type="text" name="host" class="form-control input-lg" placeholder="MySQL Host"/>
+        <input type="text" name="username" class="form-control input-lg" placeholder="MySQL Username"/>
+        <input type="password" name="password" class="form-control input-lg" placeholder="MySQL Password"/>
+        <input type="text" name="database" class="form-control input-lg" placeholder="MySQL Database"/>
+        <input type="text" name="prefix" class="form-control input-lg" placeholder="MySQL Prefix" value="iko_"/>
+        <br/>
+        <input type="hidden" name="submit" value=""/>
+        <input type="submit" name="submit" class="btn btn-primary btn-lg btn-block"
+               value="Test Connection and Continue"/>
+    </form>
+    <?php
 }
 ?>
-<form onsubmit="javascript:ajaxForm('pages/mysql.php')" action="javascript:return false;" class="ajaxForm"
-      method="POST">
-    <input type="text" name="host" class="form-control input-lg" placeholder="MySQL Host"/>
-    <input type="text" name="username" class="form-control input-lg" placeholder="MySQL Username"/>
-    <input type="password" name="password" class="form-control input-lg" placeholder="MySQL Password"/>
-    <input type="text" name="database" class="form-control input-lg" placeholder="MySQL Database"/>
-    <input type="text" name="prefix" class="form-control input-lg" placeholder="MySQL Prefix" value="iko_"/>
-    <br/>
-    <input type="hidden" name="submit" value=""/>
-    <input type="submit" name="submit" class="btn btn-primary btn-lg btn-block" value="Test Connection and Continue"/>
-</form>
+
 </div>

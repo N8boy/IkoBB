@@ -25,8 +25,7 @@ require_once('../../applications/functions.php');
             $password = encrypt($_POST['password']);
             $email = $_POST['email'];
             $date = time();
-
-            if (!$username or !$email or !$password) {
+            if (!$username or !$email or !$password or !$_POST['password'] or $_POST['password'] == "") {
                 throw new Exception('All fields are required!');
             } else {
                 $MYSQL->bindMore(array(
@@ -43,16 +42,29 @@ require_once('../../applications/functions.php');
             }
         } catch (Exception $e) {
             echo '<div class="alert alert-danger">' . $e->getMessage() . '</div>';
+            echo '<form onsubmit="javascript:ajaxForm(\'pages/user.php\')" action="javascript:return false;" class="ajaxForm"
+              method="POST">
+            <input type="text" name="username" class="form-control input-lg" placeholder="Username" value="' . $_POST['username'] . '"/>
+            <input type="password" name="password" class="form-control input-lg" placeholder="Password"/>
+            <input type="text" name="email" class="form-control input-lg" placeholder="Email" value="' . $_POST['email'] . '"/>
+            <br/>
+            <input type="hidden" name="submit" value=""/>
+            <input type="submit" name="submit" class="btn btn-primary btn-lg btn-block" value="Finish"/>
+        </form>';
         }
+    } else {
+        ?>
+        <form onsubmit="javascript:ajaxForm('pages/user.php')" action="javascript:return false;" class="ajaxForm"
+              method="POST">
+            <input type="text" name="username" class="form-control input-lg" placeholder="Username"/>
+            <input type="password" name="password" class="form-control input-lg" placeholder="Password"/>
+            <input type="text" name="email" class="form-control input-lg" placeholder="Email"/>
+            <br/>
+            <input type="hidden" name="submit" value=""/>
+            <input type="submit" name="submit" class="btn btn-primary btn-lg btn-block" value="Finish"/>
+        </form>
+        <?php
     }
     ?>
-    <form onsubmit="javascript:ajaxForm('pages/user.php')" action="javascript:return false;" class="ajaxForm"
-          method="POST">
-        <input type="text" name="username" class="form-control input-lg" placeholder="Username"/>
-        <input type="password" name="password" class="form-control input-lg" placeholder="Password"/>
-        <input type="text" name="email" class="form-control input-lg" placeholder="Email"/>
-        <br/>
-        <input type="hidden" name="submit" value=""/>
-        <input type="submit" name="submit" class="btn btn-primary btn-lg btn-block" value="Finish"/>
-    </form>
+
 </div>

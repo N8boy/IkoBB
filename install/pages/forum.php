@@ -15,7 +15,6 @@ require_once('../../applications/config.php');
             if (!$name or !$email) {
                 throw new Exception('All fields are required!');
             } else {
-                //$MYSQL = new mysqli(MYSQL_HOST, MYSQL_USERNAME, MYSQL_PASSWORD, MYSQL_DATABASE);
 
                 $dsn = 'mysql:dbname=' . MYSQL_DATABASE . ';host=' . MYSQL_HOST;
 
@@ -24,12 +23,6 @@ require_once('../../applications/config.php');
                 } catch (PDOException $e) {
                     throw new Exception('Connection failed: ' . $e->getMessage());
                 }
-
-                /*if( $MYSQL->query("INSERT INTO `" . MYSQL_PREFIX . "blog` (`id`, `blog_name`, `blog_theme`, `blog_language`) VALUES (1, '$name', 'up', 'english');") ) {
-                    echo '<div class="alert alert-success">Success! <a href="javascript:ajaxLoad(\'pages/user.php\')">Continue</a>.</div>';
-                } else {
-                    throw new Exception('Error inserting blog details into database.');
-                }*/
 
                 $rules = '
 - No spamming.
@@ -42,15 +35,27 @@ require_once('../../applications/config.php');
             }
         } catch (Exception $e) {
             echo '<div class="alert alert-danger">' . $e->getMessage() . '</div>';
-        }
-    }
-    ?>
-    <form action="javascript:return false;" onsubmit="javascript:ajaxForm('pages/forum.php')" class="ajaxForm"
+            echo '<form action="javascript:return false;" onsubmit="javascript:ajaxForm(\'pages/forum.php\')" class="ajaxForm"
           method="POST">
-        <input type="text" name="name" class="form-control input-lg" placeholder="Forum Name"/>
-        <input type="text" name="email" class="form-control input-lg" placeholder="Forum Email"/>
+        <input type="text" name="name" class="form-control input-lg" placeholder="Forum Name" value="' . $_POST['name'] . '"/>
+        <input type="text" name="email" class="form-control input-lg" placeholder="Forum Email" value="' . $_POST['email'] . '"/>
         <br/>
         <input type="hidden" name="submit" value=""/>
         <input type="submit" name="submit" class="btn btn-primary btn-lg btn-block" value="Continue"/>
-    </form>
+    </form>';
+        }
+    } else {
+        ?>
+        <form action="javascript:return false;" onsubmit="javascript:ajaxForm('pages/forum.php')" class="ajaxForm"
+              method="POST">
+            <input type="text" name="name" class="form-control input-lg" placeholder="Forum Name"/>
+            <input type="text" name="email" class="form-control input-lg" placeholder="Forum Email"/>
+            <br/>
+            <input type="hidden" name="submit" value=""/>
+            <input type="submit" name="submit" class="btn btn-primary btn-lg btn-block" value="Continue"/>
+        </form>
+        <?php
+    }
+    ?>
+
 </div>

@@ -42,8 +42,7 @@
         </div>
         <div class="collapse navbar-collapse" id="install-top">
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="http://codetana.com/">Codetana</a></li>
-                <li><a href="https://github.com/Codetana/TangoBB/wiki">Documentation</a></li>
+                <li><a href="http://ikobb.de/">IkoBB</a></li>
             </ul>
         </div>
     </div>

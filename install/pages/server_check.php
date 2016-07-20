@@ -1,6 +1,7 @@
 <div class="panel-heading">
     Checking your server.
 </div>
+<div class="panel-body">
 <?php
 
 if (version_compare(PHP_VERSION, '5.3.7', '<')) {
@@ -58,16 +59,16 @@ if (strtoupper(substr(php_uname('s'), 0, 3)) === 'WIN') {
 if ($check['php'] === true && $check['chmods'] === true && $check['gd'] == 'Installed' && $check['pdo'] == 'Installed') {
     $_SESSION['IkoBB_install_step1'] = true;
     ?>
-    <div class="panel-body">
+
         <div class="alert alert-success">
             System check done! <a href="javascript:return false;" onclick="javascript:ajaxLoad('pages/mysql.php')">Continue</a>.
         </div>
-    </div>
-<?php
+
+    <?php
 } else {
     ?>
-    <div class="panel-body">
-        <div class="alert alert-danger">
+
+    <div class="alert alert-danger">
             <strong>Oh snap!</strong>
             IkoBB can't be installed on your system.
             <?php
@@ -85,10 +86,11 @@ if ($check['php'] === true && $check['chmods'] === true && $check['gd'] == 'Inst
             }
             ?>
         </div>
-    </div>
-<?php
+
+    <?php
 }
 ?>
+</div>
 
 <table class="table">
     <thead>
