@@ -200,19 +200,6 @@ class Iko_Admin
             return false;
         }
     }
-
-    public function template($type) {
-        global $IKO;
-
-        $data = ($IKO->data['flat_ui_admin'] == 1) ? 'template/old_' . $type . '.php' : 'template/' . $type . '.php';
-        $return = '';
-        ob_start();
-        include($data);
-        $return .= ob_get_contents();
-        ob_end_clean();
-        return $return;
-    }
-
 }
 
 ?>
