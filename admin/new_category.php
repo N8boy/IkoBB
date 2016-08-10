@@ -17,8 +17,14 @@ function allowed_usergroups()
     $query = $MYSQL->query('SELECT * FROM {prefix}usergroups');
     $return = '<input type="checkbox" name="allowed_ug[]" value="0" CHECKED /> Guest<br />';
     foreach ($query as $u) {
-        $return .= '<input type="checkbox" name="allowed_ug[]" value="' . $u['id'] . '" /> ' . $u['group_name'] . '<br />';
+        if($u['id']!= 2) {
+            $return .= '<input type="checkbox" name="allowed_ug[]" value="' . $u['id'] . '" CHECKED /> ' . $u['group_name'] . '<br />';
+        }
+        else {
+            $return .= '<input type="checkbox" name="allowed_ug[]" value="' . $u['id'] . '" /> ' . $u['group_name'] . '<br />';
+        }
     }
+
     return $return;
 }
 
