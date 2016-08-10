@@ -200,6 +200,24 @@ class Iko_Admin
             return false;
         }
     }
+
+    public function template($type) {
+        global $IKO;
+        // ToDo: Add new theme system
+        if(isset($IKO->data['theme'])) {
+            $data = ($IKO->data['theme'] == 1) ? 'template/old_' . $type . '.php' : 'template/' . $type . '.php';
+        }
+        else {
+            $data = 'template/' . $type . '.php';
+        }
+        $return = '';
+        ob_start();
+        include($data);
+        $return .= ob_get_contents();
+        ob_end_clean();
+        return $return;
+    }
+
 }
 
 ?>
