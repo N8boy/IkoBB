@@ -39,11 +39,11 @@ global $ADMIN, $IKO;
                   </ul>
 
                   <div class="sidebar-links">
-                      <a href="<?php echo SITE_URL; ?>" class="btn btn-success btn-lg" data-toggle="tooltip"
+                      <a href="<?php echo SITE_URL; ?>" class="btn btn-lg" data-toggle="tooltip"
                    title="Back To Forum">
                     <i class="glyphicon glyphicon-log-out"></i>
                 </a>
-                <a href="<?php echo SITE_URL; ?>/members.php/cmd/logout" class="btn btn-success btn-lg"
+                <a href="<?php echo SITE_URL; ?>/members.php/cmd/logout" class="btn btn-lg"
                    data-toggle="tooltip" title="Log Out">
                     <i class="glyphicon glyphicon-off"></i>
                 </a><br />

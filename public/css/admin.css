@@ -38,7 +38,7 @@ body {
 
 /* Sidebar */
 .sidebar {
-    background-color: #8BC34A;
+    background-color: #504A4B;
     min-height: 100%;
     height: 100%;
     overflow-y: auto;
@@ -55,7 +55,7 @@ body {
 .sidebar > .container {
     width: 100%;
     /* Padding */
-    padding: 10px 0 10px 20px;
+    padding: 0px 0 0px 0px;
 }
 
 .main-box {
@@ -73,32 +73,39 @@ body {
 }
 
 .sidebar > .container > .nav-pills > li > a {
-    background-color: #689F38;
     /* Font */
     color: #fff;
     /* Padding */
-    padding: 10px 20px 10px 20px;
-    /* Border Radius */
-    -moz-border-radius: 5px 0 0 5px;
-    border-radius: 5px 0 0 5px;
+    padding: 12px 20px 12px 20px;
+    /* Border */
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-bottom: 1px solid #848482;
+    border-radius: 0;
 }
 
 .sidebar > .container > .nav-pills > li.active > a {
-    background-color: #8BC34A;
+    background-color: #6D6968;
+    border-top: 1px solid #848482;
 }
 
 .sidebar > .container > .nav-pills > li.active > a:hover {
-    background-color: #33691E;
+    background-color: #5C5858;
     /* Transition */
 	-webkit-transition: background-color ease-in-out 0.15s;
 	        transition: background-color ease-in-out 0.15s;
 }
 
 .sidebar > .container > .nav-pills > li > a:hover {
-    background-color: #558B2F;
+    background-color: #5C5858;
+    color: #337ab7;
     /* Transition */
 	-webkit-transition: background-color ease-in-out 0.15s;
 	        transition: background-color ease-in-out 0.15s;
+}
+.sidebar > .container > .nav-pills > li {
+    margin-top: 0px;
 }
 
 .sidebar > .container > .sidebar-links {
@@ -129,8 +136,16 @@ body {
 /* Panel */
 .panel {
     /* Border Radius */
-    -moz-border-radius: 2px;
-         border-radius: 2px;
+    -moz-border-radius: 5px;
+         border-radius: 5px;
+}
+.panel-default {
+    border: 1px solid #848482;
+}
+.panel-default > .panel-heading {
+    background-color: #6D6968;
+    color: #fff;
+
 }
 
 /* Jumbotron */

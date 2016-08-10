@@ -57,21 +57,23 @@
 }
 
 .btn-default {
-    background-color: #009688;
+    background-color: #337ab7;
     /* Font */
-    color: #fff;
+    color: #eee;
+    font-weight: bold;
 }
 
 .btn-default:hover,
 .btn-default:focus {
-    background-color: #00897b;
+    background-color: #337ab7;
     /* Font */
     color: #fff;
+    font-weight: bold;
 }
 
 .btn-default:active,
 .btn-default.active {
-    background-color: #00796b;
+    background-color: #337ab7;
     /* Font */
     color: #fff;
 }
