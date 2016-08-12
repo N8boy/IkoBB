@@ -237,29 +237,27 @@ function list_manage_node($category)
                             ORDER BY
                             node_place", $data);*/
     $MYSQL->bind('in_category', $category);
-    $query = $MYSQL->query("SELECT * FROM {prefix}forum_node WHERE in_category = :in_category AND node_type = 1 ORDER BY node_place");
+    $query = $MYSQL->query("SELECT * FROM {prefix}forum_node WHERE in_category = :in_category AND (node_type = 1 OR node_type = 3) ORDER BY node_place");
     $return = '';
     foreach ($query as $n) {
 
-        /*$MYSQL->where('parent_node', $n['id']);
-        $MYSQL->where('node_type', 2);
-        $s_q     = $MYSQL->get('{prefix}forum_node');*/
-        $MYSQL->bind('parent_node', $n['id']);
-        $s_q = $MYSQL->query('SELECT * FROM {prefix}forum_node WHERE parent_node = :parent_node AND node_type = 2 ORDER BY node_place ASC');
-        $s_q_a = array();
-        foreach ($s_q as $s_f) {
-            $locked = ($s_f['node_locked'] == 1) ? ' class="text-danger" title="Node Locked"' : '';
-            $s_q_a[] = '<a href="' . SITE_URL . '/node.php/' . $s_f['name_friendly'] . '.' . $s_f['id'] . '" target="_blank"' . $locked . '>
+        if($n['node_type']==1) {
+            $MYSQL->bind('parent_node', $n['id']);
+            $s_q = $MYSQL->query('SELECT * FROM {prefix}forum_node WHERE parent_node = :parent_node AND node_type = 2 ORDER BY node_place ASC');
+            $s_q_a = array();
+            foreach ($s_q as $s_f) {
+                $locked = ($s_f['node_locked'] == 1) ? ' class="text-danger" title="Node Locked"' : '';
+                $s_q_a[] = '<a href="' . SITE_URL . '/node.php/' . $s_f['name_friendly'] . '.' . $s_f['id'] . '" target="_blank"' . $locked . '>
                           ' . $s_f['node_name'] . '
                           (<a href="' . SITE_URL . '/admin/edit_node.php/id/' . $s_f['id'] . '" title="Edit (' . $s_f['node_name'] . ')"><i class="glyphicon glyphicon-edit"></i></a>)
                           (<a href="' . SITE_URL . '/admin/manage_node.php/delete_node/' . $s_f['id'] . '" title="Delete (' . $s_f['node_name'] . ')"><i class="glyphicon glyphicon-trash"></i></a>)
                           (<a href="' . SITE_URL . '/admin/manage_node.php/toggle_lock/' . $s_f['id'] . '" title="Toggle Lock (' . $s_f['node_name'] . ')"><i class="glyphicon glyphicon-warning-sign"></i></a>)
                         </a>
                         (<a href="' . SITE_URL . '/admin/manage_node.php/increase_order/' . $s_f['id'] . '" title="Increase Sub-Node Order (' . $s_f['node_name'] . ')"><i class="fa fa-level-up"></i></a>)';
-        }
+            }
 
-        $locked = ($n['node_locked'] == "1") ? ' style="border-left:2px solid #e84040;" title="Node is locked."' : '';
-        $return .= '<tr' . $locked . '>
+            $locked = ($n['node_locked'] == "1") ? ' style="border-left:2px solid #e84040;" title="Node is locked."' : '';
+            $return .= '<tr' . $locked . '>
                         <td>
                           <strong><a href="' . SITE_URL . '/node.php/' . $n['name_friendly'] . '.' . $n['id'] . '" target="_blank">' . $n['node_name'] . '</a></strong><br />
                           <small>' . $n['node_desc'] . '</small><br />
@@ -287,6 +285,35 @@ function list_manage_node($category)
                           </div>
                         </td>
                       </tr>';
+        } else {
+            $return .= '<tr' . $locked . '>
+                        <td>
+                          <strong>' . $n['node_name'] . '</strong><br />
+                          <small>' . $n['node_desc'] . '</small><br />
+                        </td>
+                        <td>
+                          <form action="" method="POST">
+                            <input type="hidden" name="csrf_token" value="' . $token . '">
+                            <input type="hidden" name="node_id" value="' . $n['id'] . '" />
+                            <input type="text" class="form-control" name="node_place" value="' . $n['node_place'] . '" />
+                            <input type="submit" name="change_place" style="display:none;" />
+                          </form>
+                        </td>
+                        <td>
+                          <div class="btn-group">
+                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                              Options <span class="caret"></span>
+                            </button>
+                            <span class="dropdown-arrow dropdown-arrow-inverse"></span>
+                            <ul class="dropdown-menu dropdown-inverse" role="menu">
+                              <li><a href="' . SITE_URL . '/admin/edit_link.php/id/' . $n['id'] . '">Edit Link</a></li>
+                              <li><a href="' . SITE_URL . '/admin/manage_node.php/delete_node/' . $n['id'] . '">Delete Link</a></li>
+                            </ul>
+                          </div>
+                        </td>
+                      </tr>';
+        }
+
     }
     return $return;
 }
@@ -370,7 +397,7 @@ foreach ($query as $cat) {
 }
 
 echo $ADMIN->box(
-    'Forum Nodes <p class="pull-right"><a href="' . SITE_URL . '/admin/new_node.php" class="btn btn-default btn-xs">New Node</a></p>',
+    'Forum Nodes <p class="pull-right"><a href="' . SITE_URL . '/admin/new_link.php" class="btn btn-info btn-xs">New Link</a><a href="' . SITE_URL . '/admin/new_node.php" class="btn btn-default btn-xs">New Node</a></p>',
     $notice .
     'You can manage the forum nodes here.',
     '',

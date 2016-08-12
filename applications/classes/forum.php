@@ -52,64 +52,79 @@ class Iko_Forum
 
         $return = '';
         $MYSQL->bind('in_category', $category);
-        $query = $MYSQL->query("SELECT * FROM {prefix}forum_node WHERE in_category = :in_category AND node_type = 1 ORDER BY node_place ASC");
+        $query = $MYSQL->query("SELECT * FROM {prefix}forum_node WHERE in_category = :in_category AND (node_type = 1 OR node_type = 3) ORDER BY node_place ASC");
         foreach ($query as $node) {
-            $allowed = explode(',', $node['allowed_usergroups']);
-            if (in_array($IKO->sess->data['user_group'], $allowed)) {
-                $MYSQL->bind('parent_node', $node['id']);
-                $sub = $MYSQL->query("SELECT * FROM {prefix}forum_node WHERE node_type = 2 AND parent_node = :parent_node ORDER BY node_place asc");
-                $subs = array();
-                foreach ($sub as $suf) {
-                    $allowed = explode(',', $suf['allowed_usergroups']);
-                    if (in_array($IKO->sess->data['user_group'], $allowed)) {
-                        $subs[] = '<a href="' . SITE_URL . '/node.php/' . $suf['name_friendly'] . '.' . $suf['id'] . '">' . $suf['node_name'] . '</a>';
-                    }
-                }
-                $subs = (!empty($subs)) ? implode(', ', array_slice($subs, 0, $IKO->data['number_subs'])) : 'None';
-
-                // New posts in node?
-                $MYSQL->bind('parent_node', $node['id']);
-                $sub_nodes = $MYSQL->query("SELECT id FROM {prefix}forum_node WHERE node_type = 2 AND parent_node = :parent_node");
-                $nodes = array();
-                array_push($nodes, $node['id']);
-                if (!empty($sub_nodes)) {
-                    foreach ($sub_nodes as $sub_node) {
-                        array_push($nodes, $sub_node['id']);
-                    }
-                }
-
-                foreach ($nodes as $node_id) {
-                    $MYSQL->bind('origin_node', $node_id);
-                    $posts = $MYSQL->query("SELECT * FROM {prefix}forum_posts WHERE origin_node = :origin_node AND post_type = 1 ORDER BY post_time DESC");
-                    $node_status = 'read';
-                    if (!empty($posts)) {
-                        foreach ($posts as $post) {
-                            $status = $IKO->node->thread_new_posts($post['id']);
-                            if ($status == 'unread') {
-                                $node_status = 'unread';
-                                break;
-                            }
-
+            if ($node['node_type'] == 1) { // Node is a real node
+                $allowed = explode(',', $node['allowed_usergroups']);
+                if (in_array($IKO->sess->data['user_group'], $allowed)) {
+                    $MYSQL->bind('parent_node', $node['id']);
+                    $sub = $MYSQL->query("SELECT * FROM {prefix}forum_node WHERE node_type = 2 AND parent_node = :parent_node ORDER BY node_place asc");
+                    $subs = array();
+                    foreach ($sub as $suf) {
+                        $allowed = explode(',', $suf['allowed_usergroups']);
+                        if (in_array($IKO->sess->data['user_group'], $allowed)) {
+                            $subs[] = '<a href="' . SITE_URL . '/node.php/' . $suf['name_friendly'] . '.' . $suf['id'] . '">' . $suf['node_name'] . '</a>';
                         }
                     }
+                    $subs = (!empty($subs)) ? implode(', ', array_slice($subs, 0, $IKO->data['number_subs'])) : 'None';
+
+                    // New posts in node?
+                    $MYSQL->bind('parent_node', $node['id']);
+                    $sub_nodes = $MYSQL->query("SELECT id FROM {prefix}forum_node WHERE node_type = 2 AND parent_node = :parent_node");
+                    $nodes = array();
+                    array_push($nodes, $node['id']);
+                    if (!empty($sub_nodes)) {
+                        foreach ($sub_nodes as $sub_node) {
+                            array_push($nodes, $sub_node['id']);
+                        }
+                    }
+
+                    foreach ($nodes as $node_id) {
+                        $MYSQL->bind('origin_node', $node_id);
+                        $posts = $MYSQL->query("SELECT * FROM {prefix}forum_posts WHERE origin_node = :origin_node AND post_type = 1 ORDER BY post_time DESC");
+                        $node_status = 'read';
+                        if (!empty($posts)) {
+                            foreach ($posts as $post) {
+                                $status = $IKO->node->thread_new_posts($post['id']);
+                                if ($status == 'unread') {
+                                    $node_status = 'unread';
+                                    break;
+                                }
+
+                            }
+                        }
+                    }
+
+
+                    $return .= $IKO->tpl->entity(
+                        'forum_listings_node',
+                        array(
+                            'node_name',
+                            'node_desc',
+                            'latest_post',
+                            'sub_forums',
+                            'status'
+                        ),
+                        array(
+                            '<a href="' . SITE_URL . '/node.php/' . $node['name_friendly'] . '.' . $node['id'] . '">' . $node['node_name'] . '</a>',
+                            $node['node_desc'],
+                            $this->latestPost($node['id']),
+                            $subs,
+                            $node_status
+                        )
+                    );
                 }
-
-
+            }
+            else { // node is a link
                 $return .= $IKO->tpl->entity(
-                    'forum_listings_node',
+                    'forum_listings_links',
                     array(
                         'node_name',
-                        'node_desc',
-                        'latest_post',
-                        'sub_forums',
-                        'status'
+                        'link'
                     ),
                     array(
-                        '<a href="' . SITE_URL . '/node.php/' . $node['name_friendly'] . '.' . $node['id'] . '">' . $node['node_name'] . '</a>',
-                        $node['node_desc'],
-                        $this->latestPost($node['id']),
-                        $subs,
-                        $node_status
+                        $node['node_name'],
+                        $node['node_desc']
                     )
                 );
             }
