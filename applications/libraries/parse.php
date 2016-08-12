@@ -91,7 +91,7 @@ class Library_Parse
 
                 $url = trim($matches[1]);
                 if ($this_object->checkSafeUrl($url)) {
-                    $output = '<a href="' . $url . '">' . $url . '</a>';
+                    $output = '<a href="' . $url . '" target="_blank">' . $url . '</a>';
                 }
 
                 return $output;
@@ -103,7 +103,7 @@ class Library_Parse
                 $url = trim($matches[1]);
                 $text = $matches[2];
                 if ($this_object->checkSafeUrl($url)) {
-                    $output = '<a href="' . $url . '">' . $text . '</a>';
+                    $output = '<a href="' . $url . '" target="_blank">' . $text . '</a>';
                 }
 
                 return $output;
