@@ -54,7 +54,7 @@ echo $ADMIN->box(
 echo $ADMIN->box(
     'Github and Updates',
     'Fork IkoBB on Github <a href="https://github.com/N8boy/IkoBB">here</a>.<br />
-       To keep up with the updates on IkoBB, you can fork/watch the IkoBB Github repository or visit our website at <a href="http://ikobb.de">ikoBB.Com</a> regularly!'
+       To keep up with the updates on IkoBB, you can fork/watch the IkoBB Github repository or visit our website at <a href="http://ikobb.de">ikoBB.de</a> regularly!'
 );
 
 //require_once('template/bot.php');
