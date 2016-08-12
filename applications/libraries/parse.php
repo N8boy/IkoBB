@@ -70,6 +70,10 @@ class Library_Parse
             '#\\[code=([^\\]]*?)\\](.*?)\\[/code\\]#uis' => '<pre class="brush: \\1">\\2</pre>',
             // flags
             '#\\[flag\\](.*?)\\[/flag\\]#uis' => '<span class="flag-icon flag-icon-\\1"></span>',
+            // superscript
+            '#\\[sup\\](.*?)\\[/sup\\]#uis' => '<sup>\\1</sup>',
+            // subscript
+            '#\\[sub\\](.*?)\\[/sub\\]#uis' => '<sub>\\1</sub>',
             // image
             '#\\[img\\](.*?)\\[/img\\]#uis' => function ($matches) {
                 $output = '';
