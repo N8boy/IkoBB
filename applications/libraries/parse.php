@@ -169,7 +169,7 @@ class Library_Parse
         $result = preg_replace(array_keys($this->custom_codes), array_values($this->custom_codes), $result);
 
         //Mentions
-        $result = preg_replace('/@(\w+)/', '@<a href="' . SITE_URL . '/members.php/cmd/user/id/$1">$1</a>', $result);
+        $result = preg_replace('/@(\w+)/', '<a href="' . SITE_URL . '/members.php/cmd/user/id/$1">$1</a>', $result);
 
         //Additional parsing that should be fixed.
         $result = str_replace(
