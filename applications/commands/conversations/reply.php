@@ -27,7 +27,7 @@ if ($PGET->g('id')) {
                 }
 
                 NoCSRF::check('csrf_token', $_POST);
-                $cont = clean(emoji_to_text($_POST['content']));
+                $cont = emoji_to_text($_POST['content']);
                 $time = time();
 
                 if (!$cont) {
