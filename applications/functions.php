@@ -101,7 +101,7 @@ function users_online()
     $query = $MYSQL->query("SELECT * FROM {prefix}sessions ORDER BY session_time DESC");
     $users = array();
     foreach ($query as $u) {
-        $session_time = strtotime("+1 day", $u['session_time']);
+        $session_time = strtotime("+10 minutes", $u['session_time']);
         if ($time <= $session_time) {
             if (!in_array($u['logged_user'], $users)) {
                 $users[] = $u['logged_user'];
