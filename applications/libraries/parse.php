@@ -74,6 +74,10 @@ class Library_Parse
             '#\\[sup\\](.*?)\\[/sup\\]#uis' => '<sup>\\1</sup>',
             // subscript
             '#\\[sub\\](.*?)\\[/sub\\]#uis' => '<sub>\\1</sub>',
+            //LaTeX
+            '#\\[latex\\](.*?)\\[/latex\\]#uis' => '$$\\1$$',
+            //MathML //ToDo: Check why this don't work
+            '#\\[mathml\\](.*?)\\[/mathml\\]#uis' => '<math  xmlns="http://www.w3.org/1998/Math/MathML">\\1</math>',
             // image
             '#\\[img\\](.*?)\\[/img\\]#uis' => function ($matches) {
                 $output = '';
