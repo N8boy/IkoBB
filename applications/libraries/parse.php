@@ -78,8 +78,21 @@ class Library_Parse
             '#\\[latex\\](.*?)\\[/latex\\]#uis' => '$$\\1$$',
             //LaTeX
             '#\\[asciimath\\](.*?)\\[/asciimath\\]#uis' => '`\\1`',
-            //MathML //ToDo: Check why this don't work
-            '#\\[mathml\\](.*?)\\[/mathml\\]#uis' => '<math  xmlns="http://www.w3.org/1998/Math/MathML">\\1</math>',
+            //MathML
+            '#\\[mathml\\](.*?)\\[/mathml\\]#uis' => function ($matches) {
+                $matches[1] = str_replace(
+                    array(
+                        '&lt;',
+                        '&gt;'
+                    ),
+                    array(
+                        '<',
+                        '>'
+                    ),
+                    $matches[1]
+                );
+                return '<math  xmlns="http://www.w3.org/1998/Math/MathML">' . $matches[1] . '</math>';
+            },
             // image
             '#\\[img\\](.*?)\\[/img\\]#uis' => function ($matches) {
                 $output = '';
