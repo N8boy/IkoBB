@@ -18,7 +18,6 @@ class Iko_Captcha
     {
         global $IKO;
         if ($IKO->data['captcha_type'] == "2") {
-            require_once('recaptchalib.php');
             $this->captcha_type = 2;
             $this->key = array(
                 'public' => $IKO->data['recaptcha_public_key'],
@@ -39,7 +38,7 @@ class Iko_Captcha
         if ($this->captcha_type == "1") {
             return '<img src="' . SITE_URL . '/public/img/captcha.php" alt="IkoBB Captcha" /><br /><input type="text" id="tangobb_captcha" name="tangobb_captcha" />';
         } else {
-            return recaptcha_get_html($this->key['public'], $this->error);
+            return '<div class="g-recaptcha" data-sitekey="' . $this->key['public'] . '"></div>';
         }
     }
 
@@ -57,13 +56,9 @@ class Iko_Captcha
                 return true;
             }
         } else {
-            $resp = recaptcha_check_answer(
-                $this->key['private'],
-                $_SERVER['REMOTE_ADDR'],
-                $_POST['recaptcha_challenge_field'],
-                $_POST['recaptcha_response_field']
-            );
-            if ($resp->is_valid) {
+            $recaptcha = $_POST['g-recaptcha-response'];
+            $response = file_get_contents("https://www.google.com/recaptcha/api/siteverify?secret=" . $this->key['private'] . "&response=" . $recaptcha . "&remoteip=" . $_SERVER['REMOTE_ADDR']);
+            if ($response . success == true) {
                 return true;
             } else {
                 throw new Exception ($LANG['global_form_process']['captcha_incorrect']);

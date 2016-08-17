@@ -49,7 +49,8 @@ class Iko_Template
              <script type="text/javascript" src="' . SITE_URL . '/public/js/tangobb.js"></script>
              <link type="text/css" rel="Stylesheet" href="' . SITE_URL . '/public/js/highlighter/styles/shThemeDefault.css"/>
              <link type="text/css" rel="Stylesheet" href="' . SITE_URL . '/public/js/highlighter/styles/shCore.css"/>
-             <script type="text/javascript" async src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML"></script>'
+             <script type="text/javascript" async src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+             <script src="https://www.google.com/recaptcha/api.js"></script>'
         );
 
         $this->addParam(
