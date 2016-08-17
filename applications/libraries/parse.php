@@ -77,10 +77,23 @@ class Library_Parse
                     ),
                     $matches[1]
                 );
-                return '<pre class="brush: php">' . $matches[1] . '</pre>';
+                return '<pre class="brush: c++">' . $matches[1] . '</pre>';
             },
             // codeblock with a specific brush
-            '#\\[code=([^\\]]*?)\\](.*?)\\[/code\\]#uis' => '<pre class="brush: \\1">\\2</pre>',
+            '#\\[code=([^\\]]*?)\\](.*?)\\[/code\\]#uis' => function ($matches) {
+                $matches[2] = str_replace(
+                    array(
+                        '[',
+                        ']'
+                    ),
+                    array(
+                        '&#91;',
+                        '&#93;'
+                    ),
+                    $matches[2]
+                );
+                return '<pre class="brush: ' . $matches[1] . '">' . $matches[2] . '</pre>';
+            },
             // flags
             '#\\[flag\\](.*?)\\[/flag\\]#uis' => '<span class="flag-icon flag-icon-\\1"></span>',
             // superscript
