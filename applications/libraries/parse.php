@@ -65,7 +65,20 @@ class Library_Parse
             // font face
             '#\\[font=([^\\]]*?)\\](.*?)\\[/font\\]#uis' => '<span style="font-family: \\1;">\\2</span>',
             // codeblock without a specific brush
-            '#\\[code\\](.*?)\\[/code\\]#uis' => '<pre class="brush: php">\\1</pre>',
+            '#\\[code\\](.*?)\\[/code\\]#uis' => function ($matches) {
+                $matches[1] = str_replace(
+                    array(
+                        '[',
+                        ']'
+                    ),
+                    array(
+                        '&#91;',
+                        '&#93;'
+                    ),
+                    $matches[1]
+                );
+                return '<pre class="brush: php">' . $matches[1] . '</pre>';
+            },
             // codeblock with a specific brush
             '#\\[code=([^\\]]*?)\\](.*?)\\[/code\\]#uis' => '<pre class="brush: \\1">\\2</pre>',
             // flags
