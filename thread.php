@@ -24,7 +24,7 @@ if ($PGET->s(true)) {
         $p_query = $MYSQL->query("SELECT * FROM {prefix}forum_node WHERE id = :id");
         $allowed = explode(',', $p_query['0']['allowed_usergroups']);
         if (!in_array($IKO->sess->data['user_group'], $allowed)) {
-            redirect(SITE_URL . '/404.php');
+            redirect(SITE_URL . '/403.php');
         }
 
         $user = $IKO->user($query['0']['post_user']);
