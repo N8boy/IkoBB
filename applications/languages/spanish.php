@@ -95,13 +95,16 @@ $LANG = array(
             'profile' => 'Perfil',
             'avatar' => 'Avatar',
             'change_avatar' => 'Cambiar avatar <small>Máximo 500x500 Pixeles</small>',
+            'use_avatar' => 'Utilizar Avatar',
             'use_gravatar' => 'Utilizar Gravatar',
+            'use_identicon' => 'Utilizar Identicon',
             'form_save' => 'Guardar cambios',
             'error_adding_gravatar' => 'Error al añadir Gravatar. Intenta más tarde.',
             'successful_adding_gravatar' => '¡Tu Gravatar ha sido guardado con éxito!',
             'error_upload_avatar' => 'Error al subir avatar. Intenta más tarde.',
-            'about_you' => 'Acerca de ti',
             'successful_upload_avatar' => '¡Tu avatar se ha guardado con éxito!',
+            'successful_identicon' => 'Identicon successfully generated!',
+            'about_you' => 'Acerca de ti',
             'password' => 'Contraseña',
             'current_password' => 'Contrasela actual',
             'new_password' => 'Nueva contraseña',
@@ -135,7 +138,8 @@ $LANG = array(
     ),
     'errors' => array(
         'thread_tracker_insert' => 'Ha ocurrido un error en la creación del rastreador del hilo.',
-        'thread_tracker_update' => 'Ha ocurrido un error en la actualización del rastreador del hilo.'
+        'thread_tracker_update' => 'Ha ocurrido un error en la actualización del rastreador del hilo.',
+        'generate_identicon' => 'An Error accured while generating an identicon'
     ),
     //Global Form Variables
     'global_form_process' => array(

@@ -95,13 +95,16 @@ $LANG = array(
             'profile' => 'Profile',
             'avatar' => 'Avatar',
             'change_avatar' => 'Change Avatar <small>A maximum of 500x500 Pixels</small>',
-            'use_gravatar' => 'Use Gravatar Instead',
+            'use_avatar' => 'Use Avatar',
+            'use_gravatar' => 'Use Gravatar',
+            'use_identicon' => 'Use Identicon',
             'form_save' => 'Save Changes',
             'error_adding_gravatar' => 'Error adding Gravatar. Try again later.',
             'successful_adding_gravatar' => 'Gravatar successfully saved!',
             'error_upload_avatar' => 'Error uploading avatar. Try again later.',
+            'successful_upload_avatar' => 'Avatar successfully saved!',
+            'successful_identicon' => 'Identicon successfully generated!',
             'about_you' => 'About You',
-            'successful_upload_avatar' => 'Avatar suceessfully saved!',
             'password' => 'Password',
             'current_password' => 'Current Password',
             'new_password' => 'New Password',
@@ -135,7 +138,8 @@ $LANG = array(
     ),
     'errors' => array(
         'thread_tracker_insert' => 'An Error accured while creating a thread tracker.',
-        'thread_tracker_update' => 'An Error accured while updating a thread tracker.'
+        'thread_tracker_update' => 'An Error accured while updating a thread tracker.',
+        'generate_identicon' => 'An Error accured while generating an identicon'
     ),
     //Global Form Variables
     'global_form_process' => array(

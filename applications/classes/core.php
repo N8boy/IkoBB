@@ -46,14 +46,29 @@ class Iko_Core
         $d_group                      = ($query['0']['display_group'] == 0)? $query['0']['user_group'] : $query['0']['display_group'];
         $query['0']['username_style'] = $this->usergroup($d_group, 'username_style', $query['0']['username']);
 
-        if ($query['0']['avatar_type'] == "0") {
+        if ($query['0']['avatar_type'] == 0 || $query['0']['avatar_type'] == 2) {
             $file = './public/img/avatars/' . $query['0']['user_avatar'];
             if (file_exists($file)) {
                 $query['0']['user_avatar'] = SITE_URL . '/public/img/avatars/' . $query['0']['user_avatar'];
             } else {
-                $query['0']['user_avatar'] = SITE_URL . '/public/img/avatars/default.png';
+                require_once('applications/libraries/Identicon/Generator/BaseGenerator.php');
+                require_once('applications/libraries/Identicon/Generator/GeneratorInterface.php');
+                require_once('applications/libraries/Identicon/Generator/GdGenerator.php');
+                require_once('applications/libraries/Identicon/Identicon.php');
+
+                $identicon = new \Identicon\Identicon();
+                $imageData = $identicon->getImageData($query['0']['username'], 500);
+                $image = imagecreatefromstring($imageData);
+                if ($image !== false) {
+                    imagepng($image, 'public/img/avatars/' . $query['0']['id'] . '.png');
+                    imagedestroy($image);
+                    $MYSQL->bind('user_avatar', $query['0']['id'] . '.png');
+                    $MYSQL->bind('id', $query['0']['id']);
+                    $MYSQL->query("UPDATE {prefix}users SET user_avatar = :user_avatar, avatar_type = 2 WHERE id = :id");
+                    $query['0']['user_avatar'] = SITE_URL . '/public/img/avatars/' . $query['0']['id'] . '.png';
+                }
             }
-        } else {
+        } elseif ($query['0']['avatar_type'] == 1) {
             $query['0']['user_avatar'] = "http://www.gravatar.com/avatar/" . md5(strtolower(trim($query['0']['user_email']))) . "?d=mm&s=200";
         }
 

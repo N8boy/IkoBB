@@ -38,7 +38,7 @@ require_once(PATH . 'applications/config.php');
 define('LIB', 'libraries/');
 define('CLA', 'classes/');
 
-//MySQLi Library
+//PDO Library
 require_once(PATH_A . LIB . 'pdo.php');
 $MYSQL = new db();
 

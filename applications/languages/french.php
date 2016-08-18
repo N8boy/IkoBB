@@ -94,13 +94,16 @@ $LANG = array(
             'profile' => 'Profil',
             'avatar' => 'Avatar',
             'change_avatar' => 'Changer d\'avatar <small>taille maximum de l\'image 500x500 pixels</small>',
-            'use_gravatar' => 'utiliser un  Gravatar à la place',
-            'form_save' => 'Enregistrer les modifications',
+            'use_avatar' => 'utiliser un Avatar',
+            'use_gravatar' => 'utiliser un Gravatar',
+            'use_identicon' => 'utiliser un Identicon',
+            'form_save' => 'Enregistrert les modifications',
             'error_adding_gravatar' => 'Erreur lors de l\'ajout du Gravatar. Ré-essayez plus tard.',
             'successful_adding_gravatar' => 'Gravatar enregistré!',
             'error_upload_avatar' => 'Erreur d\'enregistrement de votre nouvel avatar. Ré-essayez plus tard.',
-            'about_you' => 'A propos de vous',
             'successful_upload_avatar' => 'Avatar mis à jour!',
+            'successful_identicon' => 'Identicon successfully generated!',
+            'about_you' => 'A propos de vous',
             'password' => 'Mot de passe',
             'current_password' => 'Mot de passe actuel',
             'new_password' => 'Nouveau mot de passe',
@@ -134,7 +137,8 @@ $LANG = array(
     ),
     'errors' => array(
         'thread_tracker_insert' => 'Une erreur est survenue lors de la mise en place du suivi de sujet.',
-        'thread_tracker_update' => 'Une erreur est survenue lors de la mise à jour du suivi de sujet.'
+        'thread_tracker_update' => 'Une erreur est survenue lors de la mise à jour du suivi de sujet.',
+        'generate_identicon' => 'An Error accured while generating an identicon'
     ),
     //Global Form Variables
     'global_form_process' => array(

@@ -28,3 +28,11 @@ ul.visitors_framed > li {
     /* Margin */
     margin: 5px;
 }
+
+div.avatar_uploader {
+    display: none;
+}
+
+input.avatar_activator:checked ~ div.avatar_uploader {
+    display: block;
+}
