@@ -47,20 +47,20 @@ class Iko_Core
         $query['0']['username_style'] = $this->usergroup($d_group, 'username_style', $query['0']['username']);
 
         if ($query['0']['avatar_type'] == 0 || $query['0']['avatar_type'] == 2) {
-            $file = './public/img/avatars/' . $query['0']['user_avatar'];
+            $file = PATH . 'public/img/avatars/' . $query['0']['user_avatar'];
             if (file_exists($file)) {
                 $query['0']['user_avatar'] = SITE_URL . '/public/img/avatars/' . $query['0']['user_avatar'];
             } else {
-                require_once('applications/libraries/Identicon/Generator/BaseGenerator.php');
-                require_once('applications/libraries/Identicon/Generator/GeneratorInterface.php');
-                require_once('applications/libraries/Identicon/Generator/GdGenerator.php');
-                require_once('applications/libraries/Identicon/Identicon.php');
+                require_once(PATH_A . LIB . 'Identicon/Generator/BaseGenerator.php');
+                require_once(PATH_A . LIB . 'Identicon/Generator/GeneratorInterface.php');
+                require_once(PATH_A . LIB . 'Identicon/Generator/GdGenerator.php');
+                require_once(PATH_A . LIB . 'Identicon/Identicon.php');
 
                 $identicon = new \Identicon\Identicon();
                 $imageData = $identicon->getImageData($query['0']['username'], 500);
                 $image = imagecreatefromstring($imageData);
                 if ($image !== false) {
-                    imagepng($image, 'public/img/avatars/' . $query['0']['id'] . '.png');
+                    imagepng($image, PATH . 'public/img/avatars/' . $query['0']['id'] . '.png');
                     imagedestroy($image);
                     $MYSQL->bind('user_avatar', $query['0']['id'] . '.png');
                     $MYSQL->bind('id', $query['0']['id']);

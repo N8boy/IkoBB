@@ -27,7 +27,7 @@ if (BASEPATH == "Staff") {
     define('APPLICATION', '../../applications/');
 } else {
     define('PATH', '');
-    define('PATH_A', '');
+    define('PATH_A', 'applications/');
     define('TEMPLATE', '');
     define('APPLICATION', 'applications/');
 }
